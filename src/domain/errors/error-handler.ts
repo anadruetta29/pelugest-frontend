@@ -8,21 +8,6 @@ export class ErrorHandler {
             case "Internal error":
                 return Errors.INTERNAL_ERROR;
 
-            case "Instrument not found":
-                return Errors.INSTRUMENT_NOT_FOUND;
-
-            case "Style not found":
-                return Errors.STYLE_NOT_FOUND;
-
-            case "Comment not found":
-                return Errors.COMMENT_NOT_FOUND;
-
-            case "Forum not found":
-                return Errors.POST_NOT_FOUND
-            
-            case "Forum not active":
-                return Errors.POST_NOT_ACTIVE;
-
             case "Email already exists":
                 return Errors.EMAIL_ALREADY_EXISTS;
             
@@ -41,17 +26,11 @@ export class ErrorHandler {
             case "Missing required fields":
                 return Errors.MISSING_REQUIRED_FIELDS;
 
-            case "Invalid fields":
-                return Errors.INVALID_FIELDS;
-
             case "Invalid type":
                 return Errors.INVALID_TYPE;
 
             case "Invalid image":
                 return Errors.INVALID_IMAGE;
-
-            case "User not activated":
-                return Errors.EMAIL_NOT_VERIFIED;
             
             case "Unknown error":
                 return Errors.UNKNOWN_ERROR;
