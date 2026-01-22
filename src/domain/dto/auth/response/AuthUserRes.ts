@@ -5,5 +5,5 @@ export interface AuthUserRes {
     id: string;
     email: string;
     role: Role;
-    recordStatus: RecordStatus
+    status: RecordStatus
 }
