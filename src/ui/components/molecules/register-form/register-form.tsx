@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 import MediumTitle from "../../atoms/medium-title/medium-title";
 import InputLabel from "../../atoms/input-label/input-label";
 import MainButton from "../../atoms/main-button/main-button";
-import ISOLOGO from "../../../assets/ISOLOGO_FT.svg";
-import style from "./style.module.css";
 import AuthLayout from "../../atoms/auth-layout/auth-layout";
+import style from "./style.module.css";
 
 type Props = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -14,7 +13,6 @@ export default function RegisterForm({ onSubmit } : Props) {
     return(
         <AuthLayout>
             <form onSubmit={onSubmit} className={style.container}>
-                <img className={style.isologo} src={ISOLOGO} alt="isologo" />
                 <MediumTitle text="Creá tu cuenta" />
                 <div className={style.nameContainer}>
                     <InputLabel id="name" placeholder="Nombre" required type="text" />

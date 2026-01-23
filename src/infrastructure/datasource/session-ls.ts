@@ -1,5 +1,4 @@
-import {Session} from '../../domain';
-import {Errors} from "../../domain";
+import {Errors, Session} from "../../domain";
 import type { SessionDataSourceI } from '../../domain/datasource/session';
 import type { SaveSessionReq } from '../../domain/dto/session/request/SaveSessionReq';
 import type { GetSessionRes } from '../../domain/dto/session/response/GetSessionRes';
@@ -7,23 +6,19 @@ import type { GetSessionRes } from '../../domain/dto/session/response/GetSession
 export class SessionLSDataSourceI implements SessionDataSourceI {
 
     public async getSession(): Promise<GetSessionRes> {
-        try {
-            const session = localStorage.getItem("session");
-            const sessionParsed = JSON.parse(session || "");
-            const sessionInstance = Session.fromObject(sessionParsed);
+        const session = localStorage.getItem("session");
 
-            if (!sessionInstance) {
-                throw new Error(Errors.NO_SESSION_SAVED_ERROR);
-            }
+        if (!session) {
+            throw new Error(Errors.NO_SESSION_SAVED_ERROR);
+        }
 
-            return {
-                session: sessionInstance,
-            };
-        }
-        catch (error) {
-            throw new Error(Errors.GET_SESSION_ERROR);
-        }
+        const sessionParsed = JSON.parse(session);
+
+        return {
+            session: Session.fromObject(sessionParsed)!,
+        };
     }
+
 
     public async saveSession(dto: SaveSessionReq): Promise<void> {
         try {

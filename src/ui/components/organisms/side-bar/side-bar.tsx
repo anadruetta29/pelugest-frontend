@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import UserWithIcon from "../../atoms/user-with-icon/user-with-icon";
-import style from "./sidebar.module.css";
+import style from "./style.module.css";
 
 export default function Sidebar() {
   return (

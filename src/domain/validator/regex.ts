@@ -6,7 +6,6 @@ export class Regex {
 
     public static readonly LASTNAME = /^[\p{L}]{2,20}(?:[ '-][\p{L}]{2,20})*$/u;
 
-    public static readonly PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)\S{8,}$/;
-
+    public static readonly PASSWORD = /^\S{1,8}$/;
    
 }
