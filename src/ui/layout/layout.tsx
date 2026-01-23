@@ -15,7 +15,7 @@ export default function Layout({
 }: Props) {
     return (
         <div className={style.container}>
-        {withHeader && <Header />}
+        {withHeader && <Header userName="Admin" />}
 
         <div className={style.body}>
             {withSidebar && <Sidebar />}
