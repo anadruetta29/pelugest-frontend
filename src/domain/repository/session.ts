@@ -1,0 +1,7 @@
+import type { SaveSessionReq } from "../dto/session/request/SaveSessionReq";
+import type { GetSessionRes } from "../dto/session/response/GetSessionRes";
+
+export abstract class SessionRepositoryI {
+    abstract getSession(): Promise<GetSessionRes>;
+    abstract saveSession(dto: SaveSessionReq): Promise<void>;
+}
