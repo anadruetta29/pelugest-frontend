@@ -1,6 +1,7 @@
 .sidebar {
     width: 220px;
     padding: 24px 16px;
+    background-color: var(--primary);
 }
 
 .menu {
