@@ -1,0 +1,19 @@
+.sidebar {
+    width: 220px;
+    padding: 24px 16px;
+    background-color: var(--primary);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.link {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+
