@@ -16,6 +16,11 @@
     justify-content: center;
 }
 
+.brand > img {
+    width: 400px;
+    height: auto;
+}
+
 .formContainer {
     flex: 1; 
     display: flex;
