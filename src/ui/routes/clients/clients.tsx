@@ -4,10 +4,15 @@ import { ViewModel } from "./viewmodel";
 
 export default function ClientsRoute() {
 
-    const {  } = ViewModel();
+    const { 
+        clients,
+        onDeleteClient, 
+        onEditClient,
+        onNewClient
+    } = ViewModel();
 
     return (
-        <Layout withSidebar={false}>
+        <Layout withSidebar={true}>
             <ClientsList
                 clients={clients}
                 onDeleteClient={onDeleteClient}

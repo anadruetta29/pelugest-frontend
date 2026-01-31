@@ -1,38 +1,52 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useSession from "../../hooks/useSession";
 import { useRepositories } from "../../../core";
-import { useState } from "react";
-import { Errors, type Client, type FindByIdReq } from "../../../domain";
+import { useState, useEffect } from "react";
+import { Errors, RecordStatus, type Client, type FindByNameReq, type GetAllByStatusReq } from "../../../domain";
 import toast from "react-hot-toast";
 
 export function ViewModel() {
-
-   const navigate = useNavigate();
-
-    const { id } = useParams(); 
-    const { userId, session } = useSession();
-    const { clientRepository } = useRepositories();
+    const navigate = useNavigate();
+    const { session } = useSession();
+    const { clientRepository, recordStatusRepository } = useRepositories();
 
     const [clients, setClients] = useState<Client[]>([]);
 
+    
+    useEffect(() => {
+        fetchClients();
+    }, [session]);
+
+
     const fetchClients = async () => {
+        if (!session) return;
         try {
-            const client = await clientRepository.findById({
-                id: id,
-                session: session
-            } as FindByIdReq);
-            
-            
-            
-        } 
-        catch (error) {
+            const statusResponse = await recordStatusRepository.findByName({
+                name: "ACTIVE",
+                session
+            } as FindByNameReq);
+
+            const status = RecordStatus.fromObject(statusResponse);
+
+            const { clients } = await clientRepository.getAllByStatus({
+                statusId: status.id,
+                session
+            } as GetAllByStatusReq);
+
+            setClients(clients);
+        } catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
         }
-
-    }
-    
-    return {
-        
     };
-    
+
+    const onDeleteClient = async () => {};
+    const onEditClient = async () => {};
+    const onNewClient = async () => {};
+
+    return {
+        clients,
+        onDeleteClient,
+        onEditClient,
+        onNewClient
+    };
 }

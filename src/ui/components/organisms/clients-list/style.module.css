@@ -11,3 +11,7 @@
     justify-content: flex-start; 
     align-items: center;
 }
+
+.newClientButton button {
+    width: 150px; 
+}

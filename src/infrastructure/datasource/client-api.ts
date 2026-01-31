@@ -1,5 +1,5 @@
 import { HTTPClient } from "../../core";
-import { ErrorHandler, type ClientDataSourceI, type CreateClientReq, type CreateClientRes, type DeleteClientReq, type FindByIdReq, type FindByIdRes, type UpdateClientReq, type UpdateClientRes } from "../../domain";
+import { ErrorHandler, type ClientDataSourceI, type CreateClientReq, type CreateClientRes, type DeleteClientReq, type FindByIdReq, type FindByIdRes, type GetAllByStatusReq, type GetAllByStatusRes, type UpdateClientReq, type UpdateClientRes } from "../../domain";
 
 export class ClientApiDataSource implements ClientDataSourceI {
 
@@ -65,4 +65,17 @@ export class ClientApiDataSource implements ClientDataSourceI {
         }
     }
     
+    public async getAllByStatus(dto: GetAllByStatusReq): Promise<GetAllByStatusRes> {
+        try {
+            const response = await this.httpClient.get("/api/clients/get-all-by-status", {...dto}, dto.session.getAccessToken());
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        }
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
 }
