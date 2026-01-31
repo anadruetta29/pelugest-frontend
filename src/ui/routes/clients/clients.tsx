@@ -2,7 +2,7 @@ import ClientsList from "../../components/organisms/clients-list/clients-list";
 import Layout from "../../layout/layout";
 import { ViewModel } from "./viewmodel";
 
-export default function LoginRoute() {
+export default function ClientsRoute() {
 
     const {  } = ViewModel();
 

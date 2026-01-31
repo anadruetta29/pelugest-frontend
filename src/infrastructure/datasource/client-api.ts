@@ -1,5 +1,5 @@
 import { HTTPClient } from "../../core";
-import { ErrorHandler, type ClientDataSourceI, type CreateClientReq, type CreateClientRes, type DeleteClientReq, type UpdateClientReq, type UpdateClientRes } from "../../domain";
+import { ErrorHandler, type ClientDataSourceI, type CreateClientReq, type CreateClientRes, type DeleteClientReq, type FindByIdReq, type FindByIdRes, type UpdateClientReq, type UpdateClientRes } from "../../domain";
 
 export class ClientApiDataSource implements ClientDataSourceI {
 
@@ -40,6 +40,20 @@ export class ClientApiDataSource implements ClientDataSourceI {
     public async delete(dto: DeleteClientReq): Promise<void> {
         try {
             const response = await this.httpClient.delete("/api/clients/delete", {...dto}, dto.session.getAccessToken());
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        }
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+    public async findById(dto: FindByIdReq): Promise<FindByIdRes> {
+        try {
+            const response = await this.httpClient.get("/api/clients/find-by-id", {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }

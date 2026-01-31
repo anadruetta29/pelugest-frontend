@@ -1,4 +1,4 @@
-import type { ClientDataSourceI, ClientRepositoryI, CreateClientReq, CreateClientRes, DeleteClientReq, UpdateClientReq, UpdateClientRes } from "../../domain";
+import type { ClientDataSourceI, ClientRepositoryI, CreateClientReq, CreateClientRes, DeleteClientReq, FindByIdReq, FindByIdRes, UpdateClientReq, UpdateClientRes } from "../../domain";
 import { ClientApiDataSource } from "../datasource/client-api";
 
 export class ClientRepository implements ClientRepositoryI {
@@ -34,5 +34,14 @@ export class ClientRepository implements ClientRepositoryI {
                 throw error;
             }
         };
+
+        public async findById(dto: FindByIdReq): Promise<FindByIdRes> {
+            try {
+                return await this.dataSource.findById(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
 
 }
