@@ -1,4 +1,4 @@
-import LargeTitle from "../large-title/large-title";
+import logo from "../../../assets/LOGO.svg";
 import style from "./style.module.css";
 
 type Props = {
@@ -7,9 +7,9 @@ type Props = {
 
 export default function AuthLayout({ children }: Props) {
     return (
-        <div className={style.layoutContainer}> {/* Nombre actualizado */}
+        <div className={style.layoutContainer}> 
           <div className={style.brand}>
-            <LargeTitle text="PeluGest" />
+            <img src={logo} alt="logo" />
           </div>
           <div className={style.formContainer}>
             {children}

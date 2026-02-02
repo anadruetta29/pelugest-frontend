@@ -6,7 +6,6 @@ import { Errors, RecordStatus, type Client, type FindByNameReq, type GetAllBySta
 import toast from "react-hot-toast";
 
 export function ViewModel() {
-    const navigate = useNavigate();
     const { session } = useSession();
     const { clientRepository, recordStatusRepository } = useRepositories();
 
@@ -25,15 +24,19 @@ export function ViewModel() {
                 name: "ACTIVE",
                 session
             } as FindByNameReq);
+            console.log("statusResponse:", statusResponse);
+            console.log("recordStatus:", statusResponse.recordStatus);
 
-            const status = RecordStatus.fromObject(statusResponse);
 
-            const { clients } = await clientRepository.getAllByStatus({
+            const status = RecordStatus.fromObject(statusResponse.recordStatus);
+
+            const response = await clientRepository.getAllByStatus({
                 statusId: status.id,
                 session
             } as GetAllByStatusReq);
 
-            setClients(clients);
+            setClients(response.clients);
+
         } catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
         }

@@ -12,17 +12,12 @@ export class AuthApiDataSource implements AuthDataSourceI {
     }
 
     public async auth(dto: AuthUserReq): Promise<AuthUserRes> {
-        try {
-            const response = await this.httpClient.get("/api/auth", {}, dto.session.getAccessToken());
-            if (response.error) {
-                throw ErrorHandler.handleError(response.error);
-            }
-
-            return response;
-        }
-        catch (error) {
-            throw ErrorHandler.handleError(error as Error);
-        }
+        const response = await this.httpClient.get(
+            "/api/auth",
+            undefined,
+            dto.session.getAccessToken()
+        );
+        return response;
     }
 
     public async login(dto: LoginUserReq): Promise<LoginUserRes> {
