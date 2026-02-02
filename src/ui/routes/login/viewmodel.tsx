@@ -21,6 +21,7 @@ export function ViewModel() {
                 email?: string; 
                 password?: string 
             };
+            console.log(form)
 
             if(!Regex.EMAIL.test(form.email || "")){
                 return setError(Errors.INVALID_EMAIL);
@@ -34,10 +35,11 @@ export function ViewModel() {
                 email: form.email!!, 
                 password: form.password!!,
             } as LoginUserReq);
-
+            console.log(response)
             const session: SaveSessionReq = {
                 session: new Session(response.token),
             }
+            console.log(session)
             
             await sessionRepository.saveSession(session);
 
