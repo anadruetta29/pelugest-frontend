@@ -29,11 +29,14 @@ export default function useSession() {
                 setUserId(authResponse.id);
                 setSession(sessionResponse.session);
                 setLogged(true);
-            } else {
+            } 
+            else {
                 setLogged(false);
             }
-        } catch (error) {
-            console.error("Error de sesión:", error);
+
+        } 
+        catch (error) {
+            console.error(error);
             setLogged(false);
         }
     }, [sessionRepository, authRepository]);

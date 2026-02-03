@@ -10,13 +10,17 @@ export class HTTPClient {
 
     private getToken(): string | undefined {
         const raw = localStorage.getItem("session");
+        
         if (!raw) return undefined;
+        
         const parsed = JSON.parse(raw);
+
         return parsed.token?.accessToken; 
     }
 
     private buildHeaders(token?: string) {
         const finalToken = token ?? this.getToken();
+        
         return finalToken
             ? { Authorization: `Bearer ${finalToken}` }
             : {};
