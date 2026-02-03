@@ -18,33 +18,35 @@ export default function ClientsTable({ clients, onEditClient, onDeleteClient }: 
         <table className={style.table}>
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Celular</th>
-                    <th>Fijo</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th className={style.tableHeader}>Nombre</th>
+                    <th className={style.tableHeader}>Apellido</th>
+                    <th className={style.tableHeader}>Celular</th>
+                    <th className={style.tableHeader}>Fijo</th>
+                    <th className={style.tableHeader}>Estado</th>
+                    <th className={style.tableHeader}>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {clients.map((client) => (
                     <tr key={client.id}>
-                        <td>{client.name}</td>
-                        <td>{client.surname}</td>
-                        <td>{client.mobilePhoneNumber}</td>
-                        <td>{client.landlinePhoneNumber}</td>
-                        <td>{client.status.name}</td>
+                        <td className={style.tableContent}>{client.name}</td>
+                        <td className={style.tableContent}>{client.surname}</td>
+                        <td className={style.tableContent}>{client.mobilePhoneNumber}</td>
+                        <td className={style.tableContent}>{client.landlinePhoneNumber}</td>
+                        <td className={style.tableContent}>{client.status.name}</td>
                         <td className={style.actions}>
                             <SecondaryButton
                                 enabled
                                 text="Modificar"
                                 type="button"
+                                modifier={style.actionButtons}
                                 onClick={() => onEditClient(client)}
                             />
                             <SecondaryButton
                                 enabled
                                 text="Desactivar"
                                 type="button"
+                                modifier={style.actionButtons}
                                 onClick={() => onDeleteClient(client)}
                             />
                         </td>

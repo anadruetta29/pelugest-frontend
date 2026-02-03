@@ -5,27 +5,20 @@ import type { GetSessionRes } from '../../domain/dto/session/response/GetSession
 
 export class SessionLSDataSourceI implements SessionDataSourceI {
 
+    async saveSession(dto: SaveSessionReq): Promise<void> {
+        localStorage.setItem("session", JSON.stringify(dto.session));
+    }
+
     async getSession(): Promise<GetSessionRes> {
         const raw = localStorage.getItem("session");
-        if (!raw) {
-            return { session: null };
-        }
+        if (!raw) return { session: null };
 
         try {
             const parsed = JSON.parse(raw);
-            const session = Session.fromObject(parsed);
-
-            return { session };
+            const sessionInstance = Session.fromObject(parsed);
+            return { session: sessionInstance };
         } catch {
             return { session: null };
         }
     }
-
-    async saveSession(dto: SaveSessionReq): Promise<void> {
-        localStorage.setItem(
-            "session",
-            JSON.stringify(dto.session)
-        );
-    }
-    
 }

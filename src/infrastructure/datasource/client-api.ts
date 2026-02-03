@@ -68,9 +68,9 @@ export class ClientApiDataSource implements ClientDataSourceI {
     public async getAllByStatus(dto: GetAllByStatusReq): Promise<GetAllByStatusRes> {
         try {
             const response = await this.httpClient.get(
-            "/api/clients/get-all-by-status/${dto.statusId}",
-            undefined,
-            dto.session.getAccessToken()
+                `/api/clients/get-all-by-status/${dto.statusId}`,
+                undefined,
+                dto.session.getAccessToken()
             );
 
             if (response.error) {

@@ -12,17 +12,19 @@ export class RecordStatusApiDataSource implements RecordStatusDataSourceI {
     public async findByName(dto: FindByNameReq): Promise<FindByNameRes> {
         try {
             const response = await this.httpClient.get(
-            "/api/record-status/find-by-name/${dto.name}",
-            undefined,
-            dto.session.getAccessToken()
+                `/api/record-status/find-by-name/${dto.name}`,
+                undefined,
+                dto.session.getAccessToken()
             );
+
 
             if (response.error) {
             throw ErrorHandler.handleError(response.error);
             }
 
             return response;
-        } catch (error) {
+        } 
+        catch (error) {
             throw ErrorHandler.handleError(error as Error);
         }
     }

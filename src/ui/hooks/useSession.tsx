@@ -1,69 +1,58 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom"; // Añadimos esto
 import { useRepositories } from "../../core";
-import type { AuthUserReq, AuthUserRes, GetSessionRes, Role, Session } from "../../domain";
+import type { Session } from "../../domain";
 
 export default function useSession() {
-
-    const navigate = useNavigate();
-
     const { sessionRepository, authRepository } = useRepositories();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const [logged, setLogged] = useState<boolean | null>(null);
-    const [userId, setUserId] = useState<string | null>(null);
     const [session, setSession] = useState<Session | null>(null);
-    const [role, setRole] = useState<Role | null> (null);
+    const [userId, setUserId] = useState<string | null>(null);
 
-    useEffect(() => {
-        const checkSession = async () => {
-            const isLogged = await checkIfUserIsLogged();
-            setLogged(isLogged);
+    const checkIfUserIsLogged = useCallback(async () => {
+        try {
+            const sessionResponse = await sessionRepository.getSession();
+            
+            if (!sessionResponse?.session) {
+                setLogged(false);
+                return;
+            }
+
+            const authResponse = await authRepository.auth({ 
+                session: sessionResponse.session 
+            });
+
+            if (authResponse) {
+                setUserId(authResponse.id);
+                setSession(sessionResponse.session);
+                setLogged(true);
+            } else {
+                setLogged(false);
+            }
+        } catch (error) {
+            console.error("Error de sesión:", error);
+            setLogged(false);
         }
-
-        checkSession().then();
-    }, []);
+    }, [sessionRepository, authRepository]);
 
     useEffect(() => {
+        checkIfUserIsLogged();
+    }, [checkIfUserIsLogged]);
+
+    useEffect(() => {
+
         if (logged === null) return;
 
-        if (
-            logged === false && 
-            window.location.pathname !== "/login" && 
-            window.location.pathname !== "/register" 
-        ) {
-            navigate("/login");
+        const publicRoutes = ["/login", "/register"];
+        const isPublicRoute = publicRoutes.includes(location.pathname);
+
+        if (!logged && !isPublicRoute) {
+            navigate("/login", { replace: true });
         }
-    }, [logged]);
+    }, [logged, location.pathname, navigate]);
 
-    const checkIfUserIsLogged = async () => {
-        try {
-            const sessionResponse: GetSessionRes = await sessionRepository.getSession();
-            if (sessionResponse == null) return false;
-            
-            const authRequest: AuthUserReq = {
-                session: sessionResponse.session,
-            };
-
-            const authResponse: AuthUserRes = await authRepository.auth(authRequest);
-            if (authResponse == null) return false;
-
-            setUserId(authResponse.id);
-            setSession(sessionResponse.session);
-            setRole(authResponse.role);
-
-
-            return true;
-        }
-        catch (error) {
-            return false;
-        }
-    };
-
-    return {
-        userId,
-        session,
-        logged,
-        role
-    };
-
+    return { userId, session, logged };
 }

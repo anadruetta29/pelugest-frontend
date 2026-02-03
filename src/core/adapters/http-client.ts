@@ -9,15 +9,10 @@ export class HTTPClient {
     }
 
     private getToken(): string | undefined {
-        const sessionRaw = localStorage.getItem("session");
-        if (!sessionRaw) return undefined;
-
-        try {
-            const session = JSON.parse(sessionRaw);
-            return session?.token?.accessToken;
-        } catch {
-            return undefined;
-        }
+        const raw = localStorage.getItem("session");
+        if (!raw) return undefined;
+        const parsed = JSON.parse(raw);
+        return parsed.token?.accessToken; 
     }
 
     private buildHeaders(token?: string) {

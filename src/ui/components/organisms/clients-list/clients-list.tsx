@@ -1,6 +1,7 @@
 import type { Client } from "../../../../domain";
 import MainButton from "../../atoms/main-button/main-button";
 import ClientsTable from "../../molecules/clients-table/clients-table";
+import addIcon from "../../../assets/icons/add-new.svg";
 import style from "./style.module.css";
 
 type Props = {
@@ -20,6 +21,9 @@ export default function ClientsList( { clients, onDeleteClient, onEditClient, on
                     text="Nuevo Cliente"
                     type="button"
                     onClick={onNewClient}
+                    icon={addIcon}
+                    iconAlt="Nuevo cliente"
+                    iconPosition="left"
                 />
             </div>
             <div>

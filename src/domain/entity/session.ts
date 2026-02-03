@@ -8,9 +8,9 @@ export class Session {
     }
 
     public static fromObject(object: any): Session | null {
-        if (!object || !object.token) return null;
-
-        const tokenInstance = Token.fromObject(object.token);
+        if (!object) return null;
+        
+        const tokenInstance = Token.fromObject(object.token || object);
         if (!tokenInstance) return null;
 
         return new Session(tokenInstance);

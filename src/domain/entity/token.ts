@@ -6,8 +6,12 @@ export class Token {
     }
 
     public static fromObject(object: any): Token | null {
-        if (!object || typeof object.accessToken !== "string") return null;
 
-        return new Token(object.accessToken);
+        const tokenValue = object.accessToken || object.token;
+        
+        if (!tokenValue || typeof tokenValue !== "string") return null;
+
+        return new Token(tokenValue);
     }
+
 }

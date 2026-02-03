@@ -14,8 +14,8 @@ export function ViewModel() {
     const [error, setError] = useState<string | null>(null);
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement> ) => {
+        e.preventDefault();
         try {
-            e.preventDefault();
             
             const form = Object.fromEntries(new FormData(e.currentTarget)) as { 
                 email?: string; 
@@ -33,28 +33,20 @@ export function ViewModel() {
             const response = await authRepository.login({
                 email: form.email,
                 password: form.password,
+            } as LoginUserReq);
+
+            const sessionInstance = new Session(response.token);
+
+            await sessionRepository.saveSession({
+                session: sessionInstance
             });
 
-            const session: SaveSessionReq = {
-                session: new Session(response.token),
-            };
-
-            await sessionRepository.saveSession(session);
-
             toast.success("Sesión iniciada correctamente");
-            navigate("/clients");
-
+            
         }
-        catch (error: any) {
-    console.error("LOGIN ERROR:", error);
-
-    const message =
-        error?.response?.data?.message ||
-        error?.message ||
-        Errors.UNKNOWN_ERROR;
-
-    toast.error(message);
-}
+        catch (error) {
+            toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
+        }
 
     }
     

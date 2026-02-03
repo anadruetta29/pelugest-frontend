@@ -1,19 +1,31 @@
 .sidebar {
     width: 220px;
+    height: 100vh; 
     padding: 24px 16px;
     background-color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: sticky;
 }
 
 .menu {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: 40px; 
 }
 
 .link {
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 10px 16px;
     border-radius: 8px;
+    color: var(--on-primary);
+    font-weight: 500;
+    transition: background-color 0.2s ease;
 }
 
+.link:hover {
+    background-color: var(--shadow-low);
+}
 

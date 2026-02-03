@@ -11,3 +11,6 @@
     object-fit: cover;
 }
 
+.name {
+    color: var(--on-primary);
+}
