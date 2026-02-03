@@ -52,5 +52,6 @@ button {
 }
 
 .actionButtons {
-	width: 150px;
+	width: 100px;
+    font-size: 15px;
 }

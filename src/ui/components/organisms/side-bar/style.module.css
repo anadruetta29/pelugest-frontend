@@ -1,31 +1,54 @@
 .sidebar {
     width: 220px;
-    height: 100vh; 
+    height: 100vh;
     padding: 24px 16px;
     background-color: var(--primary);
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     position: sticky;
+    top: 0;
+}
+
+.userSection {
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--shadow-low);
 }
 
 .menu {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 40px; 
+    gap: 18px;
+    margin-top: 32px;
 }
 
 .link {
+    position: relative;
     text-decoration: none;
-    padding: 10px 16px;
+    padding: 12px 18px;
     border-radius: 8px;
     color: var(--on-primary);
     font-weight: 500;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .link:hover {
     background-color: var(--shadow-low);
 }
 
+.active {
+    background-color: var(--primary-container);
+    color: var(--on-primary-container);
+    font-weight: 600;
+}
+
+.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--on-primary-container);
+    border-radius: 0 4px 4px 0;
+}

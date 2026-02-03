@@ -3,29 +3,58 @@ import UserWithIcon from "../../atoms/user-with-icon/user-with-icon";
 import style from "./style.module.css";
 
 export default function Sidebar() {
-  return (
+    return (
         <aside className={style.sidebar}>
-
-            <div>
+            <div className={style.userSection}>
                 <UserWithIcon userName="Admin" />
             </div>
+
             <nav className={style.menu}>
-                <NavLink to="/dashboard" className={style.link}>
-                    Dashboard
+                <NavLink
+                to="/appointments"
+                className={({ isActive }) =>
+                    isActive ? `${style.link} ${style.active}` : style.link
+                }
+                >
+                    Turnos
                 </NavLink>
 
-                <NavLink to="/clients" className={style.link}>
+                <NavLink
+                to="/clients"
+                className={({ isActive }) =>
+                    isActive ? `${style.link} ${style.active}` : style.link
+                }
+                >
                     Clientes
                 </NavLink>
 
-                <NavLink to="/services" className={style.link}>
+                <NavLink
+                to="/services"
+                className={({ isActive }) =>
+                    isActive ? `${style.link} ${style.active}` : style.link
+                }
+                >
                     Servicios
                 </NavLink>
 
-                <NavLink to="/products" className={style.link}>
+                <NavLink
+                to="/products"
+                className={({ isActive }) =>
+                    isActive ? `${style.link} ${style.active}` : style.link
+                }
+                >
                     Productos
+                </NavLink>
+
+                <NavLink
+                to="/reports"
+                className={({ isActive }) =>
+                    isActive ? `${style.link} ${style.active}` : style.link
+                }
+                >
+                    Reportes
                 </NavLink>
             </nav>
         </aside>
-  );
+    );
 }
