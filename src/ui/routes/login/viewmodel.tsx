@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRepositories } from "../../../core";
-import { Errors, Regex, Session, type LoginUserReq, type LoginUserRes } from "../../../domain";
+import { Errors, Regex, Session, Token, type LoginUserReq, type LoginUserRes } from "../../../domain";
 import type { SaveSessionReq } from "../../../domain/dto/session/request/SaveSessionReq";
 import toast from "react-hot-toast";
 
@@ -22,28 +22,28 @@ export function ViewModel() {
                 password?: string 
             };
 
-            if(!Regex.EMAIL.test(form.email || "")){
+            if (!Regex.EMAIL.test(form.email || "")){
                 return setError(Errors.INVALID_EMAIL);
             }
             
-            if(!Regex.PASSWORD.test(form.password || "")){
+            if (!Regex.PASSWORD.test(form.password || "")){
                 return setError(Errors.INVALID_PASSWORD);
-            }
+            } 
 
             const response = await authRepository.login({
-                email: form.email, 
+                email: form.email,
                 password: form.password,
-            } as LoginUserReq);
-            console.log(response)
+            });
 
             const session: SaveSessionReq = {
                 session: new Session(response.token),
-            }
-            
+            };
+
             await sessionRepository.saveSession(session);
 
             toast.success("Sesión iniciada correctamente");
-            navigate("/");
+            navigate("/clients");
+
         }
         catch (error: any) {
     console.error("LOGIN ERROR:", error);

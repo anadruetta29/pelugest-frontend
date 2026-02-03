@@ -39,7 +39,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
 
     public async delete(dto: DeleteClientReq): Promise<void> {
         try {
-            const response = await this.httpClient.delete("/clients/delete", {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.delete("/api/clients/delete", {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -53,7 +53,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
 
     public async findById(dto: FindByIdReq): Promise<FindByIdRes> {
         try {
-            const response = await this.httpClient.get("/clients/find-by-id", {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.get("/api/clients/find-by-id", {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -68,7 +68,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
     public async getAllByStatus(dto: GetAllByStatusReq): Promise<GetAllByStatusRes> {
         try {
             const response = await this.httpClient.get(
-            `/clients/get-all-by-status/${dto.statusId}`,
+            "/api/clients/get-all-by-status/${dto.statusId}",
             undefined,
             dto.session.getAccessToken()
             );
