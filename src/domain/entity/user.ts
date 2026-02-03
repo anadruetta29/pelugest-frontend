@@ -5,7 +5,7 @@ export class User {
     
     public id: string;
     public name: string;
-    public lastname: string;
+    public surname: string;
     public email: string;
     public password: string;
     public status: RecordStatus;
@@ -14,7 +14,7 @@ export class User {
     private constructor(
         id: string,
         name: string, 
-        lastname: string,
+        surname: string,
         email: string,
         password: string,
         status: RecordStatus,
@@ -22,7 +22,7 @@ export class User {
     ){
         this.id = id;
         this.name = name;
-        this.lastname = lastname;
+        this.surname = surname;
         this.email = email;
         this.password = password;
         this.status = status;
@@ -33,7 +33,7 @@ export class User {
         return new User(
             object.id,
             object.name,
-            object.lastname,
+            object.surname,
             object.email,
             object.password,
             object.status,

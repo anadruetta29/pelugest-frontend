@@ -37,5 +37,4 @@ export class AuthRepository implements AuthRepositoryI {
             throw error;
         }
     }
-
 }

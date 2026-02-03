@@ -12,7 +12,7 @@ export class RecordStatusApiDataSource implements RecordStatusDataSourceI {
     public async findByName(dto: FindByNameReq): Promise<FindByNameRes> {
         try {
             const response = await this.httpClient.get(
-            `/api/record-status/find-by-name/${dto.name}`,
+            `/record-status/find-by-name/${dto.name}`,
             undefined,
             dto.session.getAccessToken()
             );

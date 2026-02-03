@@ -3,6 +3,7 @@ import style from "./style.module.css"
 
 type Props = {
     id: string;
+    name: string;
     type: "text" | "number" | "password" | "date";
     placeholder:string;
     required?: boolean;
@@ -13,7 +14,7 @@ type Props = {
     max?: number; 
 }
 
-export default function InputLabel({label, type, placeholder, id, required, value, onChange, min, max}: Props) {
+export default function InputLabel({label, name, type, placeholder, id, required, value, onChange, min, max}: Props) {
     const [self, setSelf] = useState<string | undefined>(value || "")
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +30,7 @@ export default function InputLabel({label, type, placeholder, id, required, valu
 		    <input 
                 type={type} 
                 placeholder={placeholder} 
-                name={id} 
+                name={name} 
                 id={id} 
                 value={self} 
                 onChange={handleChange} 

@@ -21,7 +21,6 @@ export function ViewModel() {
                 email?: string; 
                 password?: string 
             };
-            console.log(form)
 
             if(!Regex.EMAIL.test(form.email || "")){
                 return setError(Errors.INVALID_EMAIL);
@@ -31,24 +30,32 @@ export function ViewModel() {
                 return setError(Errors.INVALID_PASSWORD);
             }
 
-            const response: LoginUserRes = await authRepository.login({
-                email: form.email!!, 
-                password: form.password!!,
+            const response = await authRepository.login({
+                email: form.email, 
+                password: form.password,
             } as LoginUserReq);
             console.log(response)
+
             const session: SaveSessionReq = {
                 session: new Session(response.token),
             }
-            console.log(session)
             
             await sessionRepository.saveSession(session);
 
             toast.success("Sesión iniciada correctamente");
             navigate("/");
         }
-        catch(error) {
-            toast.error(error ? error as string : Errors.UNKNOWN_ERROR);
-        }
+        catch (error: any) {
+    console.error("LOGIN ERROR:", error);
+
+    const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        Errors.UNKNOWN_ERROR;
+
+    toast.error(message);
+}
+
     }
     
     return {
