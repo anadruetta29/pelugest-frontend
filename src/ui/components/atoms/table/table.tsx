@@ -12,7 +12,7 @@ export default function Table({ headers, children }: Props) {
                 <tr>
                 {headers.map((header) => (
                     <th key={header} className={style.tableHeader}>
-                    {header}
+                        {header}
                     </th>
                 ))}
                 </tr>
