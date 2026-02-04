@@ -38,7 +38,11 @@ export default function ClientsTable({
 						{client.mobilePhoneNumber}
 					</td>
 					<td className={style.tableContent}>
-						{client.landlinePhoneNumber}
+						{client.landlinePhoneNumber ? (
+							client.landlinePhoneNumber
+						) : (
+							<span className={style.notAvailable}>N/A</span>
+						)}
 					</td>
 					<td className={style.tableContent}>{client.status.name}</td>
 					<td className={style.actions}>
