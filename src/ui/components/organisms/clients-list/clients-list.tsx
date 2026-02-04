@@ -4,24 +4,43 @@ import ClientsTable from "../../molecules/clients-table/clients-table";
 import addIcon from "../../../assets/icons/add-new.svg";
 import style from "./style.module.css";
 import ConfirmModal from "../../molecules/confirm-modal/confirm-modal";
+import { ClientForm } from "../../molecules/client-form/client-form";
 
 type Props = {
     clients: Client[];
 
     isDeleteOpen: boolean;
     clientToDelete: Client | null;
-
-    onNewClient: () => void;
-    onEditClient: (client: Client) => void;
     onDeleteClient: (client: Client) => void;
     onConfirmDelete: () => void;
     onCancelDelete: () => void;
+
+    isFormOpen: boolean;
+    clientToEdit: Client | null;
+    onNewClient: () => void;
+    onEditClient: (client: Client) => void;
+    onCloseForm: () => void;
+    onSubmitClient: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 
-export default function ClientsList( { 
-    clients, onDeleteClient, onEditClient, onNewClient, clientToDelete, isDeleteOpen, onCancelDelete, onConfirmDelete
-}: Props ) {
+
+export default function ClientsList({
+    clients,
+    
+    onDeleteClient,
+    onEditClient,
+    onNewClient,
+    clientToDelete,
+    isDeleteOpen,
+    onCancelDelete,
+    onConfirmDelete,
+
+    isFormOpen,
+    clientToEdit,
+    onCloseForm,
+    onSubmitClient,
+}: Props) {
     return(
         <div className={style.container}>
             <div className={style.newClientButton}>
@@ -54,6 +73,14 @@ export default function ClientsList( {
                         cancelText="Cancelar"
                         onConfirm={onConfirmDelete}
                         onCancel={onCancelDelete}
+                    />
+                )}
+
+                {isFormOpen && (
+                    <ClientForm
+                        client={clientToEdit ?? undefined}
+                        onSubmit={onSubmitClient}
+                        onCancel={onCloseForm}
                     />
                 )}
             </div>

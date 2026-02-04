@@ -6,7 +6,7 @@ export interface UpdateClientReq {
     name: string;
     surname: string;
     mobilePhoneNumber: string;
-    landlineNumber: string;
+    landlinePhoneNumber: string;
     status: RecordStatus;
     session: Session;
 }

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import useSession from "../../hooks/useSession";
 import { useRepositories } from "../../../core";
 import { useState, useEffect } from "react";
-import { Errors, RecordStatus, type Client, type DeleteClientReq, type FindByNameReq, type GetAllByStatusReq } from "../../../domain";
+import { Errors, RecordStatus, type Client, type CreateClientReq, type DeleteClientReq, type FindByNameReq, type GetAllByStatusReq, type UpdateClientReq } from "../../../domain";
 import toast from "react-hot-toast";
 
 export function ViewModel() {
@@ -17,6 +17,11 @@ export function ViewModel() {
     const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [isCancelOpen, setIsCancelOpen] = useState(false);
+
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [formMode, setFormMode] = useState<"create" | "edit">("create");
+
+    const [clientToEdit, setClientToEdit] = useState<Client | null>(null);
 
     useEffect(() => {
         if (logged === true && session) {
@@ -35,13 +40,11 @@ export function ViewModel() {
             } as FindByNameReq);
 
             const status = RecordStatus.fromObject(statusResponse.recordStatus);
-            console.log(status)
 
             const response = await clientRepository.getAllByStatus({
                 statusId: status.id,
                 session
             } as GetAllByStatusReq);
-            console.log(response)
 
             setClients(response.clients);
 
@@ -77,13 +80,82 @@ export function ViewModel() {
         fetchClients();
     };
 
-    /* feature: update client */ 
+    /* feature: create and update client */ 
 
-    const onEditClient = async () => {};
+    const onEditClient = (client: Client) => {
+        setFormMode("edit");
+        setClientToEdit(client);
+        setIsFormOpen(true);
+    };
 
-    /* feature: create client */ 
+    const onNewClient = () => {
+        setFormMode("create");
+        setClientToEdit(null);
+        setIsFormOpen(true);
+    };
 
-    const onNewClient = async () => {};
+    const closeForm = () => {
+        setIsFormOpen(false);
+        setClientToEdit(null);
+    };
+
+    const onSubmitClient = async (e: React.FormEvent<HTMLFormElement>) => {
+
+        e.preventDefault();
+        if (!session) return;
+
+        const formData = new FormData(e.currentTarget);
+
+        try {
+            if (formMode === "create") {
+                await clientRepository.create({
+                    name: formData.get("name") as string,
+                    surname: formData.get("surname") as string,
+                    mobilePhoneNumber: formData.get("mobilePhoneNumber") as string,
+                    landlinePhoneNumber: formData.get("landlinePhoneNumber") as string,
+                    session,
+                } as CreateClientReq);
+
+                toast.success("Cliente creado correctamente");
+            }
+
+            if (formMode === "edit" && clientToEdit) {
+                const statusName = formData.get("status") as string;
+
+                const statusResponse =
+                    await recordStatusRepository.findByName({
+                        name: statusName,
+                        session,
+                    } as FindByNameReq);
+
+                const status = RecordStatus.fromObject(
+                    statusResponse.recordStatus
+                );
+
+                await clientRepository.update({
+                    id: clientToEdit.id,
+                    name: formData.get("name") as string,
+                    surname: formData.get("surname") as string,
+                    mobilePhoneNumber: formData.get("mobilePhoneNumber") as string,
+                    landlinePhoneNumber: formData.get("landlinePhoneNumber") as string,
+                    status,
+                    session
+                } as UpdateClientReq);
+
+                toast.success("Cliente actualizado correctamente");
+            }
+
+            setIsFormOpen(false);
+            setClientToEdit(null);
+            fetchClients();
+        } 
+        catch (error) {
+            toast.error(
+                error instanceof Error ? error.message : Errors.UNKNOWN_ERROR
+            );
+        }
+    };
+
 
     return {
         clients,
@@ -94,8 +166,11 @@ export function ViewModel() {
         cancelDelete,
         proceedDelete,
 
+        isFormOpen,
+        clientToEdit,
         onEditClient,
-        
         onNewClient,
+        closeForm,
+        onSubmitClient,
     };
 }

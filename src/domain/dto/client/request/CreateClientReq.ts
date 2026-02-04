@@ -4,6 +4,6 @@ export interface CreateClientReq {
     name: string;
     surname: string;
     mobilePhoneNumber: string;
-    landlineNumber: string;
+    landlinePhoneNumber?: string;
     session: Session;
 }
