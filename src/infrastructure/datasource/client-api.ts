@@ -11,7 +11,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
 
     public async create(dto: CreateClientReq): Promise<CreateClientRes> {
         try {
-            const response = await this.httpClient.post("/clients/create", {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.post(`/clients/create`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -25,7 +25,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
     
     public async update(dto: UpdateClientReq): Promise<UpdateClientRes> {
         try {
-            const response = await this.httpClient.put("/clients/update", {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.put(`/clients/update`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -39,7 +39,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
 
     public async delete(dto: DeleteClientReq): Promise<void> {
         try {
-            const response = await this.httpClient.delete("/api/clients/delete", {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.delete(`/api/clients/delete`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -53,7 +53,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
 
     public async findById(dto: FindByIdReq): Promise<FindByIdRes> {
         try {
-            const response = await this.httpClient.get("/api/clients/find-by-id", {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/clients/find-by-id`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }

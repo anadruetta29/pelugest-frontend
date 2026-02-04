@@ -6,16 +6,24 @@ export default function ClientsRoute() {
 
     const { 
         clients,
-        onDeleteClient, 
+        isDeleteOpen,
+        clientToDelete,
+        onDeleteClient,
+        cancelDelete,
+        proceedDelete,
         onEditClient,
-        onNewClient
+        onNewClient,
     } = ViewModel();
 
     return (
         <Layout withSidebar={true}>
             <ClientsList
                 clients={clients}
+                isDeleteOpen={isDeleteOpen}
+                clientToDelete={clientToDelete}
                 onDeleteClient={onDeleteClient}
+                onConfirmDelete={proceedDelete}
+                onCancelDelete={cancelDelete}
                 onEditClient={onEditClient}
                 onNewClient={onNewClient}
             />
