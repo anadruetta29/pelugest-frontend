@@ -4,7 +4,7 @@ import ClientsTable from "../../molecules/clients-table/clients-table";
 import addIcon from "../../../assets/icons/add-new.svg";
 import style from "./style.module.css";
 import ConfirmModal from "../../molecules/confirm-modal/confirm-modal";
-import { ClientForm } from "../../molecules/client-form/client-form";
+import { ClientsForm } from "../../molecules/clients-form/clients-form";
 
 type Props = {
     clients: Client[];
@@ -77,7 +77,7 @@ export default function ClientsList({
                 )}
 
                 {isFormOpen && (
-                    <ClientForm
+                    <ClientsForm
                         client={clientToEdit ?? undefined}
                         onSubmit={onSubmitClient}
                         onCancel={onCloseForm}

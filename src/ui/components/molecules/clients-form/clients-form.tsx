@@ -10,7 +10,7 @@ type Props = {
     onCancel: () => void;
 };
 
-export function ClientForm({ client, onSubmit, onCancel }: Props) {
+export function ClientsForm({ client, onSubmit, onCancel }: Props) {
     return (
         <div className={style.backdrop}>
             <form onSubmit={onSubmit} className={style.card}>
@@ -24,6 +24,7 @@ export function ClientForm({ client, onSubmit, onCancel }: Props) {
                     id="name"
                     type="text"
                     placeholder="Nombre"
+                    defaultValue={client?.name || ""}
                     required
                 />
 
@@ -33,6 +34,7 @@ export function ClientForm({ client, onSubmit, onCancel }: Props) {
                     id="surname"
                     type="text"
                     placeholder="Apellido"
+                    defaultValue={client?.surname || ""}
                     required
                 />
 
@@ -42,6 +44,7 @@ export function ClientForm({ client, onSubmit, onCancel }: Props) {
                     id="mobilePhoneNumber"
                     type="text"
                     placeholder="Ej: 3511234567"
+                    defaultValue={client?.mobilePhoneNumber || ""}
                     required
                 />
 
@@ -51,6 +54,7 @@ export function ClientForm({ client, onSubmit, onCancel }: Props) {
                     id="landlinePhoneNumber"
                     type="text"
                     placeholder="Opcional"
+                    defaultValue={client?.landlinePhoneNumber || ""}
                 />
 
                 {client && (
