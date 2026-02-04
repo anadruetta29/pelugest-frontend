@@ -2,6 +2,7 @@ import Modal from "../../atoms/modal/modal";
 import MainButton from "../../atoms/main-button/main-button";
 import SecondaryButton from "../../atoms/secondary-button/secondary-button";
 import style from "./style.module.css";
+import DestructiveButton from "../../atoms/destructive-button/destructive-button";
 
 type Props = {
     title: string;
@@ -28,10 +29,9 @@ export default function ConfirmModal({
             <h3 className={style.title}>{title}</h3>
             <p className={style.description}>{description}</p>
             <div className={style.actions}>
-            <SecondaryButton
+            <DestructiveButton
                 text={cancelText}
                 type="button"
-                enabled
                 onClick={onCancel}
             />
             <MainButton
