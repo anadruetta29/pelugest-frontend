@@ -21,7 +21,7 @@ export default function ClientsTable({ clients, onEditClient, onDeleteClient }: 
                     <th className={style.tableHeader}>Nombre</th>
                     <th className={style.tableHeader}>Apellido</th>
                     <th className={style.tableHeader}>Celular</th>
-                    <th className={style.tableHeader}>Fijo</th>
+                    <th className={style.tableHeader}>Teléfono</th>
                     <th className={style.tableHeader}>Estado</th>
                     <th className={style.tableHeader}>Acciones</th>
                 </tr>
