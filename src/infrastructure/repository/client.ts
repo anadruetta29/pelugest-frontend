@@ -1,4 +1,6 @@
 import type { ClientDataSourceI, ClientRepositoryI, CreateClientReq, CreateClientRes, DeleteClientReq, FindByIdReq, FindByIdRes, GetAllByStatusReq, GetAllByStatusRes, UpdateClientReq, UpdateClientRes } from "../../domain";
+import type { GetAllClientsReq } from "../../domain/dto/client/request/GetAllClientsReq";
+import type { GetAllClientsRes } from "../../domain/dto/client/response/GetAllClientsRes";
 import { ClientApiDataSource } from "../datasource/client-api";
 
 export class ClientRepository implements ClientRepositoryI {
@@ -38,6 +40,15 @@ export class ClientRepository implements ClientRepositoryI {
         public async findById(dto: FindByIdReq): Promise<FindByIdRes> {
             try {
                 return await this.dataSource.findById(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async getAll(dto: GetAllClientsReq): Promise<GetAllClientsRes> {
+            try {
+                return await this.dataSource.getAll(dto); 
             }
             catch (error) {
                 throw error;

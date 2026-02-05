@@ -2,6 +2,7 @@ import type { CreateClientReq } from "../dto/client/request/CreateClientReq";
 import type { DeleteClientReq } from "../dto/client/request/DeleteClientReq";
 import type { FindByIdReq } from "../dto/client/request/FindByIdReq";
 import type { GetAllByStatusReq } from "../dto/client/request/GetAllByStatusReq";
+import type { GetAllClientsReq } from "../dto/client/request/GetAllClientsReq";
 import type { UpdateClientReq } from "../dto/client/request/UpdateClientReq";
 import type { CreateClientRes } from "../dto/client/response/CreateClientRes";
 import type { FindByIdRes } from "../dto/client/response/FindByIdRes";
@@ -14,6 +15,6 @@ export abstract class ClientDataSourceI {
     abstract update(dto: UpdateClientReq): Promise<UpdateClientRes>;
     abstract delete(dto: DeleteClientReq): Promise<void>;
     abstract findById(dto: FindByIdReq): Promise<FindByIdRes>;
-    abstract getAll(): Promise<GetAllClientsRes>;
+    abstract getAll(dto: GetAllClientsReq): Promise<GetAllClientsRes>;
     abstract getAllByStatus(dto: GetAllByStatusReq): Promise<GetAllByStatusRes>;
 }

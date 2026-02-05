@@ -1,9 +1,19 @@
 import { HTTPClient } from "../../core";
-import { ErrorHandler, type ClientDataSourceI, type CreateClientReq, type CreateClientRes, type DeleteClientReq, type FindByIdReq, type FindByIdRes, type GetAllByStatusReq, type GetAllByStatusRes, type UpdateClientReq, type UpdateClientRes } from "../../domain";
-import type { GetAllClientsReq } from "../../domain/dto/client/request/GetAllClientsReq";
-import type { GetAllClientsRes } from "../../domain/dto/client/response/GetAllClientsRes";
+import { ErrorHandler } from "../../domain";
+import type { ServiceDataSourceI } from "../../domain/datasource/service";
+import type { CreateServiceReq } from "../../domain/dto/service/request/CreateServiceReq";
+import type { DeleteServiceReq } from "../../domain/dto/service/request/DeleteServiceReq";
+import type { FindByIdReq } from "../../domain/dto/service/request/FindByIdReq";
+import type { GetAllByStatusReq } from "../../domain/dto/service/request/GetAllByStatusReq";
+import type { GetAllServicesReq } from "../../domain/dto/service/request/GetAllServicesReq";
+import type { UpdateServiceReq } from "../../domain/dto/service/request/UpdateServiceReq";
+import type { CreateServiceRes } from "../../domain/dto/service/response/CreateServiceRes";
+import type { FindByIdRes } from "../../domain/dto/service/response/FindByIdRes";
+import type { GetAllByStatusRes } from "../../domain/dto/service/response/GetAllByStatusRes";
+import type { GetAllServicesRes } from "../../domain/dto/service/response/GetAllServicesRes";
+import type { UpdateServiceRes } from "../../domain/dto/service/response/UpdateServiceRes";
 
-export class ClientApiDataSource implements ClientDataSourceI {
+export class ServiceApiDataSource implements ServiceDataSourceI {
 
     private httpClient: HTTPClient;
     
@@ -11,9 +21,9 @@ export class ClientApiDataSource implements ClientDataSourceI {
         this.httpClient = new HTTPClient();
     }
 
-    public async create(dto: CreateClientReq): Promise<CreateClientRes> {
+    public async create(dto: CreateServiceReq): Promise<CreateServiceRes> {
         try {
-            const response = await this.httpClient.post(`/api/clients/create`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.post(`/api/services/create`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -25,9 +35,9 @@ export class ClientApiDataSource implements ClientDataSourceI {
         }
     }
     
-    public async update(dto: UpdateClientReq): Promise<UpdateClientRes> {
+    public async update(dto: UpdateServiceReq): Promise<UpdateServiceRes> {
         try {
-            const response = await this.httpClient.put(`/api/clients/update/${dto.id}`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.put(`/api/services/update/${dto.id}`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -39,9 +49,9 @@ export class ClientApiDataSource implements ClientDataSourceI {
         }
     }
 
-    public async delete(dto: DeleteClientReq): Promise<void> {
+    public async delete(dto: DeleteServiceReq): Promise<void> {
         try {
-            const response = await this.httpClient.delete(`/api/clients/delete`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.delete(`/api/services/delete`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -55,7 +65,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
 
     public async findById(dto: FindByIdReq): Promise<FindByIdRes> {
         try {
-            const response = await this.httpClient.get(`/api/clients/find-by-id`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/services/find-by-id`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -67,10 +77,10 @@ export class ClientApiDataSource implements ClientDataSourceI {
         }
     }
 
-    public async getAll(dto: GetAllClientsReq): Promise<GetAllClientsRes> {
+    public async getAll(dto: GetAllServicesReq): Promise<GetAllServicesRes> {
         try {
             const response = await this.httpClient.get(
-                `/api/clients/get-all`,
+                `/api/services/get-all`,
                 undefined,
                 dto.session.getAccessToken()
             );
@@ -86,7 +96,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
     public async getAllByStatus(dto: GetAllByStatusReq): Promise<GetAllByStatusRes> {
         try {
             const response = await this.httpClient.get(
-                `/api/clients/get-all-by-status/${dto.statusId}`,
+                `/api/services/get-all-by-status/${dto.statusId}`,
                 undefined,
                 dto.session.getAccessToken()
             );

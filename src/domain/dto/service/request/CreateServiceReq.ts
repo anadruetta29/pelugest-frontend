@@ -5,4 +5,5 @@ export interface CreateServiceReq {
     description: string;
     estimatedDurationMin: number;
     basePrice: number;
+    session: Session;
 }
