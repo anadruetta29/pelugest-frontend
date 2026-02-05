@@ -1,4 +1,4 @@
-import logo from "../../../assets/LOGO.svg";
+import logoIcon from "../../../assets/LOGO_CONTRASTE.svg";
 import style from "./style.module.css";
 
 type Props = {
@@ -9,7 +9,7 @@ export default function AuthLayout({ children }: Props) {
     return (
         <div className={style.layoutContainer}> 
           <div className={style.brand}>
-            <img src={logo} alt="logo" />
+            <img src={logoIcon} alt="logo" />
           </div>
           <div className={style.formContainer}>
             {children}
