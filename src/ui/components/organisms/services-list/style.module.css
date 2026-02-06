@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    padding: 20px;
+    width: 100%;
+}
+
+.newServiceButton {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+}
+
+.newServiceButton button {
+    width: 150px; 
+    border-radius: 0;
+    font-size: 15px;
+}
