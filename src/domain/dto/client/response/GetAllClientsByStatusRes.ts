@@ -1,5 +1,5 @@
 import type { Client } from "../../../entity/client";
 
-export interface GetAllByStatusRes {
+export interface GetAllClientsByStatusRes {
     clients: Client[];
 }

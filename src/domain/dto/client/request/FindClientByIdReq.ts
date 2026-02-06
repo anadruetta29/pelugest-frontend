@@ -1,6 +1,6 @@
 import type { Session } from "../../../entity/session";
 
-export interface FindByIdReq {
+export interface FindClientByIdReq {
     id: string;
     session: Session;
 }

@@ -1,5 +1,10 @@
 import { HTTPClient } from "../../core";
-import { ErrorHandler, type ClientDataSourceI, type CreateClientReq, type CreateClientRes, type DeleteClientReq, type FindByIdReq, type FindByIdRes, type GetAllByStatusReq, type GetAllByStatusRes, type UpdateClientReq, type UpdateClientRes } from "../../domain";
+import { ErrorHandler, type ClientDataSourceI, type CreateClientReq, type CreateClientRes, type DeleteClientReq, 
+    type FindClientByIdReq, 
+    type FindClientByIdRes, 
+    type GetAllClientsByStatusReq, 
+    type GetAllClientsByStatusRes, 
+    type UpdateClientReq, type UpdateClientRes } from "../../domain";
 import type { GetAllClientsReq } from "../../domain/dto/client/request/GetAllClientsReq";
 import type { GetAllClientsRes } from "../../domain/dto/client/response/GetAllClientsRes";
 
@@ -53,7 +58,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
         }
     }
 
-    public async findById(dto: FindByIdReq): Promise<FindByIdRes> {
+    public async findById(dto: FindClientByIdReq): Promise<FindClientByIdRes> {
         try {
             const response = await this.httpClient.get(`/api/clients/find-by-id`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
@@ -83,7 +88,7 @@ export class ClientApiDataSource implements ClientDataSourceI {
         }
     }
     
-    public async getAllByStatus(dto: GetAllByStatusReq): Promise<GetAllByStatusRes> {
+    public async getAllByStatus(dto: GetAllClientsByStatusReq): Promise<GetAllClientsByStatusRes> {
         try {
             const response = await this.httpClient.get(
                 `/api/clients/get-all-by-status/${dto.statusId}`,

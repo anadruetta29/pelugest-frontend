@@ -1,13 +1,13 @@
-import type { FindByIdReq } from "../../domain";
 import type { ServiceDataSourceI } from "../../domain/datasource/service";
 import type { CreateServiceReq } from "../../domain/dto/service/request/CreateServiceReq";
 import type { DeleteServiceReq } from "../../domain/dto/service/request/DeleteServiceReq";
-import type { GetAllByStatusReq } from "../../domain/dto/service/request/GetAllByStatusReq";
+import type { FindServiceByIdReq } from "../../domain/dto/service/request/FindServiceByIdReq";
+import type { GetAllServicesByStatusReq } from "../../domain/dto/service/request/GetAllServicesByStatusReq";
 import type { GetAllServicesReq } from "../../domain/dto/service/request/GetAllServicesReq";
 import type { UpdateServiceReq } from "../../domain/dto/service/request/UpdateServiceReq";
 import type { CreateServiceRes } from "../../domain/dto/service/response/CreateServiceRes";
-import type { FindByIdRes } from "../../domain/dto/service/response/FindByIdRes";
-import type { GetAllByStatusRes } from "../../domain/dto/service/response/GetAllByStatusRes";
+import type { FindServiceByIdRes } from "../../domain/dto/service/response/FindServiceByIdRes";
+import type { GetAllServicesByStatusRes } from "../../domain/dto/service/response/GetAllServicesByStatusRes";
 import type { GetAllServicesRes } from "../../domain/dto/service/response/GetAllServicesRes";
 import type { UpdateServiceRes } from "../../domain/dto/service/response/UpdateServiceRes";
 import type { ServiceRepositoryI } from "../../domain/repository/service";
@@ -47,7 +47,7 @@ export class ServiceRepository implements ServiceRepositoryI {
             }
         };
 
-        public async findById(dto: FindByIdReq): Promise<FindByIdRes> {
+        public async findById(dto: FindServiceByIdReq): Promise<FindServiceByIdRes> {
             try {
                 return await this.dataSource.findById(dto);
             }
@@ -65,7 +65,7 @@ export class ServiceRepository implements ServiceRepositoryI {
             }
         }
 
-        public async getAllByStatus(dto: GetAllByStatusReq): Promise<GetAllByStatusRes> {
+        public async getAllByStatus(dto: GetAllServicesByStatusReq): Promise<GetAllServicesByStatusRes> {
             try {
                 return await this.dataSource.getAllByStatus(dto);
             }

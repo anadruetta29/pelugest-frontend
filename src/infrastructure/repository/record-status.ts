@@ -1,4 +1,4 @@
-import type { FindByNameReq, FindByNameRes, RecordStatusDataSourceI, RecordStatusRepositoryI } from "../../domain";
+import type { FindRecordStatusByNameReq, FindRecordStatusByNameRes, RecordStatusDataSourceI, RecordStatusRepositoryI } from "../../domain";
 import { RecordStatusApiDataSource } from "../datasource/record-status-api";
 
 export class RecordStatusRepository implements RecordStatusRepositoryI {
@@ -8,7 +8,7 @@ export class RecordStatusRepository implements RecordStatusRepositoryI {
             this.dataSource = dataSource;
         }
 
-        public async findByName(dto: FindByNameReq): Promise<FindByNameRes> {
+        public async findByName(dto: FindRecordStatusByNameReq): Promise<FindRecordStatusByNameRes> {
             try {
                 return await this.dataSource.findByName(dto);
             }

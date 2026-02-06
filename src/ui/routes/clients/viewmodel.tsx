@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import useSession from "../../hooks/useSession";
 import { useRepositories } from "../../../core";
 import { useState, useEffect } from "react";
-import { Errors, RecordStatus, type Client, type CreateClientReq, type DeleteClientReq, type FindByNameReq, type GetAllByStatusReq, type UpdateClientReq } from "../../../domain";
+import { Errors, RecordStatus, type Client, type CreateClientReq, type DeleteClientReq, type FindRecordStatusByNameReq, type GetAllClientsByStatusReq, type UpdateClientReq } from "../../../domain";
 import toast from "react-hot-toast";
 
 export function ViewModel() {
@@ -37,14 +37,14 @@ export function ViewModel() {
             const statusResponse = await recordStatusRepository.findByName({
                 name: "ACTIVE",
                 session
-            } as FindByNameReq);
+            } as FindRecordStatusByNameReq);
 
             const status = RecordStatus.fromObject(statusResponse.recordStatus);
 
             const response = await clientRepository.getAllByStatus({
                 statusId: status.id,
                 session
-            } as GetAllByStatusReq);
+            } as GetAllClientsByStatusReq);
 
             setClients(response.clients);
 
@@ -126,7 +126,7 @@ export function ViewModel() {
                     await recordStatusRepository.findByName({
                         name: statusName,
                         session,
-                    } as FindByNameReq);
+                    } as FindRecordStatusByNameReq);
 
                 const status = RecordStatus.fromObject(
                     statusResponse.recordStatus

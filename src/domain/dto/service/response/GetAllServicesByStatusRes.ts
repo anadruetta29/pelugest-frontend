@@ -1,5 +1,5 @@
 import type { Service } from "../../../entity/service";
 
-export interface GetAllByStatusRes {
+export interface GetAllServicesByStatusRes {
     services: Service[];
 }

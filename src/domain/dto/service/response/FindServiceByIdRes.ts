@@ -1,5 +1,5 @@
 import type { Service } from "../../../entity/service";
 
-export interface FindByIdRes {
+export interface FindServiceByIdRes {
     service: Service[];
 }

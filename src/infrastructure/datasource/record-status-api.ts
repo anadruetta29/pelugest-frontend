@@ -1,5 +1,5 @@
 import { HTTPClient } from "../../core";
-import { ErrorHandler, RecordStatusDataSourceI, type FindByNameReq, type FindByNameRes } from "../../domain";
+import { ErrorHandler, RecordStatusDataSourceI, type FindRecordStatusByNameReq, type FindRecordStatusByNameRes } from "../../domain";
 
 export class RecordStatusApiDataSource implements RecordStatusDataSourceI {
 
@@ -9,7 +9,7 @@ export class RecordStatusApiDataSource implements RecordStatusDataSourceI {
         this.httpClient = new HTTPClient();
     }
 
-    public async findByName(dto: FindByNameReq): Promise<FindByNameRes> {
+    public async findByName(dto: FindRecordStatusByNameReq): Promise<FindRecordStatusByNameRes> {
         try {
             const response = await this.httpClient.get(
                 `/api/record-status/find-by-name/${dto.name}`,

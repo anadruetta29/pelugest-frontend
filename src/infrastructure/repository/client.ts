@@ -1,4 +1,9 @@
-import type { ClientDataSourceI, ClientRepositoryI, CreateClientReq, CreateClientRes, DeleteClientReq, FindByIdReq, FindByIdRes, GetAllByStatusReq, GetAllByStatusRes, UpdateClientReq, UpdateClientRes } from "../../domain";
+import type { ClientDataSourceI, ClientRepositoryI, CreateClientReq, CreateClientRes, DeleteClientReq, 
+    FindClientByIdReq, 
+    FindClientByIdRes, 
+    GetAllClientsByStatusReq, 
+    GetAllClientsByStatusRes, 
+    UpdateClientReq, UpdateClientRes } from "../../domain";
 import type { GetAllClientsReq } from "../../domain/dto/client/request/GetAllClientsReq";
 import type { GetAllClientsRes } from "../../domain/dto/client/response/GetAllClientsRes";
 import { ClientApiDataSource } from "../datasource/client-api";
@@ -37,7 +42,7 @@ export class ClientRepository implements ClientRepositoryI {
             }
         };
 
-        public async findById(dto: FindByIdReq): Promise<FindByIdRes> {
+        public async findById(dto: FindClientByIdReq): Promise<FindClientByIdRes> {
             try {
                 return await this.dataSource.findById(dto);
             }
@@ -55,7 +60,7 @@ export class ClientRepository implements ClientRepositoryI {
             }
         }
 
-        public async getAllByStatus(dto: GetAllByStatusReq): Promise<GetAllByStatusRes> {
+        public async getAllByStatus(dto: GetAllClientsByStatusReq): Promise<GetAllClientsByStatusRes> {
             try {
                 return await this.dataSource.getAllByStatus(dto);
             }

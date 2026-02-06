@@ -1,5 +1,5 @@
 import type { RecordStatus } from "../../../entity/record-status";
 
-export interface FindByNameRes {
+export interface FindRecordStatusByNameRes {
     recordStatus: RecordStatus;
 }
