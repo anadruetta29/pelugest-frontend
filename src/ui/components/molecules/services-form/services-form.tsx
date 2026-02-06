@@ -1,21 +1,21 @@
-import type { Client } from "../../../../domain";
+import type { Service } from "../../../../domain";
 import DestructiveButton from "../../atoms/destructive-button/destructive-button";
 import InputLabel from "../../atoms/input-label/input-label";
 import MainButton from "../../atoms/main-button/main-button";
 import style from "./style.module.css";
 
 type Props = {
-    client: Client;
+    service: Service;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     onCancel: () => void;
 };
 
-export function ClientsForm({ client, onSubmit, onCancel }: Props) {
+export function ServicesForm({ service, onSubmit, onCancel }: Props) {
     return (
         <div className={style.backdrop}>
             <form onSubmit={onSubmit} className={style.card}>
                 <h2 className={style.title}>
-                    {client ? "Editar cliente" : "Nuevo cliente"}
+                    {service ? "Editar cliente" : "Nuevo cliente"}
                 </h2>
 
                 <InputLabel
@@ -24,46 +24,47 @@ export function ClientsForm({ client, onSubmit, onCancel }: Props) {
                     id="name"
                     type="text"
                     placeholder="Nombre"
-                    defaultValue={client?.name || ""}
+                    defaultValue={service?.name || ""}
                     required
                 />
 
                 <InputLabel
-                    label="Apellido"
-                    name="surname"
-                    id="surname"
+                    label="Descripción"
+                    name="description"
+                    id="description"
                     type="text"
-                    placeholder="Apellido"
-                    defaultValue={client?.surname || ""}
+                    placeholder="Descripción"
+                    defaultValue={service?.description || ""}
                     required
                 />
 
                 <InputLabel
-                    label="Teléfono móvil"
-                    name="mobilePhoneNumber"
-                    id="mobilePhoneNumber"
+                    label="Duración estimada (min)"
+                    name="estimatedDuration"
+                    id="estimatedDuration"
                     type="text"
-                    placeholder="Ej: 3511234567"
-                    defaultValue={client?.mobilePhoneNumber || ""}
+                    placeholder="Duración estimada"
+                    defaultValue={service?.estimatedDurationMin || ""}
+                    required
+                />
+                
+                <InputLabel
+                    label="Precio base (ARS)"
+                    name="basePrice"
+                    id="basePrice"
+                    type="text"
+                    placeholder="Precio base"
+                    defaultValue={service?.basePrice || ""}
                     required
                 />
 
-                <InputLabel
-                    label="Teléfono fijo"
-                    name="landlinePhoneNumber"
-                    id="landlinePhoneNumber"
-                    type="text"
-                    placeholder="Opcional"
-                    defaultValue={client?.landlinePhoneNumber || ""}
-                />
-
-                {client && (
+                {service && (
                     <div className={style.formGroup}>
                         <label htmlFor="status">Estado</label>
                         <select
                             id="status"
                             name="status"
-                            defaultValue={client.status?.name}
+                            defaultValue={service.status?.name}
                         >
                             <option value="ACTIVE">Activo</option>
                             <option value="INACTIVE">Inactivo</option>
@@ -79,7 +80,7 @@ export function ClientsForm({ client, onSubmit, onCancel }: Props) {
                     />
                     <MainButton
                         enabled
-                        text={client ? "Guardar cambios" : "Crear cliente"}
+                        text={service ? "Guardar cambios" : "Crear servicio"}
                         type="submit"
                     />
                 </div>
