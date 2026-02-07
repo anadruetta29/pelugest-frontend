@@ -9,13 +9,11 @@ import style from "./style.module.css";
 type Props = {
     services: Service[] | undefined;
     onEditService: (service: Service) => void;
-    onDeleteService: (service: Service) => void;
     onViewDescription: (service: Service) => void;
 };
 
 export default function ServicesTable({
     services,
-    onDeleteService,
     onEditService,
     onViewDescription
 }: Props) {
@@ -60,13 +58,6 @@ export default function ServicesTable({
 							type="button"
 							modifier={style.actionButtons}
 							onClick={() => onEditService(service)}
-						/>
-						<SecondaryButton
-							enabled
-							text="Desactivar"
-							type="button"
-							modifier={style.actionButtons}
-							onClick={() => onDeleteService(service)}
 						/>
 					</td>
 				</tr>

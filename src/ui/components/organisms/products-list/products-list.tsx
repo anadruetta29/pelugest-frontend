@@ -8,13 +8,7 @@ import { ProductsForm } from "../../molecules/products-form/products-form";
 
 type Props = {
     products: Product[];
-
-    isDeleteOpen: boolean;
-    productToDelete: Product | null;
-    onDeleteProduct: (product: Product) => void;
-    onConfirmDelete: () => void;
-    onCancelDelete: () => void;
-
+    
     isFormOpen: boolean;
     productToEdit: Product | null;
     onNewProduct: () => void;
@@ -26,13 +20,8 @@ type Props = {
 export default function ProductsList({
     products,
 
-    onDeleteProduct,
     onEditProduct,
     onNewProduct,
-    productToDelete,
-    isDeleteOpen,
-    onCancelDelete,
-    onConfirmDelete,
 
     isFormOpen,
     productToEdit,
@@ -56,24 +45,8 @@ export default function ProductsList({
             <div>
                 <ProductsTable
                     products={products}
-                    onDeleteProduct={onDeleteProduct}
                     onEditProduct={onEditProduct}
                 />
-
-                {isDeleteOpen && (
-                    <ConfirmModal
-                        title="Desactivar producto"
-                        description={
-                            productToDelete
-                                ? `¿Estás seguro que querés desactivar el producto "${productToDelete.name}"?`
-                                : ""
-                        }
-                        confirmText="Desactivar"
-                        cancelText="Cancelar"
-                        onConfirm={onConfirmDelete}
-                        onCancel={onCancelDelete}
-                    />
-                )}
 
                 {isFormOpen && (
                     <ProductsForm

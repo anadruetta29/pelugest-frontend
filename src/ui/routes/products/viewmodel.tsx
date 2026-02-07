@@ -22,9 +22,6 @@ export function ViewModel() {
 
     const [products, setProducts] = useState<Product[]>([]);
 
-    const [productToDelete, setProductToDelete] = useState<Product | null>(null);
-    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formMode, setFormMode] = useState<"create" | "edit">("create");
 
@@ -54,30 +51,6 @@ export function ViewModel() {
         }
     };
 
-    /* feature: deactivate product */
-
-    const onDeleteProduct = (product: Product) => {
-        setProductToDelete(product);
-        setIsDeleteOpen(true);
-    };
-
-    const cancelDelete = () => {
-        setIsDeleteOpen(false);
-        setProductToDelete(null);
-    };
-
-    const proceedDelete = async () => {
-        if (!productToDelete || !session) return;
-
-        await productRepository.deactivate({
-            id: productToDelete.id,
-            session,
-        } as DeactivateProductReq);
-
-        setIsDeleteOpen(false);
-        setProductToDelete(null);
-        fetchProducts();
-    };
 
     /* feature: create and update product */
 
@@ -151,12 +124,6 @@ export function ViewModel() {
 
     return {
         products,
-
-        isDeleteOpen,
-        productToDelete,
-        onDeleteProduct,
-        cancelDelete,
-        proceedDelete,
 
         isFormOpen,
         productToEdit,

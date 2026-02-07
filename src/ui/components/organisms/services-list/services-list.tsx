@@ -14,7 +14,6 @@ type Props = {
 
     isDeleteOpen: boolean;
     serviceToDelete: Service | null;
-    onDeleteService: (service: Service) => void;
     onConfirmDelete: () => void;
     onCancelDelete: () => void;
 
@@ -36,7 +35,6 @@ type Props = {
 export default function ServicesList({
     services,
     
-    onDeleteService,
     onEditService,
     onNewService,
     serviceToDelete,
@@ -70,7 +68,6 @@ export default function ServicesList({
             <div>
                 <ServicesTable
                     services={services}
-                    onDeleteService={onDeleteService}
                     onEditService={onEditService}
                     onViewDescription={onViewDescription}
                 />

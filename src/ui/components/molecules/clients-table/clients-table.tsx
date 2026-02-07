@@ -8,13 +8,11 @@ import style from "./style.module.css";
 type Props = {
     clients: Client[] | undefined;
     onEditClient: (client: Client) => void;
-    onDeleteClient: (client: Client) => void;
 };
 
 export default function ClientsTable({
     clients,
     onEditClient,
-    onDeleteClient,
 }: Props) {
     if (!clients || clients.length === 0) {
       return <NoResults message="No se encontraron clientes" />;
@@ -55,13 +53,6 @@ export default function ClientsTable({
 						type="button"
 						modifier={style.actionButtons}
 						onClick={() => onEditClient(client)}
-						/>
-						<SecondaryButton
-						enabled
-						text="Desactivar"
-						type="button"
-						modifier={style.actionButtons}
-						onClick={() => onDeleteClient(client)}
 						/>
 					</td>
 				</tr>

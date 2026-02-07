@@ -6,12 +6,6 @@ export default function ProductsRoute() {
     const {
         products,
 
-        isDeleteOpen,
-        productToDelete,
-        onDeleteProduct,
-        cancelDelete,
-        proceedDelete,
-
         isFormOpen,
         productToEdit,
         onEditProduct,
@@ -24,12 +18,6 @@ export default function ProductsRoute() {
         <Layout withSidebar>
             <ProductsList
                 products={products}
-
-                isDeleteOpen={isDeleteOpen}
-                productToDelete={productToDelete}
-                onDeleteProduct={onDeleteProduct}
-                onConfirmDelete={proceedDelete}
-                onCancelDelete={cancelDelete}
 
                 isFormOpen={isFormOpen}
                 productToEdit={productToEdit}

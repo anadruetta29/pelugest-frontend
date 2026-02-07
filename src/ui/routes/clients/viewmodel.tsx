@@ -16,10 +16,6 @@ export function ViewModel() {
     const [clients, setClients] = useState<Client[]>([]);
     const [client, setClient] = useState<Client | null>(null);
 
-    const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
-    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-    const [isCancelOpen, setIsCancelOpen] = useState(false);
-
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formMode, setFormMode] = useState<"create" | "edit">("create");
 
@@ -46,31 +42,6 @@ export function ViewModel() {
         catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
         }
-    };
-
-    /* feature: delete client */ 
-
-    const onDeleteClient = (client: Client) => {
-        setClientToDelete(client);
-        setIsDeleteOpen(true);
-    };
-
-    const cancelDelete = () => {
-        setIsDeleteOpen(false);
-        setClientToDelete(null);
-    };
-
-    const proceedDelete = async () => {
-        if (!clientToDelete || !session) return;
-
-        await clientRepository.deactivate({
-            id: clientToDelete.id,
-            session
-        } as DeactivateClientReq);
-
-        setIsDeleteOpen(false);
-        setClientToDelete(null);
-        fetchClients();
     };
 
     /* feature: create and update client */ 
@@ -152,12 +123,6 @@ export function ViewModel() {
 
     return {
         clients,
-
-        isDeleteOpen,
-        clientToDelete,
-        onDeleteClient,
-        cancelDelete,
-        proceedDelete,
 
         isFormOpen,
         clientToEdit,

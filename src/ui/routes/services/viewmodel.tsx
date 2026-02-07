@@ -19,10 +19,6 @@ export function ViewModel() {
     const [services, setServices] = useState<Service[]>([]);
     const [service, setService] = useState<Service | null>(null);
 
-    const [serviceToDelete, setServiceToDelete] = useState<Service | null>(null);
-    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-    const [isCancelOpen, setIsCancelOpen] = useState(false);
-
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formMode, setFormMode] = useState<"create" | "edit">("create");
 
@@ -52,32 +48,6 @@ export function ViewModel() {
         catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
         }
-    };
-
-    /* feature: deactivate service */ 
-
-    const onDeleteService = (service: Service) => {
-        setServiceToDelete(service);
-        setIsDeleteOpen(true);
-    };
-
-    const cancelDelete = () => {
-        setIsDeleteOpen(false);
-        setServiceToDelete(null);
-    };
-
-
-    const proceedDelete = async () => {
-        if (!serviceToDelete || !session) return;
-
-        await serviceRepository.deactivate({
-            id: serviceToDelete.id,
-            session
-        } as DeactivateServiceReq);
-
-        setIsDeleteOpen(false);
-        setServiceToDelete(null);
-        fetchServices();
     };
 
     /* feature: create and update service */ 
@@ -171,12 +141,6 @@ export function ViewModel() {
 
     return {
         services,
-
-        isDeleteOpen,
-        serviceToDelete,
-        onDeleteService,
-        cancelDelete,
-        proceedDelete,
 
         isFormOpen,
         serviceToEdit,

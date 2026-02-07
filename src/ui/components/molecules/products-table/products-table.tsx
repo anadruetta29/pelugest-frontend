@@ -1,4 +1,5 @@
-import type { Product } from "../../../../domain";
+import { RecordStatus, type Product } from "../../../../domain";
+import MainButton from "../../atoms/main-button/main-button";
 import NoResults from "../../atoms/no-results/no-results";
 import SecondaryButton from "../../atoms/secondary-button/secondary-button";
 import StatusIndicator from "../../atoms/status-indicator/status-indicator";
@@ -8,13 +9,12 @@ import style from "./style.module.css";
 type Props = {
     products: Product[] | undefined;
     onEditProduct: (product: Product) => void;
-    onDeleteProduct: (product: Product) => void;
 };
 
 export default function ProductsTable({
     products,
-    onDeleteProduct,
     onEditProduct,
+
 }: Props) {
     if (!products || products.length === 0) {
         return <NoResults message="No se encontraron productos" />;
@@ -48,13 +48,6 @@ export default function ProductsTable({
                             type="button"
                             modifier={style.actionButtons}
                             onClick={() => onEditProduct(product)}
-                        />
-                        <SecondaryButton
-                            enabled
-                            text="Desactivar"
-                            type="button"
-                            modifier={style.actionButtons}
-                            onClick={() => onDeleteProduct(product)}
                         />
                     </td>
                 </tr>

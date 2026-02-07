@@ -11,7 +11,6 @@ type Props = {
 
     isDeleteOpen: boolean;
     clientToDelete: Client | null;
-    onDeleteClient: (client: Client) => void;
     onConfirmDelete: () => void;
     onCancelDelete: () => void;
 
@@ -28,7 +27,6 @@ type Props = {
 export default function ClientsList({
     clients,
     
-    onDeleteClient,
     onEditClient,
     onNewClient,
     clientToDelete,
@@ -57,7 +55,6 @@ export default function ClientsList({
             <div>
                 <ClientsTable
                     clients={clients}
-                    onDeleteClient={onDeleteClient}
                     onEditClient={onEditClient}
                 />
                 
