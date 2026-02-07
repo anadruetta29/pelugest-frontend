@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import type { GetAllServicesByStatusReq } from "../../../domain/dto/service/request/GetAllServicesByStatusReq";
 import type { CreateServiceReq } from "../../../domain/dto/service/request/CreateServiceReq";
 import type { UpdateServiceReq } from "../../../domain/dto/service/request/UpdateServiceReq";
+import type { DeactivateServiceReq } from "../../../domain/dto/service/request/DeactivateServiceReq";
+import type { GetAllServicesReq } from "../../../domain/dto/service/request/GetAllServicesReq";
 
 export function ViewModel() {
 
@@ -40,17 +42,9 @@ export function ViewModel() {
     const fetchServices = async () => {
         if (!session) return;
         try {
-            const statusResponse = await recordStatusRepository.findByName({
-                name: "ACTIVE",
+            const response = await serviceRepository.getAll({
                 session
-            } as FindRecordStatusByNameReq);
-
-            const status = RecordStatus.fromObject(statusResponse.recordStatus);
-
-            const response = await serviceRepository.getAllByStatus({
-                statusId: status.id,
-                session
-            } as GetAllServicesByStatusReq);
+            } as GetAllServicesReq);
 
             setServices(response.services);
 
@@ -60,7 +54,7 @@ export function ViewModel() {
         }
     };
 
-    /* feature: delete service */ 
+    /* feature: deactivate service */ 
 
     const onDeleteService = (service: Service) => {
         setServiceToDelete(service);
@@ -76,10 +70,10 @@ export function ViewModel() {
     const proceedDelete = async () => {
         if (!serviceToDelete || !session) return;
 
-        await serviceRepository.delete({
-            session,
+        await serviceRepository.deactivate({
             id: serviceToDelete.id,
-        } as DeleteClientReq);
+            session
+        } as DeactivateServiceReq);
 
         setIsDeleteOpen(false);
         setServiceToDelete(null);

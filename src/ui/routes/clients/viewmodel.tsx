@@ -4,6 +4,8 @@ import { useRepositories } from "../../../core";
 import { useState, useEffect } from "react";
 import { Errors, RecordStatus, type Client, type CreateClientReq, type DeleteClientReq, type FindRecordStatusByNameReq, type GetAllClientsByStatusReq, type UpdateClientReq } from "../../../domain";
 import toast from "react-hot-toast";
+import type { DeactivateClientReq } from "../../../domain/dto/client/request/DeactivateClientReq";
+import type { GetAllClientsReq } from "../../../domain/dto/client/request/GetAllClientsReq";
 
 export function ViewModel() {
 
@@ -34,17 +36,9 @@ export function ViewModel() {
     const fetchClients = async () => {
         if (!session) return;
         try {
-            const statusResponse = await recordStatusRepository.findByName({
-                name: "ACTIVE",
+            const response = await clientRepository.getAll({
                 session
-            } as FindRecordStatusByNameReq);
-
-            const status = RecordStatus.fromObject(statusResponse.recordStatus);
-
-            const response = await clientRepository.getAllByStatus({
-                statusId: status.id,
-                session
-            } as GetAllClientsByStatusReq);
+            } as GetAllClientsReq);
 
             setClients(response.clients);
 
@@ -66,14 +60,13 @@ export function ViewModel() {
         setClientToDelete(null);
     };
 
-
     const proceedDelete = async () => {
         if (!clientToDelete || !session) return;
 
-        await clientRepository.delete({
-            session,
+        await clientRepository.deactivate({
             id: clientToDelete.id,
-        } as DeleteClientReq);
+            session
+        } as DeactivateClientReq);
 
         setIsDeleteOpen(false);
         setClientToDelete(null);

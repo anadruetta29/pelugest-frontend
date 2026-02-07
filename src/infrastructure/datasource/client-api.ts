@@ -5,7 +5,9 @@ import { ErrorHandler, type ClientDataSourceI, type CreateClientReq, type Create
     type GetAllClientsByStatusReq, 
     type GetAllClientsByStatusRes, 
     type UpdateClientReq, type UpdateClientRes } from "../../domain";
+import type { DeactivateClientReq } from "../../domain/dto/client/request/DeactivateClientReq";
 import type { GetAllClientsReq } from "../../domain/dto/client/request/GetAllClientsReq";
+import type { DeactivateClientRes } from "../../domain/dto/client/response/DeactivateClientRes";
 import type { GetAllClientsRes } from "../../domain/dto/client/response/GetAllClientsRes";
 
 export class ClientApiDataSource implements ClientDataSourceI {
@@ -105,4 +107,23 @@ export class ClientApiDataSource implements ClientDataSourceI {
             throw ErrorHandler.handleError(error as Error);
         }
     }
+
+    public async deactivate(dto: DeactivateClientReq): Promise<DeactivateClientRes> {
+        try {
+            const response = await this.httpClient.get(
+                `/api/clients/deactivate/${dto.id}`,
+                undefined,
+                dto.session.getAccessToken()
+            );
+
+            if (response.error) {
+            throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        } catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+    
 }

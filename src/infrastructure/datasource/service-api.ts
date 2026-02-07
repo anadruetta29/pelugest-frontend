@@ -2,12 +2,14 @@ import { HTTPClient } from "../../core";
 import { ErrorHandler } from "../../domain";
 import type { ServiceDataSourceI } from "../../domain/datasource/service";
 import type { CreateServiceReq } from "../../domain/dto/service/request/CreateServiceReq";
+import type { DeactivateServiceReq } from "../../domain/dto/service/request/DeactivateServiceReq";
 import type { DeleteServiceReq } from "../../domain/dto/service/request/DeleteServiceReq";
 import type { FindServiceByIdReq } from "../../domain/dto/service/request/FindServiceByIdReq";
 import type { GetAllServicesByStatusReq } from "../../domain/dto/service/request/GetAllServicesByStatusReq";
 import type { GetAllServicesReq } from "../../domain/dto/service/request/GetAllServicesReq";
 import type { UpdateServiceReq } from "../../domain/dto/service/request/UpdateServiceReq";
 import type { CreateServiceRes } from "../../domain/dto/service/response/CreateServiceRes";
+import type { DeactivateServiceRes } from "../../domain/dto/service/response/DeactivateServiceRes";
 import type { FindServiceByIdRes } from "../../domain/dto/service/response/FindServiceByIdRes";
 import type { GetAllServicesByStatusRes } from "../../domain/dto/service/response/GetAllServicesByStatusRes";
 import type { GetAllServicesRes } from "../../domain/dto/service/response/GetAllServicesRes";
@@ -110,4 +112,22 @@ export class ServiceApiDataSource implements ServiceDataSourceI {
             throw ErrorHandler.handleError(error as Error);
         }
     }
+
+    public async deactivate(dto: DeactivateServiceReq): Promise<DeactivateServiceRes> {
+            try {
+                const response = await this.httpClient.get(
+                    `/api/services/deactivate/${dto.id}`,
+                    undefined,
+                    dto.session.getAccessToken()
+                );
+    
+                if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+                }
+    
+                return response;
+            } catch (error) {
+                throw ErrorHandler.handleError(error as Error);
+            }
+        }
 }

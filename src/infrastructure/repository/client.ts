@@ -4,7 +4,9 @@ import type { ClientDataSourceI, ClientRepositoryI, CreateClientReq, CreateClien
     GetAllClientsByStatusReq, 
     GetAllClientsByStatusRes, 
     UpdateClientReq, UpdateClientRes } from "../../domain";
+import type { DeactivateClientReq } from "../../domain/dto/client/request/DeactivateClientReq";
 import type { GetAllClientsReq } from "../../domain/dto/client/request/GetAllClientsReq";
+import type { DeactivateClientRes } from "../../domain/dto/client/response/DeactivateClientRes";
 import type { GetAllClientsRes } from "../../domain/dto/client/response/GetAllClientsRes";
 import { ClientApiDataSource } from "../datasource/client-api";
 
@@ -63,6 +65,15 @@ export class ClientRepository implements ClientRepositoryI {
         public async getAllByStatus(dto: GetAllClientsByStatusReq): Promise<GetAllClientsByStatusRes> {
             try {
                 return await this.dataSource.getAllByStatus(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async deactivate(dto: DeactivateClientReq): Promise<DeactivateClientRes> {
+            try {
+                return await this.dataSource.deactivate(dto);
             }
             catch (error) {
                 throw error;

@@ -1,11 +1,13 @@
 import type { ServiceDataSourceI } from "../../domain/datasource/service";
 import type { CreateServiceReq } from "../../domain/dto/service/request/CreateServiceReq";
+import type { DeactivateServiceReq } from "../../domain/dto/service/request/DeactivateServiceReq";
 import type { DeleteServiceReq } from "../../domain/dto/service/request/DeleteServiceReq";
 import type { FindServiceByIdReq } from "../../domain/dto/service/request/FindServiceByIdReq";
 import type { GetAllServicesByStatusReq } from "../../domain/dto/service/request/GetAllServicesByStatusReq";
 import type { GetAllServicesReq } from "../../domain/dto/service/request/GetAllServicesReq";
 import type { UpdateServiceReq } from "../../domain/dto/service/request/UpdateServiceReq";
 import type { CreateServiceRes } from "../../domain/dto/service/response/CreateServiceRes";
+import type { DeactivateServiceRes } from "../../domain/dto/service/response/DeactivateServiceRes";
 import type { FindServiceByIdRes } from "../../domain/dto/service/response/FindServiceByIdRes";
 import type { GetAllServicesByStatusRes } from "../../domain/dto/service/response/GetAllServicesByStatusRes";
 import type { GetAllServicesRes } from "../../domain/dto/service/response/GetAllServicesRes";
@@ -72,6 +74,15 @@ export class ServiceRepository implements ServiceRepositoryI {
             catch (error) {
                 throw error;
             }
+        }
+
+        public async deactivate(dto: DeactivateServiceReq): Promise<DeactivateServiceRes> {
+            try {
+                return await this.dataSource.deactivate(dto);
+            }
+            catch (error) {
+                throw error;
+             }
         }
 
 }
