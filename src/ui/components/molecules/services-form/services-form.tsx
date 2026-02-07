@@ -15,7 +15,7 @@ export function ServicesForm({ service, onSubmit, onCancel }: Props) {
         <div className={style.backdrop}>
             <form onSubmit={onSubmit} className={style.card}>
                 <h2 className={style.title}>
-                    {service ? "Editar cliente" : "Nuevo cliente"}
+                    {service ? "Editar servicio" : "Nuevo servicio"}
                 </h2>
 
                 <InputLabel
