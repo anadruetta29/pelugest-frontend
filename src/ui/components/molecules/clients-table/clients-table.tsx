@@ -1,6 +1,7 @@
 import type { Client } from "../../../../domain";
 import NoResults from "../../atoms/no-results/no-results";
 import SecondaryButton from "../../atoms/secondary-button/secondary-button";
+import StatusIndicator from "../../atoms/status-indicator/status-indicator";
 import Table from "../../atoms/table/table";
 import style from "./style.module.css";
 
@@ -44,7 +45,9 @@ export default function ClientsTable({
 							<span className={style.notAvailable}>N/A</span>
 						)}
 					</td>
-					<td className={style.tableContent}>{client.status.name}</td>
+					<td className={style.tableContent}>
+						<StatusIndicator status={client.status} />
+					</td>
 					<td className={style.actions}>
 						<SecondaryButton
 						enabled

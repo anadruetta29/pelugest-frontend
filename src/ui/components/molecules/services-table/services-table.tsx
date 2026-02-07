@@ -2,6 +2,7 @@ import truncateWords from "../../../../core/utils/truncate-words";
 import type { Service } from "../../../../domain";
 import NoResults from "../../atoms/no-results/no-results";
 import SecondaryButton from "../../atoms/secondary-button/secondary-button";
+import StatusIndicator from "../../atoms/status-indicator/status-indicator";
 import Table from "../../atoms/table/table";
 import style from "./style.module.css";
 
@@ -49,7 +50,9 @@ export default function ServicesTable({
 					</td>
 					<td className={style.tableContent}>{service.estimatedDurationMin}</td>
 					<td className={style.tableContent}>{service.basePrice}</td>
-					<td className={style.tableContent}>{service.status.name}</td>
+					<td className={style.tableContent}>
+						<StatusIndicator status={service.status} />
+					</td>
 					<td className={style.actions}>
 						<SecondaryButton
 							enabled
