@@ -7,6 +7,7 @@ import ConfirmModal from "../../molecules/confirm-modal/confirm-modal";
 import { ClientsForm } from "../../molecules/clients-form/clients-form";
 import ServicesTable from "../../molecules/services-table/services-table";
 import { ServicesForm } from "../../molecules/services-form/services-form";
+import InfoModal from "../../molecules/info-modal/info-modal";
 
 type Props = {
     services: Service[];
@@ -23,6 +24,11 @@ type Props = {
     onEditService: (service: Service) => void;
     onCloseForm: () => void;
     onSubmitService: (e: React.FormEvent<HTMLFormElement>) => void;
+
+    isInfoOpen: boolean;
+    serviceToView: Service | null;
+    onViewDescription: (service: Service) => void;
+    closeInfo: () => void;
 };
 
 
@@ -42,6 +48,11 @@ export default function ServicesList({
     serviceToEdit,
     onCloseForm,
     onSubmitService,
+
+    onViewDescription,
+    isInfoOpen,
+    closeInfo,
+    serviceToView
 }: Props) {
     return(
         <div className={style.container}>
@@ -61,8 +72,8 @@ export default function ServicesList({
                     services={services}
                     onDeleteService={onDeleteService}
                     onEditService={onEditService}
+                    onViewDescription={onViewDescription}
                 />
-                
                 {isDeleteOpen && (
                     <ConfirmModal
                         title="Desactivar servicio"
@@ -85,6 +96,29 @@ export default function ServicesList({
                         onCancel={onCloseForm}
                     />
                 )}
+                {isInfoOpen && serviceToView && (
+                    <InfoModal
+                        title={serviceToView.name}
+                        onClose={closeInfo}
+                    >
+                        <p>
+                            <strong>Descripción:</strong>{" "}
+                            {serviceToView.description}
+                        </p>
+                        <p>
+                        <strong>Duración:</strong>{" "}
+                            {serviceToView.estimatedDurationMin} min
+                        </p>
+                        <p>
+                            <strong>Precio base:</strong>{" "}
+                            ${serviceToView.basePrice}
+                        </p>
+                        <p>
+                            <strong>Estado:</strong>{" "}
+                            {serviceToView.status.name}
+                        </p>
+                    </InfoModal>
+                    )}
             </div>
         </div>
     )

@@ -1,3 +1,4 @@
+import truncateWords from "../../../../core/utils/truncate-words";
 import type { Service } from "../../../../domain";
 import NoResults from "../../atoms/no-results/no-results";
 import SecondaryButton from "../../atoms/secondary-button/secondary-button";
@@ -8,12 +9,14 @@ type Props = {
     services: Service[] | undefined;
     onEditService: (service: Service) => void;
     onDeleteService: (service: Service) => void;
+    onViewDescription: (service: Service) => void;
 };
 
 export default function ServicesTable({
     services,
     onDeleteService,
-    onEditService
+    onEditService,
+    onViewDescription
 }: Props) {
     if (!services || services.length === 0) {
       return <NoResults message="No se encontraron servicios" />;
@@ -25,34 +28,47 @@ export default function ServicesTable({
 				"Nombre",
 				"Descripción",
                 "Duración estimada",
-                "Precio base"
+                "Precio base",
+                "Estado",
+                "Acciones"
 			]}
 		>
 			{services.map((service) => (
 				<tr key={service.id}>
 					<td className={style.tableContent}>{service.name}</td>
-					<td className={style.tableContent}>{service.description}</td>
+					<td>
+						{truncateWords(service.description, 30).text}
+						{truncateWords(service.description, 30).truncated && (
+							<button
+								className={style.viewMore}
+								onClick={() => onViewDescription(service)}
+							>
+								+ Ver más
+							</button>
+						)}
+					</td>
 					<td className={style.tableContent}>{service.estimatedDurationMin}</td>
 					<td className={style.tableContent}>{service.basePrice}</td>
 					<td className={style.tableContent}>{service.status.name}</td>
 					<td className={style.actions}>
 						<SecondaryButton
-						enabled
-						text="Modificar"
-						type="button"
-						modifier={style.actionButtons}
-						onClick={() => onEditService(service)}
+							enabled
+							text="Modificar"
+							type="button"
+							modifier={style.actionButtons}
+							onClick={() => onEditService(service)}
 						/>
 						<SecondaryButton
-						enabled
-						text="Desactivar"
-						type="button"
-						modifier={style.actionButtons}
-						onClick={() => onDeleteService(service)}
+							enabled
+							text="Desactivar"
+							type="button"
+							modifier={style.actionButtons}
+							onClick={() => onDeleteService(service)}
 						/>
 					</td>
 				</tr>
 			))}
 		</Table>
+		
 	);
 }
