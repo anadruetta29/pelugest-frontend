@@ -1,4 +1,4 @@
-import { Session } from './../../../entity/session';
+import { Session } from '../../../entity/session';
 
 export interface CreateClientReq {
     name: string;
