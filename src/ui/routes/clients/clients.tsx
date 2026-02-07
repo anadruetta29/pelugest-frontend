@@ -1,17 +1,12 @@
+import Loader from "../../components/atoms/loader/loader";
 import ClientsList from "../../components/organisms/clients-list/clients-list";
 import Layout from "../../layout/layout";
 import { ViewModel } from "./viewmodel";
 
 export default function ClientsRoute() {
     const {
+        isLoading,
         clients,
-
-        isDeleteOpen,
-        clientToDelete,
-        onDeleteClient,
-        cancelDelete,
-        proceedDelete,
-
         isFormOpen,
         clientToEdit,
         onEditClient,
@@ -20,17 +15,18 @@ export default function ClientsRoute() {
         onSubmitClient,
     } = ViewModel();
 
+    if (isLoading) {
+        return (
+            <Layout withSidebar>
+                <Loader />
+            </Layout>
+        );
+    }
+
     return (
         <Layout withSidebar>
             <ClientsList
                 clients={clients}
-
-                isDeleteOpen={isDeleteOpen}
-                clientToDelete={clientToDelete}
-                onDeleteClient={onDeleteClient}
-                onConfirmDelete={proceedDelete}
-                onCancelDelete={cancelDelete}
-
                 isFormOpen={isFormOpen}
                 clientToEdit={clientToEdit}
                 onEditClient={onEditClient}

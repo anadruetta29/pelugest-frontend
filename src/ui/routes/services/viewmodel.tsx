@@ -16,6 +16,8 @@ export function ViewModel() {
 
     const { serviceRepository, recordStatusRepository } = useRepositories();
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [services, setServices] = useState<Service[]>([]);
     const [service, setService] = useState<Service | null>(null);
 
@@ -37,16 +39,21 @@ export function ViewModel() {
 
     const fetchServices = async () => {
         if (!session) return;
+
+        setIsLoading(true);
+
         try {
             const response = await serviceRepository.getAll({
                 session
             } as GetAllServicesReq);
 
             setServices(response.services);
-
         } 
         catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
@@ -140,6 +147,8 @@ export function ViewModel() {
 
 
     return {
+        isLoading, 
+        
         services,
 
         isFormOpen,

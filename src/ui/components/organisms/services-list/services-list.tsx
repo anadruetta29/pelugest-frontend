@@ -12,11 +12,6 @@ import InfoModal from "../../molecules/info-modal/info-modal";
 type Props = {
     services: Service[];
 
-    isDeleteOpen: boolean;
-    serviceToDelete: Service | null;
-    onConfirmDelete: () => void;
-    onCancelDelete: () => void;
-
     isFormOpen: boolean;
     serviceToEdit: Service | null;
     onNewService: () => void;
@@ -37,10 +32,6 @@ export default function ServicesList({
     
     onEditService,
     onNewService,
-    serviceToDelete,
-    isDeleteOpen,
-    onCancelDelete,
-    onConfirmDelete,
 
     isFormOpen,
     serviceToEdit,
@@ -71,21 +62,6 @@ export default function ServicesList({
                     onEditService={onEditService}
                     onViewDescription={onViewDescription}
                 />
-                {isDeleteOpen && (
-                    <ConfirmModal
-                        title="Desactivar servicio"
-                        description={
-                            serviceToDelete
-                                ? `¿Estás seguro que querés desactivar este servicio?`
-                                : ""
-                        }
-                        confirmText="Desactivar"
-                        cancelText="Cancelar"
-                        onConfirm={onConfirmDelete}
-                        onCancel={onCancelDelete}
-                    />
-                )}
-
                 {isFormOpen && (
                     <ServicesForm
                         service={serviceToEdit ?? undefined}

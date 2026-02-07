@@ -9,11 +9,6 @@ import { ClientsForm } from "../../molecules/clients-form/clients-form";
 type Props = {
     clients: Client[];
 
-    isDeleteOpen: boolean;
-    clientToDelete: Client | null;
-    onConfirmDelete: () => void;
-    onCancelDelete: () => void;
-
     isFormOpen: boolean;
     clientToEdit: Client | null;
     onNewClient: () => void;
@@ -29,10 +24,6 @@ export default function ClientsList({
     
     onEditClient,
     onNewClient,
-    clientToDelete,
-    isDeleteOpen,
-    onCancelDelete,
-    onConfirmDelete,
 
     isFormOpen,
     clientToEdit,
@@ -58,21 +49,6 @@ export default function ClientsList({
                     onEditClient={onEditClient}
                 />
                 
-                {isDeleteOpen && (
-                    <ConfirmModal
-                        title="Desactivar cliente"
-                        description={
-                            clientToDelete
-                                ? `¿Estás seguro que querés desactivar a ${clientToDelete.name} ${clientToDelete.surname}?`
-                                : ""
-                        }
-                        confirmText="Desactivar"
-                        cancelText="Cancelar"
-                        onConfirm={onConfirmDelete}
-                        onCancel={onCancelDelete}
-                    />
-                )}
-
                 {isFormOpen && (
                     <ClientsForm
                         client={clientToEdit ?? undefined}

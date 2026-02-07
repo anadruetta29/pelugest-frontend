@@ -20,6 +20,8 @@ export function ViewModel() {
 
     const { productRepository, recordStatusRepository } = useRepositories();
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [products, setProducts] = useState<Product[]>([]);
 
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -38,16 +40,22 @@ export function ViewModel() {
     const fetchProducts = async () => {
         if (!session) return;
 
+        setIsLoading(true);
+
         try {
             const response = await productRepository.getAll({
                 session,
             } as GetAllProductsReq);
 
             setProducts(response.products);
-        } catch (error) {
+        } 
+        catch (error) {
             toast.error(
                 error instanceof Error ? error.message : Errors.UNKNOWN_ERROR
             );
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
@@ -123,6 +131,8 @@ export function ViewModel() {
     };
 
     return {
+        isLoading,
+        
         products,
 
         isFormOpen,

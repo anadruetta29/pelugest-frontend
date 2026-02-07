@@ -1,16 +1,12 @@
 import ServicesList from "../../components/organisms/services-list/services-list";
 import Layout from "../../layout/layout";
 import { ViewModel } from "./viewmodel";
+import Loader from "../../components/atoms/loader/loader";
 
 export default function ServicesRoute() {
     const {
+        isLoading,
         services,
-
-        isDeleteOpen,
-        serviceToDelete,
-        onDeleteService,
-        cancelDelete,
-        proceedDelete,
 
         isFormOpen,
         serviceToEdit,
@@ -22,19 +18,21 @@ export default function ServicesRoute() {
         closeInfo,
         isInfoOpen,
         onViewDescription,
-        serviceToView
+        serviceToView,
     } = ViewModel();
+
+    if (isLoading) {
+        return (
+            <Layout withSidebar>
+                <Loader />
+            </Layout>
+        );
+    }
 
     return (
         <Layout withSidebar>
             <ServicesList
                 services={services}
-
-                isDeleteOpen={isDeleteOpen}
-                serviceToDelete={serviceToDelete}
-                onDeleteService={onDeleteService}
-                onConfirmDelete={proceedDelete}
-                onCancelDelete={cancelDelete}
 
                 isFormOpen={isFormOpen}
                 serviceToEdit={serviceToEdit}
