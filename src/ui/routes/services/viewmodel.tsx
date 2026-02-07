@@ -60,7 +60,7 @@ export function ViewModel() {
         }
     };
 
-    /* feature: delete client */ 
+    /* feature: delete service */ 
 
     const onDeleteService = (service: Service) => {
         setServiceToDelete(service);
