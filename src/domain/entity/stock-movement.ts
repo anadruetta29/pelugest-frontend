@@ -7,7 +7,7 @@ export class StockMovement {
 
     public id: string;
     public quantityMl: number;
-    public type: StockMovementType;
+    public type: string;
     public createdAt: Date;
     public product: Product;
     public user: User;
@@ -16,7 +16,7 @@ export class StockMovement {
     private constructor(
         id: string,
         quantityMl: number,
-        type: StockMovementType,
+        type: string,
         createdAt: Date,
         product: Product,
         user: User,
@@ -35,7 +35,7 @@ export class StockMovement {
         return new StockMovement(
             object.id,
             object.quantityMl,
-            StockMovementType.fromObject(object.type), 
+            object.type, 
             object.createdAt ? new Date(object.createdAt) : new Date(),
             object.product,
             object.user,

@@ -4,6 +4,7 @@ import RegisterRoute from "./register/register";
 import ClientsRoute from "./clients/clients";
 import ServicesRoute from "./services/services";
 import ProductsRoute from "./products/products";
+import StockMovementsRoute from "./stock-movements/stock-movements";
 
 export default function RoutesManager() {
     return (
@@ -14,6 +15,7 @@ export default function RoutesManager() {
                 <Route path="/clients" element={<ClientsRoute />} />
                 <Route path="/services" element={<ServicesRoute />} />
                 <Route path="/products" element={<ProductsRoute />} />
+                <Route path="/stock-movements/:id" element={<StockMovementsRoute />} />
             </Routes>
         </BrowserRouter>
     )

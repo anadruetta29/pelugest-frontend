@@ -1,7 +1,7 @@
 import { Session } from '../../../entity/session';
-import type { StockMovementType } from '../../../entity/stock-movement-type';
 
-export interface CreateStockMovementReq {
+export interface UpdateStockMovementReq {
+    id: string;
     quantityMl: number;
     type: string;
     productId: string;

@@ -17,6 +17,8 @@ import type { UpdateProductReq } from "../../../domain/dto/product/request/Updat
 
 export function ViewModel() {
 
+    const navigate = useNavigate();
+
     const { session, logged } = useSession();
 
     const { productRepository, recordStatusRepository, stockProductRepository } = useRepositories();
@@ -82,7 +84,7 @@ export function ViewModel() {
     };
 
     const onUpdateStockProduct = (product: Product) => {
-
+        navigate(`/stock-movements/${product.id}`);
     }
 
     const onNewProduct = () => {

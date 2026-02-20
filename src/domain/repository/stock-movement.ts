@@ -4,14 +4,17 @@ import type { FindStockMovementByIdReq } from "../dto/stock-movement/request/Fin
 import type { GetAllStockMovementsByProductReq } from "../dto/stock-movement/request/GetAllStockMovementsByProductReq";
 import type { GetAllStockMovementsByUserReq } from "../dto/stock-movement/request/GetAllStockMovementsByUserReq";
 import type { GetAllStockMovementsReq } from "../dto/stock-movement/request/GetAllStockMovementsReq";
+import type { UpdateStockMovementReq } from "../dto/stock-movement/request/UpdateStockMovementReq";
 import type { CreateStockMovementRes } from "../dto/stock-movement/response/CreateStockMovementRes";
 import type { FindStockMovementByIdRes } from "../dto/stock-movement/response/FindStockMovementByIdRes";
 import type { GetAllStockMovementsByProductRes } from "../dto/stock-movement/response/GetAllStockMovementsByProductRes";
 import type { GetAllStockMovementsByUserRes } from "../dto/stock-movement/response/GetAllStockMovementsByUserRes";
 import type { GetAllStockMovementsRes } from "../dto/stock-movement/response/GetAllStockMovementsRes";
+import type { UpdateStockMovementRes } from "../dto/stock-movement/response/UpdateStockMovementRes";
 
 export abstract class StockMovementRepositoryI {
     abstract create(dto: CreateStockMovementReq): Promise<CreateStockMovementRes>;
+    abstract update(dto: UpdateStockMovementReq): Promise<UpdateStockMovementRes>
     abstract delete(dto: DeleteStockMovementReq): Promise<void>;
     abstract findById(dto: FindStockMovementByIdReq): Promise<FindStockMovementByIdRes>;
     abstract getAll(dto: GetAllStockMovementsReq): Promise<GetAllStockMovementsRes>;

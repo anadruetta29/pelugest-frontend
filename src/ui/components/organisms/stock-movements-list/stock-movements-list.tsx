@@ -35,11 +35,11 @@ export default function StockMovementsList({
             <div className={style.newStockMovementButton}>
                 <MainButton
                     enabled
-                    text="Nuevo movimiento de stock"
+                    text="Agregar"
                     type="button"
                     onClick={onNewStockMovement}
                     icon={addIcon}
-                    iconAlt="Nuevo movimiento de stock"
+                    iconAlt="Nuevo"
                     iconPosition="left"
                 />
             </div>

@@ -17,36 +17,29 @@ export function StockMovementsForm({ stockMovement, onSubmit, onCancel }: Props)
                 <h2 className={style.title}>
                     {stockMovement ? "Editar movimiento de stock" : "Nuevo movimiento de stock"}
                 </h2>
-
-                <InputLabel
-                    label="Producto"
-                    name="product"
-                    id="product"
-                    type="text"
-                    placeholder="Producto"
-                    defaultValue={stockMovement?.product.name || ""}
-                    required
-                />
-
-                <InputLabel
-                    label="Tipo de movimiento"
-                    name="type"
-                    id="type"
-                    type="text"
-                    placeholder="Tipo de movimiento"
-                    defaultValue={stockMovement?.type.name || ""}
-                    required
-                />
                 
                 <InputLabel
                     label="Cantidad"
                     name="quantityMl"
                     id="quantityMl"
-                    type="text"
+                    type="number"
                     placeholder="Cantidad"
                     defaultValue={stockMovement?.quantityMl ?? 0}
                     required
                 />
+
+                <div className={style.formGroup}>
+                    <label htmlFor="stockMovementType">Tipo de movimiento</label>
+                    <select
+                        id="type"
+                        name="type"
+                        defaultValue={stockMovement?.type ?? "IN"} 
+                    >
+                        <option value="IN">INGRESO</option>
+                        <option value="OUT">EGRESO</option>
+                        <option value="ADJUSTMENT">AJUSTE</option>
+                    </select>
+                </div>
 
                 <div className={style.actions}>
                     <DestructiveButton
@@ -56,7 +49,7 @@ export function StockMovementsForm({ stockMovement, onSubmit, onCancel }: Props)
                     />
                     <MainButton
                         enabled
-                        text={stockMovement ? "Guardar cambios" : "Crear movimiento de stock"}
+                        text={stockMovement ? "Guardar cambios" : "Crear movimiento"}
                         type="submit"
                     />
                 </div>

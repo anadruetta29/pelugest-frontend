@@ -7,10 +7,12 @@ import type { FindStockMovementByIdReq } from "../../domain/dto/stock-movement/r
 import type { GetAllStockMovementsByProductReq } from "../../domain/dto/stock-movement/request/GetAllStockMovementsByProductReq";
 import type { GetAllStockMovementsByUserReq } from "../../domain/dto/stock-movement/request/GetAllStockMovementsByUserReq";
 import type { GetAllStockMovementsReq } from "../../domain/dto/stock-movement/request/GetAllStockMovementsReq";
+import type { UpdateStockMovementReq } from "../../domain/dto/stock-movement/request/UpdateStockMovementReq";
 import type { CreateStockMovementRes } from "../../domain/dto/stock-movement/response/CreateStockMovementRes";
 import type { FindStockMovementByIdRes } from "../../domain/dto/stock-movement/response/FindStockMovementByIdRes";
 import type { GetAllStockMovementsByProductRes } from "../../domain/dto/stock-movement/response/GetAllStockMovementsByProductRes";
 import type { GetAllStockMovementsByUserRes } from "../../domain/dto/stock-movement/response/GetAllStockMovementsByUserRes";
+import type { UpdateStockMovementRes } from "../../domain/dto/stock-movement/response/UpdateStockMovementRes";
 
 
 export class StockMovementApiDataSource implements StockMovementDataSourceI {
@@ -24,6 +26,20 @@ export class StockMovementApiDataSource implements StockMovementDataSourceI {
     public async create(dto: CreateStockMovementReq): Promise<CreateStockMovementRes> {
         try {
             const response = await this.httpClient.post(`/api/stock-movements/create`, { ...dto }, dto.session.getAccessToken());
+            if (response.error) throw ErrorHandler.handleError(response.error);
+            return response;
+        } catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+    public async update(dto: UpdateStockMovementReq): Promise<UpdateStockMovementRes> {
+        try {
+            const response = await this.httpClient.put(
+                `/api/stock-movements/update/${dto.id}`,
+                { ...dto },
+                dto.session.getAccessToken()
+            );
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
