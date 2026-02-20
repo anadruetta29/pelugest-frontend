@@ -14,6 +14,7 @@ export default function ProductsRoute() {
         onNewProduct,
         closeForm,
         onSubmitProduct,
+        onUpdateStockProduct
     } = ViewModel();
 
     if (isLoading) {
@@ -34,6 +35,7 @@ export default function ProductsRoute() {
                 onNewProduct={onNewProduct}
                 onCloseForm={closeForm}
                 onSubmitProduct={onSubmitProduct}
+                onUpdateStockProduct={onUpdateStockProduct}
             />
         </Layout>
     );

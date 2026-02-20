@@ -9,11 +9,13 @@ import style from "./style.module.css";
 type Props = {
     products: Product[] | undefined;
     onEditProduct: (product: Product) => void;
-};
+    onUpdateStockProduct: (product: Product) => void;
+}
 
 export default function ProductsTable({
     products,
     onEditProduct,
+    onUpdateStockProduct
 
 }: Props) {
     if (!products || products.length === 0) {
@@ -49,7 +51,15 @@ export default function ProductsTable({
                             modifier={style.actionButtons}
                             onClick={() => onEditProduct(product)}
                         />
+                        <SecondaryButton
+                            enabled
+                            text="Actualizar stock"
+                            type="button"
+                            modifier={style.actionButtons}
+                            onClick={() => onUpdateStockProduct(product)}
+                        />
                     </td>
+
                 </tr>
             ))}
         </Table>

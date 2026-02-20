@@ -68,6 +68,10 @@ export function ViewModel() {
         setIsFormOpen(true);
     };
 
+    const onUpdateStockProduct = (product: Product) => {
+
+    }
+
     const onNewProduct = () => {
         setFormMode("create");
         setProductToEdit(null);
@@ -141,5 +145,6 @@ export function ViewModel() {
         onNewProduct,
         closeForm,
         onSubmitProduct,
+        onUpdateStockProduct
     };
 }

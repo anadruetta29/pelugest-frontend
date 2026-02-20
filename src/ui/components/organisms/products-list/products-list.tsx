@@ -13,6 +13,7 @@ type Props = {
     productToEdit: Product | null;
     onNewProduct: () => void;
     onEditProduct: (product: Product) => void;
+    onUpdateStockProduct: (product: Product) => void;
     onCloseForm: () => void;
     onSubmitProduct: (e: React.FormEvent<HTMLFormElement>) => void;
 };
@@ -22,6 +23,7 @@ export default function ProductsList({
 
     onEditProduct,
     onNewProduct,
+    onUpdateStockProduct,
 
     isFormOpen,
     productToEdit,
@@ -46,6 +48,7 @@ export default function ProductsList({
                 <ProductsTable
                     products={products}
                     onEditProduct={onEditProduct}
+                    onUpdateStockProduct={onUpdateStockProduct}
                 />
 
                 {isFormOpen && (
