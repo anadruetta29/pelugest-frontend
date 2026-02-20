@@ -27,6 +27,8 @@ export default function ProductsTable({
             headers={[
                 "Nombre",
                 "Precio",
+                "Cantidad actual",
+                "Stock mínimo",
                 "Estado",
                 "Acciones",
             ]}
@@ -37,6 +39,14 @@ export default function ProductsTable({
 
                     <td className={style.tableContent}>
                         ${product.price}
+                    </td>
+
+                    <td className={style.tableContent}>
+                        ${product.stock?.currentAmountMl ?? 0}
+                    </td>
+
+                    <td className={style.tableContent}>
+                        ${product.stock?.minimumStockMl ?? 0}
                     </td>
 
                     <td className={style.tableContent}>

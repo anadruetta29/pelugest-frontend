@@ -7,9 +7,10 @@ import {
     RecordStatus,
     type Product,
     type FindRecordStatusByNameReq,
+    type UpdateStockProductReq,
+    type FindStockProductByProductReq,
 } from "../../../domain";
 import toast from "react-hot-toast";
-import type { DeactivateProductReq } from "../../../domain/dto/product/request/DeactivateProductReq";
 import type { GetAllProductsReq } from "../../../domain/dto/product/request/GetAllProductsReq";
 import type { CreateProducttReq } from "../../../domain/dto/product/request/CreateProductReq";
 import type { UpdateProductReq } from "../../../domain/dto/product/request/UpdateProductReq";
@@ -18,7 +19,7 @@ export function ViewModel() {
 
     const { session, logged } = useSession();
 
-    const { productRepository, recordStatusRepository } = useRepositories();
+    const { productRepository, recordStatusRepository, stockProductRepository } = useRepositories();
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -47,18 +48,34 @@ export function ViewModel() {
                 session,
             } as GetAllProductsReq);
 
-            setProducts(response.products);
-        } 
-        catch (error) {
-            toast.error(
-                error instanceof Error ? error.message : Errors.UNKNOWN_ERROR
-            );
-        }
-        finally {
+            const productsWithStock: Product[] = [];
+
+            for (const product of response.products) {
+                try {
+                    const stockResponse = await stockProductRepository.findByProduct({
+                        productId: product.id,
+                        session,
+                    } as FindStockProductByProductReq);
+
+                    productsWithStock.push({
+                        ...product,
+                        stock: stockResponse.stock, 
+                    });
+                } catch {
+                    productsWithStock.push({
+                        ...product,
+                        stock: undefined,
+                    });
+                }
+            }
+
+            setProducts(productsWithStock);
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
+        } finally {
             setIsLoading(false);
         }
     };
-
 
     /* feature: create and update product */
 
@@ -91,43 +108,56 @@ export function ViewModel() {
 
         try {
             if (formMode === "create") {
-                await productRepository.create({
+                const createdProduct = await productRepository.create({
                     name: formData.get("name") as string,
                     price: Number(formData.get("price")),
                     session,
                 } as CreateProducttReq);
 
-                toast.success("Producto creado correctamente");
+                await stockProductRepository.create({
+                    currentAmountMl: Number(formData.get("currentAmountMl")) || 0,
+                    minimumStockMl: Number(formData.get("minimumStockMl")) || 0,
+                    productId: createdProduct.product.id,
+                    session,
+                });
+
+                toast.success("Producto y stock creados correctamente");
             }
 
             if (formMode === "edit" && productToEdit) {
+
                 const statusName = formData.get("status") as string;
+            const statusResponse = await recordStatusRepository.findByName({
+                name: statusName,
+                session,
+            } as FindRecordStatusByNameReq);
+            const status = RecordStatus.fromObject(statusResponse.recordStatus);
 
-                const statusResponse =
-                    await recordStatusRepository.findByName({
-                        name: statusName,
-                        session,
-                    } as FindRecordStatusByNameReq);
+            await productRepository.update({
+                id: productToEdit.id,
+                name: formData.get("name") as string,
+                price: Number(formData.get("price")),
+                status,
+                session,
+            } as UpdateProductReq);
 
-                const status = RecordStatus.fromObject(
-                    statusResponse.recordStatus
-                );
-
-                await productRepository.update({
-                    id: productToEdit.id,
-                    name: formData.get("name") as string,
-                    price: Number(formData.get("price")),
-                    status,
+            if (productToEdit.stock) {
+                await stockProductRepository.update({
+                    id: productToEdit.stock.id,
+                    currentAmountMl: Number(formData.get("currentAmountMl")) || 0,
+                    minimumStockMl: Number(formData.get("minimumStockMl")) || 0,
                     session,
-                } as UpdateProductReq);
-
-                toast.success("Producto actualizado correctamente");
+                } as UpdateStockProductReq);
             }
 
-            setIsFormOpen(false);
-            setProductToEdit(null);
-            fetchProducts();
-        } catch (error) {
+            toast.success("Producto y stock actualizados correctamente");
+        }
+
+        setIsFormOpen(false);
+        setProductToEdit(null);
+        fetchProducts();
+        } 
+        catch (error) {
             toast.error(
                 error instanceof Error ? error.message : Errors.UNKNOWN_ERROR
             );

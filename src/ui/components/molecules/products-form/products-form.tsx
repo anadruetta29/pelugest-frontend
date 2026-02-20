@@ -37,6 +37,29 @@ export function ProductsForm({ product, onSubmit, onCancel }: Props) {
                     defaultValue={product?.price || ""}
                     required
                 />
+                
+                <div className={style.stock}>
+                    <InputLabel
+                        label="Cantidad actual"
+                        name="currentAmountMl"
+                        id="currentAmountMl"
+                        type="text"
+                        placeholder="Cantidad actual"
+                        defaultValue={product?.stock?.currentAmountMl ?? 0}
+                        required
+                    />
+
+                    <InputLabel
+                        label="Stock mínimo"
+                        name="minimumStockMl"
+                        id="minimumStockMl"
+                        type="text"
+                        placeholder="Stock mínimo"
+                        defaultValue={product?.stock?.minimumStockMl ?? 0}
+                        required
+                    />
+                </div>
+                
 
                 {product && (
                     <div className={style.formGroup}>

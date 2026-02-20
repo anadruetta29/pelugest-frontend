@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { createContext, useContext, useMemo } from "react";
 import { AuthRepository } from "../../infrastructure/repository/auth";
 import { SessionRepository } from "../../infrastructure/repository/session";
-import { ClientRepository, RecordStatusRepository } from "../../infrastructure";
+import { ClientRepository, RecordStatusRepository, StockProductRepository } from "../../infrastructure";
 import { ServiceRepository } from "../../infrastructure/repository/service";
 import { ProductRepository } from "../../infrastructure/repository/product";
 
@@ -17,6 +17,7 @@ interface RepositoriesContextType {
 	recordStatusRepository: RecordStatusRepository;
 	serviceRepository: ServiceRepository;
 	productRepository: ProductRepository;
+	stockProductRepository: StockProductRepository;
 }
 
 const RepositoriesContext = createContext<RepositoriesContextType | null>(null);
@@ -28,7 +29,8 @@ export const RepositoriesProvider = ({ children }: RepositoriesProviderProps) =>
 			clientRepository: new ClientRepository(),
 			recordStatusRepository: new RecordStatusRepository(),
 			serviceRepository: new ServiceRepository(),
-			productRepository: new ProductRepository()
+			productRepository: new ProductRepository(),
+			stockProductRepository: new StockProductRepository()
 	}), []);
 
 	return (

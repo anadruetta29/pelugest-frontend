@@ -63,7 +63,7 @@ export class StockProductApiDataSource implements StockProductDataSourceI {
 
     public async findByProduct(dto: FindStockProductByProductReq): Promise<FindStockProductByProductRes> {
         try {
-            const response = await this.httpClient.get(`/api/stock-products/find-by-product`, { ...dto }, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/stock-products/find-by-product/${dto.productId}`, undefined, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
