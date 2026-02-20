@@ -10,7 +10,7 @@ import type { GetAllStockMovementsByProductRes } from "../dto/stock-movement/res
 import type { GetAllStockMovementsByUserRes } from "../dto/stock-movement/response/GetAllStockMovementsByUserRes";
 import type { GetAllStockMovementsRes } from "../dto/stock-movement/response/GetAllStockMovementsRes";
 
-export abstract class StockMovementDataSourceI {
+export abstract class StockMovementRepositoryI {
     abstract create(dto: CreateStockMovementReq): Promise<CreateStockMovementRes>;
     abstract delete(dto: DeleteStockMovementReq): Promise<void>;
     abstract findById(dto: FindStockMovementByIdReq): Promise<FindStockMovementByIdRes>;

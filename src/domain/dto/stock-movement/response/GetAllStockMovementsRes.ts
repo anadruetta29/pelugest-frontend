@@ -1,5 +1,5 @@
 import type { StockMovement } from "../../../entity/stock-movement";
 
-export interface GetAllStockMovementsReq {
+export interface GetAllStockMovementsRes {
     movements: StockMovement[]
 }
