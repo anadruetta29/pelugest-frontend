@@ -45,34 +45,30 @@ export function ViewModel() {
 
         try {
             const response = await productRepository.getAll({
-                session,
+            session,
             } as GetAllProductsReq);
 
-            const productsWithStock: Product[] = [];
+            const productsWithStockPromises = response.products.map(async (product) => {
+            try {
+                const stockResponse = await stockProductRepository.findByProduct({
+                productId: product.id,
+                session,
+                } as FindStockProductByProductReq);
 
-            for (const product of response.products) {
-                try {
-                    const stockResponse = await stockProductRepository.findByProduct({
-                        productId: product.id,
-                        session,
-                    } as FindStockProductByProductReq);
-
-                    productsWithStock.push({
-                        ...product,
-                        stock: stockResponse.stock, 
-                    });
-                } catch {
-                    productsWithStock.push({
-                        ...product,
-                        stock: undefined,
-                    });
-                }
+                return { ...product, stock: stockResponse.stock };
+            } catch {
+                return { ...product, stock: undefined };
             }
+            });
+
+            const productsWithStock = await Promise.all(productsWithStockPromises);
 
             setProducts(productsWithStock);
-        } catch (error) {
+        } 
+        catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
-        } finally {
+        } 
+        finally {
             setIsLoading(false);
         }
     };
