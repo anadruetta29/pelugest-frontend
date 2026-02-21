@@ -25,7 +25,7 @@ export class ProductApiDataSource implements ProductDataSourceI {
 
     public async create(dto: CreateProducttReq): Promise<CreateProductRes> {
         try {
-            const response = await this.httpClient.post(`/api/products/create`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.post(`/api/products/`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -39,7 +39,7 @@ export class ProductApiDataSource implements ProductDataSourceI {
     
     public async update(dto: UpdateProductReq): Promise<UpdateProductRes> {
         try {
-            const response = await this.httpClient.put(`/api/products/update/${dto.id}`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.put(`/api/products/${dto.id}`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -53,7 +53,7 @@ export class ProductApiDataSource implements ProductDataSourceI {
 
     public async delete(dto: DeleteProductReq): Promise<void> {
         try {
-            const response = await this.httpClient.delete(`/api/products/delete`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.delete(`/api/products/`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -67,7 +67,7 @@ export class ProductApiDataSource implements ProductDataSourceI {
 
     public async findById(dto: FindProductByIdReq): Promise<FindProductByIdRes> {
         try {
-            const response = await this.httpClient.get(`/api/products/find-by-id`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/products/${dto.id}`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -82,7 +82,7 @@ export class ProductApiDataSource implements ProductDataSourceI {
     public async getAll(dto: GetAllProductsReq): Promise<GetAllProductsRes> {
         try {
             const response = await this.httpClient.get(
-                `/api/products/get-all`,
+                `/api/products/`,
                 undefined,
                 dto.session.getAccessToken()
             );
@@ -98,7 +98,7 @@ export class ProductApiDataSource implements ProductDataSourceI {
     public async getAllByStatus(dto: GetAllProductsByStatusReq): Promise<GetAllProductsByStatusRes> {
         try {
             const response = await this.httpClient.get(
-                `/api/products/get-all-by-status/${dto.statusId}`,
+                `/api/products/status/${dto.statusId}`,
                 undefined,
                 dto.session.getAccessToken()
             );
@@ -116,7 +116,7 @@ export class ProductApiDataSource implements ProductDataSourceI {
     public async deactivate(dto: DeactivateProductReq): Promise<DeactivateProductRes> {
         try {
             const response = await this.httpClient.get(
-                `/api/products/deactivate/${dto.id}`,
+                `/api/products/${dto.id}/deactivate`,
                 undefined,
                 dto.session.getAccessToken()
             );

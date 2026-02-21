@@ -25,7 +25,7 @@ export class ServiceApiDataSource implements ServiceDataSourceI {
 
     public async create(dto: CreateServiceReq): Promise<CreateServiceRes> {
         try {
-            const response = await this.httpClient.post(`/api/services/create`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.post(`/api/services`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -39,7 +39,7 @@ export class ServiceApiDataSource implements ServiceDataSourceI {
     
     public async update(dto: UpdateServiceReq): Promise<UpdateServiceRes> {
         try {
-            const response = await this.httpClient.put(`/api/services/update/${dto.id}`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.put(`/api/services/${dto.id}`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -53,7 +53,7 @@ export class ServiceApiDataSource implements ServiceDataSourceI {
 
     public async delete(dto: DeleteServiceReq): Promise<void> {
         try {
-            const response = await this.httpClient.delete(`/api/services/delete`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.delete(`/api/services/${dto.id}`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -67,7 +67,7 @@ export class ServiceApiDataSource implements ServiceDataSourceI {
 
     public async findById(dto: FindServiceByIdReq): Promise<FindServiceByIdRes> {
         try {
-            const response = await this.httpClient.get(`/api/services/find-by-id`, {...dto}, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/services/`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
@@ -82,7 +82,7 @@ export class ServiceApiDataSource implements ServiceDataSourceI {
     public async getAll(dto: GetAllServicesReq): Promise<GetAllServicesRes> {
         try {
             const response = await this.httpClient.get(
-                `/api/services/get-all`,
+                `/api/services/`,
                 undefined,
                 dto.session.getAccessToken()
             );
@@ -98,7 +98,7 @@ export class ServiceApiDataSource implements ServiceDataSourceI {
     public async getAllByStatus(dto: GetAllServicesByStatusReq): Promise<GetAllServicesByStatusRes> {
         try {
             const response = await this.httpClient.get(
-                `/api/services/get-all-by-status/${dto.statusId}`,
+                `/api/services/status/${dto.statusId}`,
                 undefined,
                 dto.session.getAccessToken()
             );
@@ -116,7 +116,7 @@ export class ServiceApiDataSource implements ServiceDataSourceI {
     public async deactivate(dto: DeactivateServiceReq): Promise<DeactivateServiceRes> {
             try {
                 const response = await this.httpClient.get(
-                    `/api/services/deactivate/${dto.id}`,
+                    `/api/services/${dto.id}/deactivate`,
                     undefined,
                     dto.session.getAccessToken()
                 );

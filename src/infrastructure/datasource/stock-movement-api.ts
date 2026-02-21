@@ -25,7 +25,7 @@ export class StockMovementApiDataSource implements StockMovementDataSourceI {
 
     public async create(dto: CreateStockMovementReq): Promise<CreateStockMovementRes> {
         try {
-            const response = await this.httpClient.post(`/api/stock-movements/create`, { ...dto }, dto.session.getAccessToken());
+            const response = await this.httpClient.post(`/api/stock-movements`, { ...dto }, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
@@ -36,7 +36,7 @@ export class StockMovementApiDataSource implements StockMovementDataSourceI {
     public async update(dto: UpdateStockMovementReq): Promise<UpdateStockMovementRes> {
         try {
             const response = await this.httpClient.put(
-                `/api/stock-movements/update/${dto.id}`,
+                `/api/stock-movements/${dto.id}`,
                 { ...dto },
                 dto.session.getAccessToken()
             );
@@ -49,7 +49,7 @@ export class StockMovementApiDataSource implements StockMovementDataSourceI {
 
     public async delete(dto: DeleteStockMovementReq): Promise<void> {
         try {
-            const response = await this.httpClient.delete(`/api/stock-movements/delete`, { ...dto }, dto.session.getAccessToken());
+            const response = await this.httpClient.delete(`/api/stock-movements/${dto.id}`, { ...dto }, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
         } catch (error) {
             throw ErrorHandler.handleError(error as Error);
@@ -58,7 +58,7 @@ export class StockMovementApiDataSource implements StockMovementDataSourceI {
 
     public async findById(dto: FindStockMovementByIdReq): Promise<FindStockMovementByIdRes> {
         try {
-            const response = await this.httpClient.get(`/api/stock-movements/find-by-id`, { ...dto }, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/stock-movements/${dto.id}`, { ...dto }, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
@@ -68,7 +68,7 @@ export class StockMovementApiDataSource implements StockMovementDataSourceI {
 
     public async getAll(dto: GetAllStockMovementsReq): Promise<GetAllStockMovementsRes> {
         try {
-            const response = await this.httpClient.get(`/api/stock-movements/get-all`, undefined, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/stock-movements/`, undefined, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
@@ -78,7 +78,7 @@ export class StockMovementApiDataSource implements StockMovementDataSourceI {
 
     public async getAllByProduct(dto: GetAllStockMovementsByProductReq): Promise<GetAllStockMovementsByProductRes> {
         try {
-            const response = await this.httpClient.get(`/api/stock-movements/get-all-by-product/${dto.productId}`, undefined, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/stock-movements/product/${dto.productId}`, undefined, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
@@ -88,7 +88,7 @@ export class StockMovementApiDataSource implements StockMovementDataSourceI {
 
     public async getAllByUser(dto: GetAllStockMovementsByUserReq): Promise<GetAllStockMovementsByUserRes> {
         try {
-            const response = await this.httpClient.get(`/api/stock-movements/get-all-by-user/${dto.userId}`, undefined, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/stock-movements/user/${dto.userId}`, undefined, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {

@@ -24,7 +24,7 @@ export class StockProductApiDataSource implements StockProductDataSourceI {
 
     public async create(dto: CreateStockProductReq): Promise<CreateStockProductRes> {
         try {
-            const response = await this.httpClient.post(`/api/stock-products/create`, { ...dto }, dto.session.getAccessToken());
+            const response = await this.httpClient.post(`/api/stock-products`, { ...dto }, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
@@ -34,7 +34,7 @@ export class StockProductApiDataSource implements StockProductDataSourceI {
 
     public async update(dto: UpdateStockProductReq): Promise<UpdateStockProductRes> {
         try {
-            const response = await this.httpClient.put(`/api/stock-products/update/${dto.id}`, { ...dto }, dto.session.getAccessToken());
+            const response = await this.httpClient.put(`/api/stock-products/${dto.id}`, { ...dto }, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
@@ -44,7 +44,7 @@ export class StockProductApiDataSource implements StockProductDataSourceI {
 
     public async delete(dto: DeleteStockProductReq): Promise<void> {
         try {
-            const response = await this.httpClient.delete(`/api/stock-products/delete`, { ...dto }, dto.session.getAccessToken());
+            const response = await this.httpClient.delete(`/api/stock-products/${dto.id}`, { ...dto }, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
         } catch (error) {
             throw ErrorHandler.handleError(error as Error);
@@ -53,7 +53,7 @@ export class StockProductApiDataSource implements StockProductDataSourceI {
 
     public async findById(dto: FindStockProductByIdReq): Promise<FindStockProductByIdRes> {
         try {
-            const response = await this.httpClient.get(`/api/stock-products/find-by-id`, { ...dto }, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/stock-products/${dto.id}`, { ...dto }, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
@@ -63,7 +63,7 @@ export class StockProductApiDataSource implements StockProductDataSourceI {
 
     public async findByProduct(dto: FindStockProductByProductReq): Promise<FindStockProductByProductRes> {
         try {
-            const response = await this.httpClient.get(`/api/stock-products/find-by-product/${dto.productId}`, undefined, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/stock-products/product/${dto.productId}`, undefined, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
@@ -73,7 +73,7 @@ export class StockProductApiDataSource implements StockProductDataSourceI {
 
     public async getAll(dto: GetAllStockProductsReq): Promise<GetAllStockProductsRes> {
         try {
-            const response = await this.httpClient.get(`/api/stock-products/get-all`, undefined, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/stock-products/`, undefined, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {
