@@ -10,6 +10,7 @@ export default function RoutesManager() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={<LoginRoute />} />
                 <Route path="/login" element={<LoginRoute />} />
                 <Route path="/register" element={<RegisterRoute />} />
                 <Route path="/clients" element={<ClientsRoute />} />

@@ -4,12 +4,12 @@ import { useRepositories } from "../../../core";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import type { GetAllStockMovementsReq } from "../../../domain/dto/stock-movement/request/GetAllStockMovementsReq";
-import { Errors, type CreateStockMovementReq, type StockMovement } from "../../../domain";
+import { Errors, type CreateStockMovementReq, type GetAllStockMovementsByProductReq, type StockMovement } from "../../../domain";
 import type { UpdateStockMovementReq } from "../../../domain/dto/stock-movement/request/UpdateStockMovementReq";
 
 export function ViewModel() {
 
-    const { session, logged, userId } = useSession();
+    const { session, logged } = useSession();
 
     const { id } = useParams();
 
@@ -26,7 +26,7 @@ export function ViewModel() {
     const [stockMovementToEdit, setStockMovementToEdit] = useState<StockMovement | null>(null);
 
     useEffect(() => {
-        if (logged === true && session) {
+        if (logged && session) {
             fetchStockMovements();
         }
     }, [logged, session]);
@@ -39,11 +39,13 @@ export function ViewModel() {
         setIsLoading(true);
 
         try {
-            const response = await stockMovementRepository.getAll({
+            console.log(id)
+            const response = await stockMovementRepository.getAllByProduct({
+                productId: id,
                 session
-            } as GetAllStockMovementsReq);
+            } as GetAllStockMovementsByProductReq);
 
-            setStockMovements(response.movements);
+            setStockMovements(response.stockMovements);
 
         } 
         catch (error) {
@@ -82,11 +84,17 @@ export function ViewModel() {
 
         try {
             if (formMode === "create") {
+
+                console.log("Datos a enviar:", {
+                    quantityMl: formData.get("quantityMl"),
+                    type: formData.get("type"),
+                    productId: id
+                });
+
                 await stockMovementRepository.create({
                     quantityMl: Number(formData.get("quantityMl")),
                     type: String(formData.get("type")),
                     productId: id,
-                    userId: userId, 
                     session,
                 } as CreateStockMovementReq);
 
@@ -100,7 +108,6 @@ export function ViewModel() {
                     quantityMl: Number(formData.get("quantityMl")),
                     type: formData.get("type") as "IN" | "OUT" | "ADJUSTMENT",
                     productId: id,
-                    userId: userId, 
                     session
                 } as UpdateStockMovementReq);
 

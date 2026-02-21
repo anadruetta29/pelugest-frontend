@@ -1,5 +1,6 @@
 import { RecordStatus, StockMovement, type Product } from "../../../../domain";
 import MainButton from "../../atoms/main-button/main-button";
+import MovementIndicator from "../../atoms/movement-indicator/movement-indicator";
 import NoResults from "../../atoms/no-results/no-results";
 import SecondaryButton from "../../atoms/secondary-button/secondary-button";
 import StatusIndicator from "../../atoms/status-indicator/status-indicator";
@@ -36,7 +37,7 @@ export default function StockMovementsTable({
                     <td className={style.tableContent}>{stockMovement.product.name}</td>
 
                     <td className={style.tableContent}>
-                        {stockMovement.type.name}
+                        <MovementIndicator type={stockMovement.type} />
                     </td>
 
                     <td className={style.tableContent}>
@@ -48,7 +49,13 @@ export default function StockMovementsTable({
                     </td>
                     
                     <td className={style.tableContent}>
-                        {stockMovement.createdAt.getDate()}
+                        {new Date(stockMovement.createdAt).toLocaleDateString('es-ES', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })}
                     </td>
 
                     <td className={style.actions}>

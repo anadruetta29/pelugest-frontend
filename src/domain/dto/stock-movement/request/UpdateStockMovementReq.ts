@@ -5,7 +5,6 @@ export interface UpdateStockMovementReq {
     quantityMl: number;
     type: string;
     productId: string;
-    userId: string;
     session: Session;
 }
 

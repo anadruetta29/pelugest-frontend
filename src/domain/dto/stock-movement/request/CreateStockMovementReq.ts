@@ -1,11 +1,9 @@
 import { Session } from '../../../entity/session';
-import type { StockMovementType } from '../../../entity/stock-movement-type';
 
 export interface CreateStockMovementReq {
     quantityMl: number;
     type: string;
     productId: string;
-    userId: string;
     session: Session;
 }
 

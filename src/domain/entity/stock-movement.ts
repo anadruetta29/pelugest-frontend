@@ -1,6 +1,5 @@
 import type { Product } from "./product";
-import { RecordStatus } from "./record-status"; 
-import { StockMovementType } from "./stock-movement-type";
+import type { StockMovementType } from "./stock-movement-type";
 import type { User } from "./user";
 
 export class StockMovement {
@@ -11,7 +10,6 @@ export class StockMovement {
     public createdAt: Date;
     public product: Product;
     public user: User;
-    public status?: RecordStatus; 
 
     private constructor(
         id: string,
@@ -20,7 +18,6 @@ export class StockMovement {
         createdAt: Date,
         product: Product,
         user: User,
-        status?: RecordStatus
     ) {
         this.id = id;
         this.quantityMl = quantityMl;
@@ -28,7 +25,6 @@ export class StockMovement {
         this.createdAt = createdAt;
         this.product = product;
         this.user = user;
-        this.status = status;
     }
 
     static fromObject(object: { [key: string]: any }): StockMovement {
@@ -38,8 +34,7 @@ export class StockMovement {
             object.type, 
             object.createdAt ? new Date(object.createdAt) : new Date(),
             object.product,
-            object.user,
-            object.status ? RecordStatus.fromObject(object.status) : undefined
+            object.user
         );
     }
 }
