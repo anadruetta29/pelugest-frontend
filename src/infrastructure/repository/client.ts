@@ -6,8 +6,10 @@ import type { ClientDataSourceI, ClientRepositoryI, CreateClientReq, CreateClien
     UpdateClientReq, UpdateClientRes } from "../../domain";
 import type { DeactivateClientReq } from "../../domain/dto/client/request/DeactivateClientReq";
 import type { GetAllClientsReq } from "../../domain/dto/client/request/GetAllClientsReq";
+import type { SearchClientReq } from "../../domain/dto/client/request/SearchClientReq";
 import type { DeactivateClientRes } from "../../domain/dto/client/response/DeactivateClientRes";
 import type { GetAllClientsRes } from "../../domain/dto/client/response/GetAllClientsRes";
+import type { SearchClientRes } from "../../domain/dto/client/response/SearchClientRes";
 import { ClientApiDataSource } from "../datasource/client-api";
 
 export class ClientRepository implements ClientRepositoryI {
@@ -74,6 +76,15 @@ export class ClientRepository implements ClientRepositoryI {
         public async deactivate(dto: DeactivateClientReq): Promise<DeactivateClientRes> {
             try {
                 return await this.dataSource.deactivate(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async search(dto: SearchClientReq): Promise<SearchClientRes> {
+            try {
+                return await this.dataSource.search(dto);
             }
             catch (error) {
                 throw error;
