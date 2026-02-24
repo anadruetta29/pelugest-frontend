@@ -1,19 +1,27 @@
 .container {
     display: flex;
     flex-direction: column;
-    gap: 20px; 
-    padding: 20px;
+    gap: 24px;
+    padding: 24px;
     width: 100%;
+    background-color: var(--surface);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .newClientButton {
-    display: flex;
-    justify-content: flex-end; 
-    align-items: center;
-}
-
-.newClientButton button {
     width: 150px; 
     border-radius: 0;
     font-size: 15px;
+}
+
+.newClientButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px var(--shadow-medium);
 }

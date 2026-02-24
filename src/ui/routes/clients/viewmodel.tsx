@@ -2,34 +2,44 @@ import { useNavigate } from "react-router-dom";
 import useSession from "../../hooks/useSession";
 import { useRepositories } from "../../../core";
 import { useState, useEffect } from "react";
-import { Errors, RecordStatus, type Client, type CreateClientReq, type DeleteClientReq, type FindRecordStatusByNameReq, type GetAllClientsByStatusReq, type UpdateClientReq } from "../../../domain";
+import {
+    Errors,
+    RecordStatus,
+    type Client,
+    type CreateClientReq,
+    type FindRecordStatusByNameReq,
+    type UpdateClientReq,
+} from "../../../domain";
 import toast from "react-hot-toast";
-import type { DeactivateClientReq } from "../../../domain/dto/client/request/DeactivateClientReq";
 import type { GetAllClientsReq } from "../../../domain/dto/client/request/GetAllClientsReq";
+import type { SearchClientReq } from "../../../domain/dto/client/request/SearchClientReq";
 
 export function ViewModel() {
 
     const { session, logged } = useSession();
-
     const { clientRepository, recordStatusRepository } = useRepositories();
 
     const [isLoading, setIsLoading] = useState(true);
 
     const [clients, setClients] = useState<Client[]>([]);
-    const [client, setClient] = useState<Client | null>(null);
+
+    const [search, setSearch] = useState("");
+    const [searchClients, setSearchClients] = useState<Client[]>([]);
+    const [isSearching, setIsSearching] = useState(false);
 
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formMode, setFormMode] = useState<"create" | "edit">("create");
-
     const [clientToEdit, setClientToEdit] = useState<Client | null>(null);
 
     useEffect(() => {
-        if (logged === true && session) {
+        if (logged && session) {
             fetchClients();
         }
     }, [logged, session]);
 
-    /*     feature: show clients */    
+    /* ==============================
+       FEATURE: GET ALL CLIENTS
+    ============================== */
 
     const fetchClients = async () => {
         if (!session) return;
@@ -38,21 +48,22 @@ export function ViewModel() {
 
         try {
             const response = await clientRepository.getAll({
-                session
+                session,
             } as GetAllClientsReq);
 
             setClients(response.clients);
-
         } 
         catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
-        }
+        } 
         finally {
             setIsLoading(false);
         }
     };
 
-    /* feature: create and update client */ 
+    /* ==============================
+       FEATURE: CREATE / UPDATE
+    ============================== */
 
     const onEditClient = (client: Client) => {
         setFormMode("edit");
@@ -72,7 +83,6 @@ export function ViewModel() {
     };
 
     const onSubmitClient = async (e: React.FormEvent<HTMLFormElement>) => {
-
         e.preventDefault();
         if (!session) return;
 
@@ -111,7 +121,7 @@ export function ViewModel() {
                     mobilePhoneNumber: formData.get("mobilePhoneNumber") as string,
                     landlinePhoneNumber: formData.get("landlinePhoneNumber") as string,
                     status,
-                    session
+                    session,
                 } as UpdateClientReq);
 
                 toast.success("Cliente actualizado correctamente");
@@ -119,7 +129,8 @@ export function ViewModel() {
 
             setIsFormOpen(false);
             setClientToEdit(null);
-            fetchClients();
+
+            await fetchClients();
         } 
         catch (error) {
             toast.error(
@@ -128,11 +139,65 @@ export function ViewModel() {
         }
     };
 
+    /* ==============================
+       FEATURE: SEARCH
+    ============================== */
+
+    const handleSearchChange = (value: string) => {
+        setSearch(value);
+
+        if (value.trim() === "") {
+            clearSearch();
+        }
+    };
+
+    const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!session) return;
+
+        if (!search.trim()) {
+            clearSearch();
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+            setIsSearching(true);
+
+            const response = await clientRepository.search({
+                name: search,
+                page: 1,
+                limit: 10,
+                session,
+            } as SearchClientReq);
+
+            setSearchClients(response.clients);
+        } 
+        catch (error) {
+            console.error("Error searching clients:", error);
+        } 
+        finally {
+            setIsLoading(false);
+        }
+    };
+
+    const clearSearch = () => {
+        setSearch("");
+        setIsSearching(false);
+        setSearchClients([]);
+    };
+
+    const displayedClients = isSearching ? searchClients : clients;
 
     return {
         isLoading,
-        
-        clients,
+
+        displayedClients,
+
+        search,
+        isSearching,
+        handleSearchChange,
+        handleSearch,
 
         isFormOpen,
         clientToEdit,

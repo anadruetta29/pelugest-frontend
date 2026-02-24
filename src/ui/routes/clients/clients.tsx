@@ -6,13 +6,16 @@ import { ViewModel } from "./viewmodel";
 export default function ClientsRoute() {
     const {
         isLoading,
-        clients,
+        displayedClients,
         isFormOpen,
         clientToEdit,
         onEditClient,
         onNewClient,
         closeForm,
         onSubmitClient,
+        search,
+        handleSearchChange,
+        handleSearch,
     } = ViewModel();
 
     if (isLoading) {
@@ -26,13 +29,16 @@ export default function ClientsRoute() {
     return (
         <Layout withSidebar>
             <ClientsList
-                clients={clients}
+                clients={displayedClients} 
                 isFormOpen={isFormOpen}
                 clientToEdit={clientToEdit}
                 onEditClient={onEditClient}
                 onNewClient={onNewClient}
                 onCloseForm={closeForm}
                 onSubmitClient={onSubmitClient}
+                search={search}
+                onSearchChange={handleSearchChange}
+                onSearch={handleSearch}
             />
         </Layout>
     );

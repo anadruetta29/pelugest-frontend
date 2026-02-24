@@ -2,9 +2,9 @@ import type { Client } from "../../../../domain";
 import MainButton from "../../atoms/main-button/main-button";
 import ClientsTable from "../../molecules/clients-table/clients-table";
 import addIcon from "../../../assets/icons/add-new.svg";
-import style from "./style.module.css";
-import ConfirmModal from "../../molecules/confirm-modal/confirm-modal";
 import { ClientsForm } from "../../molecules/clients-form/clients-form";
+import SearchBar from "../../molecules/search-bar/search-bar";
+import style from "./style.module.css";
 
 type Props = {
     clients: Client[];
@@ -15,6 +15,10 @@ type Props = {
     onEditClient: (client: Client) => void;
     onCloseForm: () => void;
     onSubmitClient: (e: React.FormEvent<HTMLFormElement>) => void;
+
+    search: string;
+    onSearchChange: (value: string) => void;
+    onSearch: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 
@@ -29,10 +33,19 @@ export default function ClientsList({
     clientToEdit,
     onCloseForm,
     onSubmitClient,
+
+    onSearch,
+    onSearchChange,
+    search
 }: Props) {
     return(
         <div className={style.container}>
-            <div className={style.newClientButton}>
+            <div className={style.header}>
+                <SearchBar 
+                    value={search}
+                    onChange={onSearchChange}
+                    onSearch={onSearch}
+                />
                 <MainButton
                     enabled
                     text="Nuevo Cliente"
@@ -41,6 +54,7 @@ export default function ClientsList({
                     icon={addIcon}
                     iconAlt="Nuevo cliente"
                     iconPosition="left"
+                    modifier={style.newClientButton}
                 />
             </div>
             <div>
