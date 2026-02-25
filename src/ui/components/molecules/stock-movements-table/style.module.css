@@ -52,8 +52,13 @@ button {
 }
 
 .actionButtons {
-	width: 100px;
+    width: 100px; 
     font-size: 15px;
+}
+
+.actionButtons:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px var(--shadow-medium);
 }
 
 .notAvailable {
