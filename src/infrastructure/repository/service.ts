@@ -5,12 +5,14 @@ import type { DeleteServiceReq } from "../../domain/dto/service/request/DeleteSe
 import type { FindServiceByIdReq } from "../../domain/dto/service/request/FindServiceByIdReq";
 import type { GetAllServicesByStatusReq } from "../../domain/dto/service/request/GetAllServicesByStatusReq";
 import type { GetAllServicesReq } from "../../domain/dto/service/request/GetAllServicesReq";
+import type { SearchServiceReq } from "../../domain/dto/service/request/SearchServiceReq";
 import type { UpdateServiceReq } from "../../domain/dto/service/request/UpdateServiceReq";
 import type { CreateServiceRes } from "../../domain/dto/service/response/CreateServiceRes";
 import type { DeactivateServiceRes } from "../../domain/dto/service/response/DeactivateServiceRes";
 import type { FindServiceByIdRes } from "../../domain/dto/service/response/FindServiceByIdRes";
 import type { GetAllServicesByStatusRes } from "../../domain/dto/service/response/GetAllServicesByStatusRes";
 import type { GetAllServicesRes } from "../../domain/dto/service/response/GetAllServicesRes";
+import type { SearchServiceRes } from "../../domain/dto/service/response/SearchServiceRes";
 import type { UpdateServiceRes } from "../../domain/dto/service/response/UpdateServiceRes";
 import type { ServiceRepositoryI } from "../../domain/repository/service";
 import { ServiceApiDataSource } from "../datasource/service-api";
@@ -83,6 +85,15 @@ export class ServiceRepository implements ServiceRepositoryI {
             catch (error) {
                 throw error;
              }
+        }
+
+        public async search(dto: SearchServiceReq): Promise<SearchServiceRes> {
+            try {
+                return await this.dataSource.search(dto);
+            }
+            catch (error) {
+                throw error;
+            }
         }
 
 }

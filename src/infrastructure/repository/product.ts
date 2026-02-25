@@ -6,12 +6,14 @@ import type { DeleteProductReq } from "../../domain/dto/product/request/DeletePr
 import type { FindProductByIdReq } from "../../domain/dto/product/request/FindProductByIdReq";
 import type { GetAllProductsByStatusReq } from "../../domain/dto/product/request/GetAllProductsByStatusReq";
 import type { GetAllProductsReq } from "../../domain/dto/product/request/GetAllProductsReq";
+import type { SearchProductReq } from "../../domain/dto/product/request/SearchProductReq";
 import type { UpdateProductReq } from "../../domain/dto/product/request/UpdateProductReq";
 import type { CreateProductRes } from "../../domain/dto/product/response/CreateProductRes";
 import type { DeactivateProductRes } from "../../domain/dto/product/response/DeactivateProductRes";
 import type { FindProductByIdRes } from "../../domain/dto/product/response/FindProductByIdRes";
 import type { GetAllProductsByStatusRes } from "../../domain/dto/product/response/GetAllProductsByStatusRes";
 import type { GetAllProductsRes } from "../../domain/dto/product/response/GetAllProductsRes";
+import type { SearchProductRes } from "../../domain/dto/product/response/SearchProductRes";
 import type { UpdateProductRes } from "../../domain/dto/product/response/UpdateProductRes";
 import type { ProductRepositoryI } from "../../domain/repository/product";
 import { ProductApiDataSource } from "../datasource/product-api";
@@ -80,6 +82,15 @@ export class ProductRepository implements ProductRepositoryI {
         public async deactivate(dto: DeactivateProductReq): Promise<DeactivateProductRes> {
             try {
                 return await this.dataSource.deactivate(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async search(dto: SearchProductReq): Promise<SearchProductRes> {
+            try {
+                return await this.dataSource.search(dto);
             }
             catch (error) {
                 throw error;

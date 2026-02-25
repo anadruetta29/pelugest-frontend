@@ -5,6 +5,7 @@ import addIcon from "../../../assets/icons/add-new.svg";
 import style from "./style.module.css";
 import ConfirmModal from "../../molecules/confirm-modal/confirm-modal";
 import { ProductsForm } from "../../molecules/products-form/products-form";
+import SearchBar from "../../molecules/search-bar/search-bar";
 
 type Props = {
     products: Product[];
@@ -16,6 +17,10 @@ type Props = {
     onUpdateStockProduct: (product: Product) => void;
     onCloseForm: () => void;
     onSubmitProduct: (e: React.FormEvent<HTMLFormElement>) => void;
+
+    search: string;
+    onSearchChange: (value: string) => void;
+    onSearch: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 export default function ProductsList({
@@ -29,10 +34,19 @@ export default function ProductsList({
     productToEdit,
     onCloseForm,
     onSubmitProduct,
+
+    onSearch,
+    onSearchChange,
+    search
 }: Props) {
     return (
         <div className={style.container}>
-            <div className={style.newProductButton}>
+            <div className={style.header}>
+                <SearchBar 
+                    value={search}
+                    onChange={onSearchChange}
+                    onSearch={onSearch}
+                 />
                 <MainButton
                     enabled
                     text="Nuevo Producto"
@@ -41,6 +55,7 @@ export default function ProductsList({
                     icon={addIcon}
                     iconAlt="Nuevo producto"
                     iconPosition="left"
+                    modifier={style.newProductButton}
                 />
             </div>
 

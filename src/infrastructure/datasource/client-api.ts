@@ -129,22 +129,22 @@ export class ClientApiDataSource implements ClientDataSourceI {
     }
 
     public async search(dto: SearchClientReq): Promise<SearchClientRes> {
-    try {
-        const response = await this.httpClient.get(
-            `/api/clients/search`,
-            { ... dto},
-            dto.session.getAccessToken()
-        );
+        try {
+            const response = await this.httpClient.get(
+                `/api/clients/search`,
+                { ... dto},
+                dto.session.getAccessToken()
+            );
 
-        if (response.error) {
-            throw ErrorHandler.handleError(response.error);
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        } 
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
         }
-
-        return response;
-    } 
-    catch (error) {
-        throw ErrorHandler.handleError(error as Error);
     }
-}
     
 }

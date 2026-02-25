@@ -9,6 +9,7 @@ import ServicesTable from "../../molecules/services-table/services-table";
 import { ServicesForm } from "../../molecules/services-form/services-form";
 import InfoModal from "../../molecules/info-modal/info-modal";
 import StatusIndicator from "../../atoms/status-indicator/status-indicator";
+import SearchBar from "../../molecules/search-bar/search-bar";
 
 type Props = {
     services: Service[];
@@ -24,6 +25,10 @@ type Props = {
     serviceToView: Service | null;
     onViewDescription: (service: Service) => void;
     closeInfo: () => void;
+
+    search: string;
+    onSearchChange: (value: string) => void;
+    onSearch: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 
@@ -42,11 +47,20 @@ export default function ServicesList({
     onViewDescription,
     isInfoOpen,
     closeInfo,
-    serviceToView
+    serviceToView,
+
+    onSearch,
+    onSearchChange,
+    search
 }: Props) {
     return(
         <div className={style.container}>
-            <div className={style.newServiceButton}>
+            <div className={style.header}>
+                <SearchBar 
+                   value={search}
+                   onChange={onSearchChange}
+                   onSearch={onSearch}
+                />
                 <MainButton
                     enabled
                     text="Nuevo servicio"
@@ -55,6 +69,7 @@ export default function ServicesList({
                     icon={addIcon}
                     iconAlt="Nuevo servicio"
                     iconPosition="left"
+                    modifier={style.newServiceButton}
                 />
             </div>
             <div>

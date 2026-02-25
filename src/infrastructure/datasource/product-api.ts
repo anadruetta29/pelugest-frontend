@@ -7,12 +7,14 @@ import type { DeleteProductReq } from "../../domain/dto/product/request/DeletePr
 import type { FindProductByIdReq } from "../../domain/dto/product/request/FindProductByIdReq";
 import type { GetAllProductsByStatusReq } from "../../domain/dto/product/request/GetAllProductsByStatusReq";
 import type { GetAllProductsReq } from "../../domain/dto/product/request/GetAllProductsReq";
+import type { SearchProductReq } from "../../domain/dto/product/request/SearchProductReq";
 import type { UpdateProductReq } from "../../domain/dto/product/request/UpdateProductReq";
 import type { CreateProductRes } from "../../domain/dto/product/response/CreateProductRes";
 import type { DeactivateProductRes } from "../../domain/dto/product/response/DeactivateProductRes";
 import type { FindProductByIdRes } from "../../domain/dto/product/response/FindProductByIdRes";
 import type { GetAllProductsByStatusRes } from "../../domain/dto/product/response/GetAllProductsByStatusRes";
 import type { GetAllProductsRes } from "../../domain/dto/product/response/GetAllProductsRes";
+import type { SearchProductRes } from "../../domain/dto/product/response/SearchProductRes";
 import type { UpdateProductRes } from "../../domain/dto/product/response/UpdateProductRes";
 
 export class ProductApiDataSource implements ProductDataSourceI {
@@ -130,5 +132,24 @@ export class ProductApiDataSource implements ProductDataSourceI {
             throw ErrorHandler.handleError(error as Error);
         }
     }
+
+    public async search(dto: SearchProductReq): Promise<SearchProductRes> {
+        try {
+            const response = await this.httpClient.get(
+                `/api/products/search`,
+                { ... dto},
+                dto.session.getAccessToken()
+            );
     
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+    
+            return response;
+        } 
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+        
 }

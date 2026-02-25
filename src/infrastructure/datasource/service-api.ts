@@ -7,12 +7,14 @@ import type { DeleteServiceReq } from "../../domain/dto/service/request/DeleteSe
 import type { FindServiceByIdReq } from "../../domain/dto/service/request/FindServiceByIdReq";
 import type { GetAllServicesByStatusReq } from "../../domain/dto/service/request/GetAllServicesByStatusReq";
 import type { GetAllServicesReq } from "../../domain/dto/service/request/GetAllServicesReq";
+import type { SearchServiceReq } from "../../domain/dto/service/request/SearchServiceReq";
 import type { UpdateServiceReq } from "../../domain/dto/service/request/UpdateServiceReq";
 import type { CreateServiceRes } from "../../domain/dto/service/response/CreateServiceRes";
 import type { DeactivateServiceRes } from "../../domain/dto/service/response/DeactivateServiceRes";
 import type { FindServiceByIdRes } from "../../domain/dto/service/response/FindServiceByIdRes";
 import type { GetAllServicesByStatusRes } from "../../domain/dto/service/response/GetAllServicesByStatusRes";
 import type { GetAllServicesRes } from "../../domain/dto/service/response/GetAllServicesRes";
+import type { SearchServiceRes } from "../../domain/dto/service/response/SearchServiceRes";
 import type { UpdateServiceRes } from "../../domain/dto/service/response/UpdateServiceRes";
 
 export class ServiceApiDataSource implements ServiceDataSourceI {
@@ -114,20 +116,39 @@ export class ServiceApiDataSource implements ServiceDataSourceI {
     }
 
     public async deactivate(dto: DeactivateServiceReq): Promise<DeactivateServiceRes> {
-            try {
-                const response = await this.httpClient.get(
-                    `/api/services/${dto.id}/deactivate`,
-                    undefined,
-                    dto.session.getAccessToken()
-                );
-    
-                if (response.error) {
-                throw ErrorHandler.handleError(response.error);
-                }
-    
-                return response;
-            } catch (error) {
-                throw ErrorHandler.handleError(error as Error);
+        try {
+            const response = await this.httpClient.get(
+                `/api/services/${dto.id}/deactivate`,
+                undefined,
+                dto.session.getAccessToken()
+            );
+
+            if (response.error) {
+            throw ErrorHandler.handleError(response.error);
             }
+
+            return response;
+        } catch (error) {
+            throw ErrorHandler.handleError(error as Error);
         }
+    }
+
+    public async search(dto: SearchServiceReq): Promise<SearchServiceRes> {
+       try {
+            const response = await this.httpClient.get(
+                `/api/services/search`,
+                { ... dto},
+                dto.session.getAccessToken()
+            );
+    
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+    
+            return response;
+        } 
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
 }
