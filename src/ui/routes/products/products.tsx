@@ -6,7 +6,6 @@ import Loader from "../../components/atoms/loader/loader";
 export default function ProductsRoute() {
     const {
         isLoading,
-        products,
 
         isFormOpen,
         productToEdit,
@@ -14,7 +13,11 @@ export default function ProductsRoute() {
         onNewProduct,
         closeForm,
         onSubmitProduct,
-        onUpdateStockProduct
+        onUpdateStockProduct,
+        search,
+        handleSearchChange,
+        handleSearch,
+        displayedProducts
     } = ViewModel();
 
     if (isLoading) {
@@ -28,7 +31,7 @@ export default function ProductsRoute() {
     return (
         <Layout withSidebar>
             <ProductsList
-                products={products}
+                products={displayedProducts}
                 isFormOpen={isFormOpen}
                 productToEdit={productToEdit}
                 onEditProduct={onEditProduct}
@@ -36,6 +39,9 @@ export default function ProductsRoute() {
                 onCloseForm={closeForm}
                 onSubmitProduct={onSubmitProduct}
                 onUpdateStockProduct={onUpdateStockProduct}
+                search={search}
+                onSearchChange={handleSearchChange}
+                onSearch={handleSearch}
             />
         </Layout>
     );

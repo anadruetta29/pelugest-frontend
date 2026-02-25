@@ -9,6 +9,7 @@ import type { CreateServiceReq } from "../../../domain/dto/service/request/Creat
 import type { UpdateServiceReq } from "../../../domain/dto/service/request/UpdateServiceReq";
 import type { DeactivateServiceReq } from "../../../domain/dto/service/request/DeactivateServiceReq";
 import type { GetAllServicesReq } from "../../../domain/dto/service/request/GetAllServicesReq";
+import type { SearchServiceReq } from "../../../domain/dto/service/request/SearchServiceReq";
 
 export function ViewModel() {
 
@@ -21,6 +22,10 @@ export function ViewModel() {
     const [services, setServices] = useState<Service[]>([]);
     const [service, setService] = useState<Service | null>(null);
 
+    const [search, setSearch] = useState("");
+    const [searchServices, setSearchServices] = useState<Service[]>([]);
+    const [isSearching, setIsSearching] = useState(false);
+    
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formMode, setFormMode] = useState<"create" | "edit">("create");
 
@@ -145,6 +150,56 @@ export function ViewModel() {
         setServiceToView(null);
     };
 
+    /* ==============================
+               FEATURE: SEARCH
+            ============================== */
+        
+            const handleSearchChange = (value: string) => {
+                setSearch(value);
+        
+                if (value.trim() === "") {
+                    clearSearch();
+                }
+            };
+        
+            const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                if (!session) return;
+        
+                if (!search.trim()) {
+                    clearSearch();
+                    return;
+                }
+        
+                try {
+                    setIsLoading(true);
+                    setIsSearching(true);
+        
+                    const response = await serviceRepository.search({
+                        name: search,
+                        page: 1,
+                        limit: 10,
+                        session,
+                    } as SearchServiceReq);
+        
+                    setSearchServices(response.services);
+                } 
+                catch (error) {
+                    console.error("Error searching services:", error);
+                } 
+                finally {
+                    setIsLoading(false);
+                }
+            };
+        
+            const clearSearch = () => {
+                setSearch("");
+                setIsSearching(false);
+                setSearchServices([]);
+            };
+        
+            const displayedServices = isSearching ? searchServices : services;
+
 
     return {
         isLoading, 
@@ -161,6 +216,12 @@ export function ViewModel() {
         isInfoOpen,
         serviceToView,
         onViewDescription,
-        closeInfo
+        closeInfo,
+         
+        search,
+        handleSearchChange,
+        handleSearch,
+
+        displayedServices
     };
 }

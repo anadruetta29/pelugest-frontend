@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import type { GetAllProductsReq } from "../../../domain/dto/product/request/GetAllProductsReq";
 import type { CreateProducttReq } from "../../../domain/dto/product/request/CreateProductReq";
 import type { UpdateProductReq } from "../../../domain/dto/product/request/UpdateProductReq";
+import type { SearchProductReq } from "../../../domain/dto/product/request/SearchProductReq";
 
 export function ViewModel() {
 
@@ -26,6 +27,10 @@ export function ViewModel() {
     const [isLoading, setIsLoading] = useState(true);
 
     const [products, setProducts] = useState<Product[]>([]);
+
+    const [search, setSearch] = useState("");
+    const [searchProducts, setSearchProducts] = useState<Product[]>([]);
+    const [isSearching, setIsSearching] = useState(false);
 
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formMode, setFormMode] = useState<"create" | "edit">("create");
@@ -162,6 +167,72 @@ export function ViewModel() {
         }
     };
 
+    /* ==============================
+           FEATURE: SEARCH
+        ============================== */
+    
+        const handleSearchChange = (value: string) => {
+            setSearch(value);
+    
+            if (value.trim() === "") {
+                clearSearch();
+            }
+        };
+    
+        const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            if (!session) return;
+
+            if (!search.trim()) {
+                clearSearch;
+                return;
+            }
+
+            try {
+                setIsLoading(true);
+                setIsSearching(true);
+
+                const response = await productRepository.search({
+                    name: search,
+                    page: 1,
+                    limit: 10,
+                    session,
+                } as SearchProductReq);
+
+                const productsWithStock = await Promise.all(
+                    response.products.map(async (product) => {
+                        try {
+                            const stockResponse =
+                                await stockProductRepository.findByProduct({
+                                    productId: product.id,
+                                    session,
+                                } as FindStockProductByProductReq);
+
+                            return { ...product, stock: stockResponse.stock };
+                        } catch {
+                            return { ...product, stock: undefined };
+                        }
+                    })
+                );
+
+                setSearchProducts(productsWithStock);
+            } 
+            catch (error) {
+                console.error("Error searching products:", error);
+            } 
+            finally {
+                setIsLoading(false);
+            }
+        };
+
+        const clearSearch = () => {
+            setSearch("");
+            setIsSearching(false);
+            setSearchProducts([]);
+        };
+
+        const displayedProducts = isSearching ? searchProducts : products;
+
     return {
         isLoading,
         
@@ -173,6 +244,12 @@ export function ViewModel() {
         onNewProduct,
         closeForm,
         onSubmitProduct,
-        onUpdateStockProduct
+        onUpdateStockProduct,
+
+        search,
+        handleSearchChange,
+        handleSearch,
+
+        displayedProducts
     };
 }

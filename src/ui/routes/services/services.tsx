@@ -6,7 +6,6 @@ import Loader from "../../components/atoms/loader/loader";
 export default function ServicesRoute() {
     const {
         isLoading,
-        services,
 
         isFormOpen,
         serviceToEdit,
@@ -19,6 +18,11 @@ export default function ServicesRoute() {
         isInfoOpen,
         onViewDescription,
         serviceToView,
+
+        search,
+        handleSearchChange,
+        handleSearch,
+        displayedServices
     } = ViewModel();
 
     if (isLoading) {
@@ -32,7 +36,7 @@ export default function ServicesRoute() {
     return (
         <Layout withSidebar>
             <ServicesList
-                services={services}
+                services={displayedServices}
 
                 isFormOpen={isFormOpen}
                 serviceToEdit={serviceToEdit}
@@ -45,6 +49,10 @@ export default function ServicesRoute() {
                 isInfoOpen={isInfoOpen}
                 closeInfo={closeInfo}
                 serviceToView={serviceToView}
+
+                search={search}
+                onSearchChange={handleSearchChange}
+                onSearch={handleSearch}
             />
         </Layout>
     );
