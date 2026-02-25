@@ -18,9 +18,9 @@ export default function MovementIndicator({ type }: Props) {
                 ${isAdjustment ? style.adjustment : ""}
                 `}
             >
-                {isIn && "↑"}
-                {isOut && "↓"}
-                {isAdjustment && "—"}
+                {isIn && "⇧"}
+                {isOut && "⇩"}
+                {isAdjustment && "‒"}
             </span>
             <span className={style.label}>
                 {isIn && "Ingreso"}
