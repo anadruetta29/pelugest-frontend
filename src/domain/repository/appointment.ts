@@ -10,7 +10,7 @@ import type { GetAllAppointmentsByStatusRes } from "../dto/appointment/response/
 import type { GetAllAppointmentsRes } from "../dto/appointment/response/GetAllAppointmentsRes";
 import type { UpdateAppointmentRes } from "../dto/appointment/response/UpdateAppointmentRes";
 
-export abstract class AppointmentDataSourceI {
+export abstract class AppointmentRepositoryI {
     abstract create(dto: CreateAppointmentReq): Promise<CreateAppointmentRes>; 
     abstract update(dto: UpdateAppointmentReq): Promise<UpdateAppointmentRes>;
     abstract delete(dto: DeleteAppointmentReq): Promise<void>;

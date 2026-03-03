@@ -1,3 +1,4 @@
+export * from './datasource/appointment-api';
 export * from './datasource/auth-api';
 export * from './datasource/client-api';
 export * from './datasource/product-api';
@@ -6,6 +7,7 @@ export * from './datasource/service-api';
 export * from './datasource/session-ls';
 export * from './datasource/stock-movement-api';
 export * from './datasource/stock-product-api';
+export * from './repository/appointment';
 export * from './repository/auth';
 export * from './repository/client';
 export * from './repository/product';

@@ -1,4 +1,4 @@
-import type { CreateProducttReq } from "../dto/product/request/CreateProductReq";
+import type { CreateProductReq } from "../dto/product/request/CreateProductReq";
 import type { DeactivateProductReq } from "../dto/product/request/DeactivateProductReq";
 import type { DeleteProductReq } from "../dto/product/request/DeleteProductReq";
 import type { FindProductByIdReq } from "../dto/product/request/FindProductByIdReq";
@@ -15,7 +15,7 @@ import type { SearchProductRes } from "../dto/product/response/SearchProductRes"
 import type { UpdateProductRes } from "../dto/product/response/UpdateProductRes";
 
 export abstract class ProductRepositoryI {
-    abstract create(dto: CreateProducttReq): Promise<CreateProductRes>;
+    abstract create(dto: CreateProductReq): Promise<CreateProductRes>;
     abstract update(dto: UpdateProductReq): Promise<UpdateProductRes>;
     abstract delete(dto: DeleteProductReq): Promise<void>;
     abstract findById(dto: FindProductByIdReq): Promise<FindProductByIdRes>;

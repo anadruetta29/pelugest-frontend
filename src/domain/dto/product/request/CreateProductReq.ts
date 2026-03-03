@@ -1,6 +1,6 @@
 import { Session } from '../../../entity/session';
 
-export interface CreateProducttReq {
+export interface CreateProductReq {
     name: string;
     price: number;
     session: Session;

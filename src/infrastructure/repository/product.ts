@@ -1,6 +1,6 @@
 import type {  } from "../../domain";
 import { ProductDataSourceI } from "../../domain/datasource/product";
-import type { CreateProducttReq } from "../../domain/dto/product/request/CreateProductReq";
+import type { CreateProductReq } from "../../domain/dto/product/request/CreateProductReq";
 import type { DeactivateProductReq } from "../../domain/dto/product/request/DeactivateProductReq";
 import type { DeleteProductReq } from "../../domain/dto/product/request/DeleteProductReq";
 import type { FindProductByIdReq } from "../../domain/dto/product/request/FindProductByIdReq";
@@ -25,7 +25,7 @@ export class ProductRepository implements ProductRepositoryI {
             this.dataSource = dataSource;
         }
         
-        public async create(dto: CreateProducttReq): Promise<CreateProductRes> {
+        public async create(dto: CreateProductReq): Promise<CreateProductRes> {
             try {
                 return await this.dataSource.create(dto);
             }

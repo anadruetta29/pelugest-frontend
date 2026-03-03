@@ -1,7 +1,7 @@
 import { HTTPClient } from "../../core";
 import { ErrorHandler } from "../../domain";
 import type { ProductDataSourceI } from "../../domain/datasource/product";
-import type { CreateProducttReq } from "../../domain/dto/product/request/CreateProductReq";
+import type { CreateProductReq } from "../../domain/dto/product/request/CreateProductReq";
 import type { DeactivateProductReq } from "../../domain/dto/product/request/DeactivateProductReq";
 import type { DeleteProductReq } from "../../domain/dto/product/request/DeleteProductReq";
 import type { FindProductByIdReq } from "../../domain/dto/product/request/FindProductByIdReq";
@@ -25,7 +25,7 @@ export class ProductApiDataSource implements ProductDataSourceI {
         this.httpClient = new HTTPClient();
     }
 
-    public async create(dto: CreateProducttReq): Promise<CreateProductRes> {
+    public async create(dto: CreateProductReq): Promise<CreateProductRes> {
         try {
             const response = await this.httpClient.post(`/api/products/`, {...dto}, dto.session.getAccessToken());
             if (response.error) {
