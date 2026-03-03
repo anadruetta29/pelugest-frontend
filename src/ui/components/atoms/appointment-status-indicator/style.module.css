@@ -1,0 +1,27 @@
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+.RESERVED {
+  background-color: var(--reserved-status);
+}
+
+.IN_PROGRESS {
+  background-color: var(--in-progress-status);
+}
+
+.ATTENDED {
+  background-color: var(--attended-status);
+}
+
+.MISSED {
+  background-color: var(--missed-status);
+}
+
+.CANCELLED {
+  background-color: var(--cancelled-status);
+}

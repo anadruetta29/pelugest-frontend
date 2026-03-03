@@ -53,4 +53,10 @@
 	--menu-button: #374151;
 	--text-muted: #7d7d84;
 	--text-soft-black: #1F2937;
+
+	--reserved-status: #2ecc71;
+	--in-progress-status: #3498db;
+	--attended-status: #9b59b6;
+	--missed-status: #e67e22;
+	--cancelled-status: #7f8c8d;
 }

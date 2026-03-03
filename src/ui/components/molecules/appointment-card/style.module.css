@@ -1,0 +1,54 @@
+.container {
+    background-color: var(--surface);
+    color: var(--on-surface);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    padding: 20px;
+    margin-bottom: 20px;
+
+    box-shadow: 0 4px 12px var(--shadow-low);
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px var(--shadow-medium);
+}
+
+
+.date {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.person {
+    font-size: 14px;
+    color: var(--text-soft-black);
+}
+
+
+.statusWrapper {
+    margin-top: 4px;
+}
+
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+.detailButtonWrapper {
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+}
