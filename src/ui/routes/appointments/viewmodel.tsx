@@ -65,7 +65,6 @@ export default function ViewModel() {
         e.preventDefault();
         
         if (!session) {
-            console.log("❌ No session found");
             return;
         }
 
@@ -75,18 +74,12 @@ export default function ViewModel() {
         const startDateTimeString = formData.get("startDateTime") as string;
         const startDateTime = new Date(startDateTimeString);
 
-        console.log("📅 startDateTimeString:", startDateTimeString);
-        console.log("📅 parsed startDateTime:", startDateTime);
-        console.log("📅 isValidDate:", !isNaN(startDateTime.getTime()));
-
-        console.log("🧾 selectedServiceIds:", selectedServiceIds);
 
         const estimatedEndDateTime = calculateEstimatedEndTime(
             startDateTime,
             selectedServiceIds
         );
         
-        console.log("⏳ estimatedEndDateTime:", estimatedEndDateTime);
 
         const appointmentDetails = services
             .filter(service => selectedServiceIds.includes(service.id))
@@ -95,11 +88,6 @@ export default function ViewModel() {
                 price: Number(service.basePrice),
                 durationMin: service.estimatedDurationMin
         }));
-
-        console.log("📦 appointmentDetails:", appointmentDetails);
-
-        console.log("👤 clientId:", formData.get("clientId") as string);
-        console.log("✂️ hairdresserId:", formData.get("hairdresserId") as string);
 
         try {
             await appointmentRepository.create({
@@ -118,6 +106,7 @@ export default function ViewModel() {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
         }
     };
+    
     /* ==============================
        FEATURE: UPDATE APPOINTMENT
     ============================== */
