@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { createContext, useContext, useMemo } from "react";
 import { AuthRepository } from "../../infrastructure/repository/auth";
 import { SessionRepository } from "../../infrastructure/repository/session";
-import { ClientRepository, RecordStatusRepository, StockMovementRepository, StockProductRepository } from "../../infrastructure";
+import { AppointmentRepository, ClientRepository, RecordStatusRepository, StockMovementRepository, StockProductRepository } from "../../infrastructure";
 import { ServiceRepository } from "../../infrastructure/repository/service";
 import { ProductRepository } from "../../infrastructure/repository/product";
 
@@ -19,6 +19,7 @@ interface RepositoriesContextType {
 	productRepository: ProductRepository;
 	stockProductRepository: StockProductRepository;
 	stockMovementRepository: StockMovementRepository;
+	appointmentRepository: AppointmentRepository;
 }
 
 const RepositoriesContext = createContext<RepositoriesContextType | null>(null);
@@ -32,7 +33,8 @@ export const RepositoriesProvider = ({ children }: RepositoriesProviderProps) =>
 			serviceRepository: new ServiceRepository(),
 			productRepository: new ProductRepository(),
 			stockProductRepository: new StockProductRepository(),
-			stockMovementRepository: new StockMovementRepository()
+			stockMovementRepository: new StockMovementRepository(),
+			appointmentRepository: new AppointmentRepository(),
 	}), []);
 
 	return (

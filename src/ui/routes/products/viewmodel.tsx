@@ -12,7 +12,7 @@ import {
 } from "../../../domain";
 import toast from "react-hot-toast";
 import type { GetAllProductsReq } from "../../../domain/dto/product/request/GetAllProductsReq";
-import type { CreateProducttReq } from "../../../domain/dto/product/request/CreateProductReq";
+import type { CreateProductReq } from "../../../domain/dto/product/request/CreateProductReq";
 import type { UpdateProductReq } from "../../../domain/dto/product/request/UpdateProductReq";
 import type { SearchProductReq } from "../../../domain/dto/product/request/SearchProductReq";
 
@@ -115,7 +115,7 @@ export function ViewModel() {
                     name: formData.get("name") as string,
                     price: Number(formData.get("price")),
                     session,
-                } as CreateProducttReq);
+                } as CreateProductReq);
 
                 await stockProductRepository.create({
                     currentAmountMl: Number(formData.get("currentAmountMl")) || 0,

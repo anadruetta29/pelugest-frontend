@@ -1,0 +1,29 @@
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+
+    padding: 32px 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.newAppointmentButton {
+    width: 150px; 
+    border-radius: 0;
+    font-size: 15px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
