@@ -27,6 +27,10 @@ export default function AppointmentCard( { appointment,
     onViewDetail,
     onEditAppointment
  }: Props) {
+
+    const start = new Date(appointment.startDateTime);
+    const end = new Date(appointment.estimatedEndDateTime);
+
     return (
         <div className={style.container}>
 
@@ -35,9 +39,20 @@ export default function AppointmentCard( { appointment,
                 <img src={editIcon} alt="Edit icon" onClick={onEditAppointment} className={style.editIcon}/>
             </div>
 
+
             <p className={style.date}>
-                {new Date(appointment.startDateTime).toLocaleString()} -{" "}
-                {new Date(appointment.estimatedEndDateTime).toLocaleString()}
+                {start.toLocaleDateString("es-AR", {
+                    day: "numeric",
+                    month: "short",
+                    })
+                } · {start.toLocaleTimeString("es-AR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    })
+                } - {end.toLocaleTimeString("es-AR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })}
             </p>
 
             <p className={style.person}>
