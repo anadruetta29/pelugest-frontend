@@ -27,7 +27,10 @@ export default function AppointmentsRoute() {
         
         clients,
         hairdressers,
-        services
+        services,
+
+        onRemoveService,
+        selectedServiceIds
     } = ViewModel();
 
     if (isLoading) {
@@ -58,6 +61,9 @@ export default function AppointmentsRoute() {
                 onOpenEditAppointment={onOpenEditAppointment}
                 services={services}
                 onUpdateAppointment={onUpdateAppointment}
+                onRemoveService={onRemoveService}
+                selectedServiceIds={selectedServiceIds}
+
             />
         </Layout>
     );

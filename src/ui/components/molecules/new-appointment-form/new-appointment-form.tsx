@@ -13,9 +13,22 @@ type Props = {
 
     services: Service[];
     onAddService: (serviceId: string) => void;
+
+    selectedServiceIds: string[];
+    onRemoveService: (serviceId: string) => void;
+
 };
 
-export function NewAppointmentForm({ onSubmit, onCancel, clients, hairdressers, onAddService, services }: Props) {
+export function NewAppointmentForm({ 
+    onSubmit, 
+    onCancel, 
+    clients, 
+    hairdressers, 
+    onAddService, 
+    services,
+    selectedServiceIds,
+    onRemoveService
+ }: Props) {
     return (
         <div className={style.backdrop}>
             <form onSubmit={onSubmit} className={style.card}>
@@ -57,7 +70,7 @@ export function NewAppointmentForm({ onSubmit, onCancel, clients, hairdressers, 
                         name="hairdresserId"
                         required
                     >
-                        <option value="">Seleccionar peluquero: </option>
+                        <option value="">Seleccionar peluquero</option>
                         {hairdressers.map((hairdresser) => (
                         <option key={hairdresser.id} value={hairdresser.id}>
                             {hairdresser.name}
@@ -67,7 +80,7 @@ export function NewAppointmentForm({ onSubmit, onCancel, clients, hairdressers, 
                 </div>
                 
                 <div className={style.formGroup}>
-                    <label htmlFor="serviceId">Servicio:</label>
+                    <label htmlFor="serviceId">Agregar servicio:</label>
                     <select
                         defaultValue=""
                         onChange={(e) => {
@@ -76,16 +89,37 @@ export function NewAppointmentForm({ onSubmit, onCancel, clients, hairdressers, 
                             e.target.value = "";
                         }}
                     >
-                        <option value="">Seleccionar servicio: </option>
-
+                        <option value="">Seleccionar servicio</option>
                         {services.map((service) => (
                             <option key={service.id} value={service.id}>
-                            {service.name}
+                                {service.name}
                             </option>
                         ))}
                     </select>
                 </div>
 
+                {selectedServiceIds.length > 0 && (
+                    <div className={style.selectedServices}>
+                        <h4>Servicios seleccionados:</h4>
+                        <ul>
+                            {selectedServiceIds.map((id) => {
+                                const service = services.find(s => s.id === id);
+                                if (!service) return null;
+                                return (
+                                    <li key={id}>
+                                        {service.name}{" "}
+                                        <button
+                                            type="button"
+                                            onClick={() => onRemoveService(id)}
+                                        >
+                                            ❌
+                                        </button>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )}
                 <div className={style.actions}>
                     <DestructiveButton
                         text="Cancelar"

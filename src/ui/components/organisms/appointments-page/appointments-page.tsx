@@ -30,6 +30,9 @@ type Props = {
     onMissAppointment?: (id: string) => void;
     onStartAppointment?: (id: string) => void;
     onViewDetail?: (id: string) => void;
+
+    selectedServiceIds: string[];
+    onRemoveService: (serviceId: string) => void;
 };
 
 export default function AppointmentsPage({
@@ -49,7 +52,9 @@ export default function AppointmentsPage({
     onCancelAppointment,
     onMissAppointment,
     onStartAppointment,
-    onViewDetail
+    onViewDetail,
+    onRemoveService,
+    selectedServiceIds
 }: Props) {
     return (
         <div className={style.container}>
@@ -88,6 +93,8 @@ export default function AppointmentsPage({
                         hairdressers={hairdressers}
                         services={services}
                         onAddService={onAddService}
+                        onRemoveService={onRemoveService}
+                        selectedServiceIds={selectedServiceIds}
                     />
             )}
 
@@ -102,6 +109,8 @@ export default function AppointmentsPage({
                         hairdressers={hairdressers}
                         services={services}
                         onAddService={onAddService}
+                        onRemoveService={onRemoveService}
+                        selectedServiceIds={selectedServiceIds}
                     />
             )}
         </div>
