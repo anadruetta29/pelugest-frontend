@@ -42,6 +42,7 @@ export function ViewModel() {
             });
 
             toast.success("Sesión iniciada correctamente");
+            navigate("/appointments");
             
         }
         catch (error) {

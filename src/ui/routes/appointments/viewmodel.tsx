@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRepositories } from "../../../core";
 import useSession from "../../hooks/useSession";
-import { AppointmentDetail, Errors, type Appointment, type CreateAppointmentReq, type GetAllAppointmentsReq, type UpdateAppointmentReq } from "../../../domain";
+import { AppointmentDetail, Client, Errors, Service, Session, User, type Appointment, type CreateAppointmentReq, type FindRecordStatusByNameReq, type GetAllAppointmentsReq, type UpdateAppointmentReq } from "../../../domain";
 import toast from "react-hot-toast";
 
 export default function ViewModel() {
 
     const { session, logged } = useSession();
-    const { appointmentRepository, clientRepository, serviceRepository,  } = useRepositories();
+    const { appointmentRepository, clientRepository, serviceRepository, userRepository, recordStatusRepository
+
+      } = useRepositories();
     
     const [isLoading, setIsLoading] = useState(true);
     
@@ -18,12 +20,16 @@ export default function ViewModel() {
 
     const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
 
-    const [details, setDetails] = useState<AppointmentDetail[]>([]);
-
+    const [clients, setClients] = useState<Client[]>([]);
+    const [hairdressers, setHairdressers] = useState<User[]>([]);
+    const [services, setServices] = useState<Service[]>([]);
 
     useEffect(() => {
         if (logged && session) {
             fetchAppointments();
+            fetchClients();
+            fetchHairdressers();
+            fetchServices();
         }
     }, [logged, session]);
 
@@ -69,6 +75,18 @@ export default function ViewModel() {
             selectedServiceIds
         );
 
+        // 🔥 Crear entidades reales
+        const appointmentDetails: AppointmentDetail[] = services
+            .filter(service => selectedServiceIds.includes(service.id))
+            .map(service =>
+                AppointmentDetail.fromObject({
+                    id: crypto.randomUUID(), 
+                    service: service,       
+                    price: service.basePrice,
+                    durationMin: service.estimatedDurationMin
+                })
+            );
+
         try {
             await appointmentRepository.create({
                 session,
@@ -76,18 +94,16 @@ export default function ViewModel() {
                 estimatedEndDateTime,
                 clientId: formData.get("clientId") as string,
                 hairdresserId: formData.get("hairdresserId") as string,
-                details: details
-            } as CreateAppointmentReq);
+                details: appointmentDetails
+            });
 
             toast.success("Turno creado correctamente");
             onCloseForm();
             fetchAppointments();
-
         } catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
         }
     };
-
     /* ==============================
        FEATURE: UPDATE APPOINTMENT
     ============================== */
@@ -101,8 +117,20 @@ export default function ViewModel() {
     const startDateTimeString = formData.get("startDateTime") as string;
     const startDateTime = new Date(startDateTimeString);
 
-    const estimatedEndDateTime = new Date(
-        calculateEstimatedEndTime(startDateTimeString, selectedServiceIds)
+    const estimatedEndDateTime = calculateEstimatedEndTime(
+        startDateTime,
+        selectedServiceIds
+    );
+
+    const appointmentDetails: AppointmentDetail[] = services
+        .filter(service => selectedServiceIds.includes(service.id))
+        .map(service =>
+            AppointmentDetail.fromObject({
+                id: crypto.randomUUID(),
+                service: service,
+                price: service.basePrice,
+                durationMin: service.estimatedDurationMin
+            })
     );
 
     try {
@@ -113,7 +141,7 @@ export default function ViewModel() {
             estimatedEndDateTime,
             clientId: formData.get("clientId") as string,
             hairdresserId: formData.get("hairdresserId") as string,
-            details: details
+            details: appointmentDetails
         } as UpdateAppointmentReq);
 
         toast.success("Turno actualizado");
@@ -146,7 +174,7 @@ export default function ViewModel() {
         setIsNewOpen(true);
     };
 
-    const onEditAppointment = (appointment: Appointment) => {
+    const onOpenEditAppointment = (appointment: Appointment) => {
         setSelectedServiceIds(appointment.details.map(d => d.service.id) || []);
         setIsNewOpen(false);
         setEditingAppointment(appointment);
@@ -164,15 +192,21 @@ export default function ViewModel() {
 
     const calculateEstimatedEndTime = (
         startDateTime: Date,
-        selectedServiceIds: string[]
+        serviceIds: string[]
     ): Date => {
 
-        const totalDuration = services
-            .filter(service => selectedServiceIds.includes(service.id))
-            .reduce((acc, service) => acc + service.durationMin, 0);
+        if (!serviceIds.length) return startDateTime;
 
-        return new Date(startDateTime.getTime() + totalDuration * 60000);
+        const totalDurationMin = services
+            .filter(service => serviceIds.includes(service.id))
+            .reduce((acc, service) => acc + service.estimatedDurationMin, 0);
+
+        const endDateTime = new Date(startDateTime);
+        endDateTime.setMinutes(endDateTime.getMinutes() + totalDurationMin);
+
+        return endDateTime;
     };
+    
 
     /* ==============================
        GET CLIENTS, USERS AND SERVICES LISTS 
@@ -180,7 +214,63 @@ export default function ViewModel() {
 
     const fetchClients = async () => {
         try {
-            response = await clients
+
+            const status = await recordStatusRepository.findByName(
+                {
+                    name: "ACTIVE",
+                    session: session
+                } as FindRecordStatusByNameReq
+            )
+
+            const response = await clientRepository.getAllByStatus(
+                { 
+                    session: session,
+                    statusId: status.recordStatus.id
+                }
+            )
+
+            setClients(response.clients);
+        }
+        catch (error) {
+            toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
+        }
+    }
+
+    const fetchHairdressers = async () => {
+        try {
+
+            const response = await userRepository.getAllByRoleName(
+                { 
+                    session: session,
+                    roleName: "HAIRDRESSER"
+                }
+            )
+
+            setHairdressers(response.users);
+        }
+        catch (error) {
+            toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
+        }
+    }
+
+    const fetchServices = async () => {
+        try {
+            const status = await recordStatusRepository.findByName(
+                {
+                    name: "ACTIVE",
+                    session: session
+                } as FindRecordStatusByNameReq
+            )
+
+            const response = await serviceRepository.getAllByStatus({
+                session: session,
+                statusId: status.recordStatus.id
+            })
+
+            setServices(response.services);
+        }
+        catch (error) {
+            toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
         }
     }
 
@@ -202,7 +292,7 @@ export default function ViewModel() {
         editingAppointment,
 
         onNewAppointment,
-        onEditAppointment,
+        onOpenEditAppointment,
         onCloseForm,
 
         onCreateAppointment,
@@ -213,6 +303,10 @@ export default function ViewModel() {
         onCancelAppointment,
         onMissAppointment,
         onStartAppointment,
-        onViewDetail
+        onViewDetail,
+
+        clients,
+        hairdressers,
+        services
     };
 }

@@ -12,7 +12,7 @@ export default function AppointmentsRoute() {
         editingAppointment,
 
         onNewAppointment,
-        onEditAppointment,
+        onOpenEditAppointment,
         onCloseForm,
 
         onCreateAppointment,
@@ -23,7 +23,11 @@ export default function AppointmentsRoute() {
         onCancelAppointment,
         onMissAppointment,
         onStartAppointment,
-        onViewDetail
+        onViewDetail,
+        
+        clients,
+        hairdressers,
+        services
     } = ViewModel();
 
     if (isLoading) {
@@ -51,8 +55,9 @@ export default function AppointmentsRoute() {
                 onAddService={onAddService}
                 onCloseForm={onCloseForm}
                 onCreateAppointment={onCreateAppointment}
-                onEditAppointment={onEditAppointment}
+                onOpenEditAppointment={onOpenEditAppointment}
                 services={services}
+                onUpdateAppointment={onUpdateAppointment}
             />
         </Layout>
     );

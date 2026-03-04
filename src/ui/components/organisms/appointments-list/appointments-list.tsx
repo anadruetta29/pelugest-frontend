@@ -4,13 +4,15 @@ import AppointmentCard from "../../molecules/appointment-card/appointment-card";
 import style from "./style.module.css";
 
 type Props = {
-  appointments: Appointment[];
+    appointments: Appointment[];
 
-  onStart?: (id: string) => void;
-  onAttend?: (id: string) => void;
-  onMiss?: (id: string) => void;
-  onCancel?: (id: string) => void;
-  onViewDetail?: (id: string) => void;
+    onEdit?: (appointment: Appointment) => void;
+
+    onStart?: (id: string) => void;
+    onAttend?: (id: string) => void;
+    onMiss?: (id: string) => void;
+    onCancel?: (id: string) => void;
+    onViewDetail?: (id: string) => void;
 };
 
 export default function AppointmentsList({
@@ -19,7 +21,8 @@ export default function AppointmentsList({
   onAttend,
   onMiss,
   onCancel,
-  onViewDetail
+  onViewDetail,
+  onEdit
 }: Props) {
 
     if (!appointments || appointments.length === 0) {
@@ -40,6 +43,7 @@ export default function AppointmentsList({
                     onMiss={onMiss}
                     onCancel={onCancel}
                     onViewDetail={onViewDetail}
+                    onEditAppointment={() => onEdit?.(appointment)}
                 />
             ))}
         </div>

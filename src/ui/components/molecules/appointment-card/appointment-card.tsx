@@ -1,7 +1,8 @@
-import type { Appointment, AppointmentStatus } from "../../../../domain";
+import type { Appointment } from "../../../../domain";
 import { ActionButton } from "../../atoms/action-button/action-button";
 import AppointmentStatusIndicator from "../../atoms/appointment-status-indicator/appointment-status-indicator";
 import SmallTitle from "../../atoms/small-title/small-title";
+import editIcon from "../../../assets/icons/edit.svg";
 import style from "./style.module.css";
 
 type Props = {
@@ -12,6 +13,8 @@ type Props = {
     onCancel?: (id: string) => void;
     onViewDetail?: (id: string) => void;
     appointmentNumber: number;
+
+    onEditAppointment: () => void;
 }
 
 export default function AppointmentCard( { appointment,
@@ -20,11 +23,16 @@ export default function AppointmentCard( { appointment,
     onCancel,
     onMiss,
     onStart,
-    onViewDetail
+    onViewDetail,
+    onEditAppointment
  }: Props) {
     return (
         <div className={style.container}>
-            <SmallTitle text={`Turno n° ${appointmentNumber}`} />
+
+            <div className={style.header}>
+                <SmallTitle text={`Turno n° ${appointmentNumber}`} />
+                <img src={editIcon} alt="Edit icon" onClick={onEditAppointment}/>
+            </div>
 
             <p className={style.date}>
                 {new Date(appointment.startDateTime).toLocaleString()} -{" "}

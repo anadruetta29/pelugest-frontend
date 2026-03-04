@@ -2,9 +2,10 @@ import type { ReactNode } from "react";
 import { createContext, useContext, useMemo } from "react";
 import { AuthRepository } from "../../infrastructure/repository/auth";
 import { SessionRepository } from "../../infrastructure/repository/session";
-import { AppointmentRepository, ClientRepository, RecordStatusRepository, StockMovementRepository, StockProductRepository } from "../../infrastructure";
+import { AppointmentRepository, ClientRepository, RecordStatusRepository, StockMovementRepository, StockProductRepository, UserRepository } from "../../infrastructure";
 import { ServiceRepository } from "../../infrastructure/repository/service";
 import { ProductRepository } from "../../infrastructure/repository/product";
+import type { AppointmentDetail } from "../../domain";
 
 interface RepositoriesProviderProps {
   	children: ReactNode;
@@ -20,6 +21,7 @@ interface RepositoriesContextType {
 	stockProductRepository: StockProductRepository;
 	stockMovementRepository: StockMovementRepository;
 	appointmentRepository: AppointmentRepository;
+	userRepository: UserRepository;
 }
 
 const RepositoriesContext = createContext<RepositoriesContextType | null>(null);
@@ -35,6 +37,7 @@ export const RepositoriesProvider = ({ children }: RepositoriesProviderProps) =>
 			stockProductRepository: new StockProductRepository(),
 			stockMovementRepository: new StockMovementRepository(),
 			appointmentRepository: new AppointmentRepository(),
+			userRepository: new UserRepository()
 	}), []);
 
 	return (

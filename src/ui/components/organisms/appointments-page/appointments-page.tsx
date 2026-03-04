@@ -19,7 +19,9 @@ type Props = {
     onCloseForm: () => void;
 
     onCreateAppointment: (e: React.FormEvent<HTMLFormElement>) => void;
-    onEditAppointment: (e: React.FormEvent<HTMLFormElement>) => void;
+
+    onUpdateAppointment: (e: React.FormEvent<HTMLFormElement>) => void;
+    onOpenEditAppointment: (appointment: Appointment) => void;
 
     onAddService: (serviceId: string) => void;
 
@@ -40,7 +42,8 @@ export default function AppointmentsPage({
     onNewAppointment,
     onCloseForm,
     onCreateAppointment,
-    onEditAppointment,
+    onOpenEditAppointment,
+    onUpdateAppointment,
     onAddService,
     onAttendAppointment,
     onCancelAppointment,
@@ -71,30 +74,35 @@ export default function AppointmentsPage({
                     onMiss={onMissAppointment}
                     onStart={onStartAppointment}
                     onViewDetail={onViewDetail}
+                    onEdit={onOpenEditAppointment}
                 />
             </div>
 
-            {isNewOpen && (
-                <NewAppointmentForm
-                    onSubmit={onCreateAppointment}
-                    onCancel={onCloseForm}
-                    clients={clients}
-                    hairdressers={hairdressers}
-                    services={services}
-                    onAddService={onAddService}
-                />
+            {isNewOpen &&  clients?.length > 0 && 
+                hairdressers?.length > 0 && 
+                services?.length > 0 && (
+                    <NewAppointmentForm
+                        onSubmit={onCreateAppointment}
+                        onCancel={onCloseForm}
+                        clients={clients}
+                        hairdressers={hairdressers}
+                        services={services}
+                        onAddService={onAddService}
+                    />
             )}
 
-            {editingAppointment && (
-                <EditAppointmentForm
-                    appointment={editingAppointment}
-                    onSubmit={onEditAppointment}
-                    onCancel={onCloseForm}
-                    clients={clients}
-                    hairdressers={hairdressers}
-                    services={services}
-                    onAddService={onAddService}
-                />
+            {editingAppointment && clients?.length > 0 && 
+                hairdressers?.length > 0 && 
+                services?.length > 0 && (
+                    <EditAppointmentForm
+                        appointment={editingAppointment}
+                        onSubmit={onUpdateAppointment}
+                        onCancel={onCloseForm}
+                        clients={clients}
+                        hairdressers={hairdressers}
+                        services={services}
+                        onAddService={onAddService}
+                    />
             )}
         </div>
     );

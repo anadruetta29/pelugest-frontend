@@ -55,7 +55,7 @@ export function NewAppointmentForm({ onSubmit, onCancel, clients, hairdressers, 
                         name="hairdresserId"
                         required
                     >
-                        <option value="">Seleccionar peluquero</option>
+                        <option value="">Seleccionar peluquero: </option>
                         {hairdressers.map((hairdresser) => (
                         <option key={hairdresser.id} value={hairdresser.id}>
                             {hairdresser.name}
@@ -65,6 +65,7 @@ export function NewAppointmentForm({ onSubmit, onCancel, clients, hairdressers, 
                 </div>
                 
                 <div className={style.formGroup}>
+                    <label htmlFor="serviceId">Servicio:</label>
                     <select
                         defaultValue=""
                         onChange={(e) => {
@@ -73,9 +74,7 @@ export function NewAppointmentForm({ onSubmit, onCancel, clients, hairdressers, 
                             e.target.value = "";
                         }}
                     >
-                        <option value="" disabled>
-                            Seleccionar servicio
-                        </option>
+                        <option value="">Seleccionar servicio: </option>
 
                         {services.map((service) => (
                             <option key={service.id} value={service.id}>

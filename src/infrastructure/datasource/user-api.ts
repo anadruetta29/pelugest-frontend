@@ -11,7 +11,7 @@ export class UserApiDataSource implements UserDataSourceI {
 
     public async getAllByRoleName(dto: GetAllUsersByRoleNameReq): Promise<GetAllUsersByRoleNameRes> {
         try {
-            const response = await this.httpClient.get(`/api/users/${dto.roleName}`, undefined, dto.session.getAccessToken());
+            const response = await this.httpClient.get(`/api/users/role/${dto.roleName}`, undefined, dto.session.getAccessToken());
             if (response.error) throw ErrorHandler.handleError(response.error);
             return response;
         } catch (error) {

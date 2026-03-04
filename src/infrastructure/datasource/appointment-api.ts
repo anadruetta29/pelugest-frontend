@@ -1,5 +1,7 @@
 import { HTTPClient } from "../../core";
 import { AppointmentDataSourceI, ErrorHandler, type CreateAppointmentReq, type CreateAppointmentRes, type DeleteAppointmentReq, type FindAppointmentByIdReq, type FindAppointmentByIdRes, type GetAllAppointmentsByStatusReq, type GetAllAppointmentsByStatusRes, type GetAllAppointmentsReq, type GetAllAppointmentsRes, type UpdateAppointmentReq, type UpdateAppointmentRes } from "../../domain";
+import type { CreateAppointmentDetailReq } from "../../domain/dto/appointment/request/CreateAppointmentDetailReq";
+import type { CreateAppointmentDetailRes } from "../../domain/dto/appointment/response/CreateAppointmentDetailRes";
 
 export class AppointmentApiDataSource implements AppointmentDataSourceI {
 
@@ -98,6 +100,20 @@ export class AppointmentApiDataSource implements AppointmentDataSourceI {
             throw ErrorHandler.handleError(error as Error);
         }
     }
+    
+    public async createAppointmentDetail(dto: CreateAppointmentDetailReq): Promise<CreateAppointmentDetailRes> {
+        try {
+            const response = await this.httpClient.post(`/api/appointments/`, {...dto});
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
 
+            return response;
+        }
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+    
         
 }
