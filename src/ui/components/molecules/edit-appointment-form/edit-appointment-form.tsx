@@ -25,26 +25,30 @@ export function EditAppointmentForm({ appointment, onSubmit, onCancel, clients, 
                     Editar turno
                 </h2>
 
-                <InputLabel
-                    label="Hora de inicio: "
-                    name="startDateTime"
-                    id="startDateTime"
-                    type="date"
-                    placeholder="Hora de inicio"
-                    defaultValue={appointment?.startDateTime.toDateString() || ""}
-                    required
-                />
+                <div className={style.formGroup}>
+                    <InputLabel
+                        label="Hora de inicio: "
+                        name="startDateTime"
+                        id="startDateTime"
+                        type="datetime-local"
+                        placeholder="Hora de inicio"
+                        defaultValue={appointment?.startDateTime ? new Date(appointment.startDateTime).toISOString().slice(0, 16) : ""}
+                        required
+                    />
+                </div>
 
-                <InputLabel
-                    label="Hora de fin (estimación): "
-                    name="estimatedEndDateTime"
-                    id="estimatedEndDateTime"
-                    type="date"
-                    placeholder="Hora de fin (estimación)"
-                    defaultValue={appointment?.startDateTime.toDateString() || ""}
-                    required
-                />
-
+                <div className={style.formGroup}>
+                    <InputLabel
+                        label="Hora de fin (estimación): "
+                        name="estimatedEndDateTime"
+                        id="estimatedEndDateTime"
+                        type="datetime-local"
+                        placeholder="Hora de fin (estimación)"
+                        defaultValue={appointment?.estimatedEndDateTime ? new Date(appointment.estimatedEndDateTime).toISOString().slice(0, 16) : ""}
+                        required
+                    />
+                </div>
+                
                 <div className={style.formGroup}>
                     <label htmlFor="clientId">Cliente:</label>
                     <select
@@ -80,6 +84,7 @@ export function EditAppointmentForm({ appointment, onSubmit, onCancel, clients, 
                 </div>
                 
                 <div className={style.formGroup}>
+                    <label>Servicio:</label>
                     <select
                         defaultValue=""
                         onChange={(e) => {

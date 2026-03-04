@@ -178,7 +178,9 @@ export default function ViewModel() {
     };
 
     const onOpenEditAppointment = (appointment: Appointment) => {
-        setSelectedServiceIds(appointment.details.map(d => d.service.id) || []);
+        setSelectedServiceIds(
+            appointment.details?.map(d => d.service.id) || []
+        );
         setIsNewOpen(false);
         setEditingAppointment(appointment);
     };
