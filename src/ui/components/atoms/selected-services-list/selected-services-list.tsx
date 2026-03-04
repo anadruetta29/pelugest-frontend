@@ -1,4 +1,5 @@
 import type { Service } from "../../../../domain";
+import crossIcon from "../../../assets/icons/cross.svg";
 import style from "./style.module.css";
 
 type Props = {
@@ -26,7 +27,7 @@ export default function SelectedServicesList( {
                                 type="button"
                                 onClick={() => onRemoveService(id)}
                             >
-                                ❌
+                                <img src={crossIcon} alt="Borrar servicio" />
                             </button>
                         </li>
                     );

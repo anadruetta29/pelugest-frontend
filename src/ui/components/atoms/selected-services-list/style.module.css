@@ -1,0 +1,67 @@
+.selectedServices {
+    margin-top: 16px;
+    color: var(--on-surface);
+}
+
+.selectedServices h4 {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.selectedServices ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.selectedServices li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--pill-background);
+    color: var(--text-soft-black);
+    padding: 6px 14px;
+    border-radius: 999px; 
+    font-size: 14px;
+    box-shadow: 0 1px 2px var(--shadow-low); 
+    transition: all 0.2s ease;
+}
+
+.selectedServices li:hover {
+    background-color: var(--primary-container);
+    color: var(--on-primary-container);
+    transform: translateY(-1px);
+}
+
+.selectedServices button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 0.2s ease;
+    width: 16px;
+    height: 16px;
+}
+
+.selectedServices button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.selectedServices button:hover img {
+    filter: brightness(0.7); 
+}
+
+.selectedServices button:focus {
+    outline: none;
+}
