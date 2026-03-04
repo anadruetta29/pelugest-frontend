@@ -6,6 +6,6 @@ export interface CreateAppointmentReq {
     estimatedEndDateTime: Date;
     clientId: string;
     hairdresserId: string;
-    details: AppointmentDetail[];
+    details: { serviceId: string; price: number; durationMin: number;}[]
     session: Session;
 }

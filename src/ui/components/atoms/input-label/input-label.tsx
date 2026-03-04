@@ -4,7 +4,7 @@ import style from "./style.module.css"
 type Props = {
     id: string;
     name: string;
-    type: "text" | "number" | "password" | "date";
+    type: "text" | "number" | "password" | "date" | "datetime-local";
     placeholder:string;
     defaultValue?: string | number | undefined;
     required?: boolean;

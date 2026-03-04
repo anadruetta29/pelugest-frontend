@@ -26,10 +26,10 @@ export default function ViewModel() {
 
     useEffect(() => {
         if (logged && session) {
-            fetchAppointments();
             fetchClients();
             fetchHairdressers();
             fetchServices();
+            fetchAppointments();
         }
     }, [logged, session]);
 
@@ -63,29 +63,43 @@ export default function ViewModel() {
 
     const onCreateAppointment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!session) return;
+        
+        if (!session) {
+            console.log("❌ No session found");
+            return;
+        }
+
 
         const formData = new FormData(e.currentTarget);
 
         const startDateTimeString = formData.get("startDateTime") as string;
         const startDateTime = new Date(startDateTimeString);
 
+        console.log("📅 startDateTimeString:", startDateTimeString);
+        console.log("📅 parsed startDateTime:", startDateTime);
+        console.log("📅 isValidDate:", !isNaN(startDateTime.getTime()));
+
+        console.log("🧾 selectedServiceIds:", selectedServiceIds);
+
         const estimatedEndDateTime = calculateEstimatedEndTime(
             startDateTime,
             selectedServiceIds
         );
+        
+        console.log("⏳ estimatedEndDateTime:", estimatedEndDateTime);
 
-        // 🔥 Crear entidades reales
-        const appointmentDetails: AppointmentDetail[] = services
+        const appointmentDetails = services
             .filter(service => selectedServiceIds.includes(service.id))
-            .map(service =>
-                AppointmentDetail.fromObject({
-                    id: crypto.randomUUID(), 
-                    service: service,       
-                    price: service.basePrice,
-                    durationMin: service.estimatedDurationMin
-                })
-            );
+            .map(service => ({
+                serviceId: service.id,
+                price: Number(service.basePrice),
+                durationMin: service.estimatedDurationMin
+        }));
+
+        console.log("📦 appointmentDetails:", appointmentDetails);
+
+        console.log("👤 clientId:", formData.get("clientId") as string);
+        console.log("✂️ hairdresserId:", formData.get("hairdresserId") as string);
 
         try {
             await appointmentRepository.create({
@@ -95,7 +109,7 @@ export default function ViewModel() {
                 clientId: formData.get("clientId") as string,
                 hairdresserId: formData.get("hairdresserId") as string,
                 details: appointmentDetails
-            });
+            } as CreateAppointmentReq);
 
             toast.success("Turno creado correctamente");
             onCloseForm();

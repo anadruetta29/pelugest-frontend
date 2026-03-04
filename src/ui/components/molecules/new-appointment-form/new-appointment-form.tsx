@@ -23,15 +23,17 @@ export function NewAppointmentForm({ onSubmit, onCancel, clients, hairdressers, 
                     Nuevo turno
                 </h2>
 
-                <InputLabel
+                <div className={style.formGroup}>
+                    <InputLabel
                     label="Hora de inicio: "
                     name="startDateTime"
                     id="startDateTime"
-                    type="date"
+                    type="datetime-local"
                     placeholder="Hora de inicio"
                     required
                 />
-
+                </div>
+                
                 <div className={style.formGroup}>
                     <label htmlFor="clientId">Cliente:</label>
                     <select
