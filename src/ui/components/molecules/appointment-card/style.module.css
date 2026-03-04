@@ -15,7 +15,7 @@
 
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
 
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
@@ -24,6 +24,8 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 18px var(--shadow-medium);
 }
+
+/* HEADER */
 
 .header {
     display: flex;
@@ -44,8 +46,20 @@
     transform: scale(1.1);
 }
 
+/* INFO */
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
 .date {
     font-size: 14px;
+    font-weight: 500;
     color: var(--text-secondary);
 }
 
@@ -53,6 +67,8 @@
     display: flex;
     justify-content: space-between;
     font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
 }
 
 .label {
@@ -63,16 +79,44 @@
     font-weight: 500;
 }
 
-.actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
+/* STATUS */
+
+.statusWrapper {
+    margin-top: 4px;
 }
 
+/* ACTIONS */
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* DETAIL BUTTON */
 
 .detailButtonWrapper {
-    margin-top: 8px;
     padding-top: 12px;
     border-top: 1px solid var(--border-light);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.viewDetailButton {
+    background: none;
+    border: none;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    color: var(--text-secondary);
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.viewDetailButton:hover {
+    color: var(--primary);
+    text-decoration: underline;
 }

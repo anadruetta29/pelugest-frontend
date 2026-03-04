@@ -3,7 +3,6 @@ import { ActionButton } from "../../atoms/action-button/action-button";
 import AppointmentStatusIndicator from "../../atoms/appointment-status-indicator/appointment-status-indicator";
 import SmallTitle from "../../atoms/small-title/small-title";
 import editIcon from "../../../assets/icons/edit.svg";
-import SecondaryButton from "../../atoms/secondary-button/secondary-button";
 import style from "./style.module.css";
 
 type Props = {
@@ -14,11 +13,11 @@ type Props = {
     onCancel?: (id: string) => void;
     onViewDetail?: (id: string) => void;
     appointmentNumber: number;
-
     onEditAppointment: () => void;
-}
+};
 
-export default function AppointmentCard( { appointment,
+export default function AppointmentCard({
+    appointment,
     appointmentNumber,
     onAttend,
     onCancel,
@@ -26,48 +25,57 @@ export default function AppointmentCard( { appointment,
     onStart,
     onViewDetail,
     onEditAppointment
- }: Props) {
+}: Props) {
 
     const start = new Date(appointment.startDateTime);
     const end = new Date(appointment.estimatedEndDateTime);
+
 
     return (
         <div className={style.container}>
 
             <div className={style.header}>
                 <SmallTitle text={`Turno n° ${appointmentNumber}`} />
-                <img src={editIcon} alt="Edit icon" onClick={onEditAppointment} className={style.editIcon}/>
+                <img
+                    src={editIcon}
+                    alt="Edit icon"
+                    onClick={onEditAppointment}
+                    className={style.editIcon}
+                />
             </div>
 
+            <div className={style.info}>
+                
+                <p className={style.person}>
+                    <span className={style.label}>Cliente</span>
+                    <span className={style.value}>{appointment.client.name}</span>
+                </p>
 
-            <p className={style.date}>
-                {start.toLocaleDateString("es-AR", {
-                    day: "numeric",
-                    month: "short",
-                    })
-                } · {start.toLocaleTimeString("es-AR", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    })
-                } - {end.toLocaleTimeString("es-AR", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                })}
-            </p>
+                <p className={style.person}>
+                    <span className={style.label}>Peluquero</span>
+                    <span className={style.value}>{appointment.hairdresser.name}</span>
+                </p>
 
-            <p className={style.person}>
-                <span className={style.label}>Cliente</span>
-                <span className={style.value}>{appointment.client.name}</span>
-            </p>
+                <p className={style.date}>
+                    {start.toLocaleDateString("es-AR", {
+                        day: "numeric",
+                        month: "short",
+                        })
+                    } · {start.toLocaleTimeString("es-AR", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        })
+                    } - {end.toLocaleTimeString("es-AR", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                    })}
+                </p>
 
-            <p className={style.person}>
-                <span className={style.label}>Peluquero</span>
-                <span className={style.value}>{appointment.hairdresser.name}</span>
-            </p>
+                <div className={style.statusWrapper}>
+                    <AppointmentStatusIndicator status={appointment.status} />
+                </div>
+            </div>
 
-            <span className={style.statusWrapper}>
-                <AppointmentStatusIndicator status={appointment.status} />
-            </span>
             <div className={style.actions}>
                 {appointment.status.name === "RESERVED" && (
                     <>
@@ -88,28 +96,29 @@ export default function AppointmentCard( { appointment,
                 {appointment.status.name === "IN_PROGRESS" && (
                     <>
                         <ActionButton
-                        label="Finalizar"
-                        variant="success"
-                        onClick={() => onAttend?.(appointment.id)}
+                            label="Finalizar"
+                            variant="success"
+                            onClick={() => onAttend?.(appointment.id)}
                         />
 
                         <ActionButton
-                        label="Ausente"
-                        variant="secondary"
-                        onClick={() => onMiss?.(appointment.id)}
+                            label="Ausente"
+                            variant="secondary"
+                            onClick={() => onMiss?.(appointment.id)}
                         />
                     </>
                 )}
             </div>
 
             <div className={style.detailButtonWrapper}>
-                <SecondaryButton
-                    enabled
-                    text="Ver detalle"
+                <button
                     type="button"
+                    className={style.viewDetailButton}
                     onClick={() => onViewDetail?.(appointment.id)}
-                />
+                >
+                    Ver detalle →
+                </button>
             </div>
         </div>
-    )
+    );
 }
