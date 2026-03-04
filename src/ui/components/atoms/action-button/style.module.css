@@ -1,10 +1,15 @@
 .btn {
-    padding: 8px 16px;
-    border-radius: 10px;
+    width: 100%;
+    min-height: 36px;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
     border: none;
 
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
+    letter-spacing: 0.3px;
 
     cursor: pointer;
 
@@ -13,64 +18,71 @@
     justify-content: center;
     gap: 8px;
 
-    transition: 
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.18s ease,
         background-color 0.2s ease,
-        transform 0.1s ease,
-        box-shadow 0.2s ease;
+        filter 0.2s ease;
+
+    box-shadow: 0 2px 6px var(--shadow-low);
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px var(--shadow-low);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px var(--shadow-medium);
 }
 
 .btn:active {
-  transform: translateY(0);
-  box-shadow: none;
+    transform: translateY(0);
+    box-shadow: 0 2px 6px var(--shadow-low);
 }
 
-.btn-icon {
+.btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.icon {
     width: 16px;
     height: 16px;
     object-fit: contain;
 }
 
-.btn-primary {
+
+.primary {
     background-color: var(--primary);
     color: var(--on-primary);
 }
 
-.btn-primary:hover {
-    background-color: var(--on-primary-container);
+.primary:hover {
+    filter: brightness(0.95);
 }
 
-
-.btn-secondary {
+.secondary {
     background-color: var(--secondary);
     color: var(--on-secondary);
 }
 
-.btn-secondary:hover {
-    background-color: var(--secondary-container);
-    color: var(--on-secondary-container);
-}
-
-
-.btn-success {
-    background-color: var(--primary-container);
-    color: var(--on-primary-container);
-}
-
-.btn-success:hover {
+.secondary:hover {
     filter: brightness(0.95);
 }
 
-
-.btn-danger {
-    background-color: var(--error);
-    color: var(--on-error);
+.success {
+    background-color: var(--success, var(--primary-container));
+    color: var(--on-success, var(--on-primary-container));
 }
 
-.btn-danger:hover {
-    background-color: var(--on-error-container);
+.success:hover {
+    filter: brightness(0.95);
+}
+
+.danger {
+    background: transparent;
+    color: var(--error);
+    border: 1px solid var(--error);
+}
+
+.danger:hover {
+    background: var(--error);
+    color: var(--on-primary);
 }

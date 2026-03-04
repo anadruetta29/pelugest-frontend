@@ -3,8 +3,8 @@ import { ActionButton } from "../../atoms/action-button/action-button";
 import AppointmentStatusIndicator from "../../atoms/appointment-status-indicator/appointment-status-indicator";
 import SmallTitle from "../../atoms/small-title/small-title";
 import editIcon from "../../../assets/icons/edit.svg";
-import style from "./style.module.css";
 import SecondaryButton from "../../atoms/secondary-button/secondary-button";
+import style from "./style.module.css";
 
 type Props = {
     appointment: Appointment;
@@ -40,8 +40,15 @@ export default function AppointmentCard( { appointment,
                 {new Date(appointment.estimatedEndDateTime).toLocaleString()}
             </p>
 
-            <p className={style.person}> Cliente: {appointment.client.name}</p>
-            <p className={style.person}> Peluquero: {appointment.hairdresser.name}</p>
+            <p className={style.person}>
+                <span className={style.label}>Cliente</span>
+                <span className={style.value}>{appointment.client.name}</span>
+            </p>
+
+            <p className={style.person}>
+                <span className={style.label}>Peluquero</span>
+                <span className={style.value}>{appointment.hairdresser.name}</span>
+            </p>
 
             <span className={style.statusWrapper}>
                 <AppointmentStatusIndicator status={appointment.status} />

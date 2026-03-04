@@ -1,3 +1,5 @@
+import style from "./style.module.css";
+
 type Props = { 
     label: string;
     variant: "primary" | "danger" | "success" | "secondary";
@@ -14,12 +16,15 @@ export const ActionButton = ({
   iconAlt
 }: Props) => {
     return (
-        <button className={`btn btn-${variant}`} onClick={onClick}>
+        <button
+            className={`${style.btn} ${style[variant]}`}
+            onClick={onClick}
+        >
         {iconSrc && (
             <img
-            src={iconSrc}
-            alt={iconAlt ?? "button icon"}
-            className="btn-icon"
+                src={iconSrc}
+                alt={iconAlt ?? "button icon"}
+                className={style.icon}
             />
         )}
         <span>{label}</span>
