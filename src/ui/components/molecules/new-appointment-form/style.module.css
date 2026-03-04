@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    padding: 16px; 
     z-index: 1000;
 }
 
@@ -15,17 +15,17 @@
     width: 100%;
     max-width: 500px;
     border-radius: 16px;
-    padding: 2rem;
+    padding: 32px; 
     box-shadow: 0 10px 25px var(--shadow-medium);
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 20px;
     animation: fadeIn 0.2s ease-in-out;
 }
 
 .title {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 18px;
     font-weight: 600;
     color: var(--primary);
 }
@@ -33,22 +33,22 @@
 .formGroup {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 4px;
 }
 
 .formGroup label {
-    font-size: 0.9rem;
+    font-size: 15px;
     font-weight: 500;
     color: var(--text-secondary);
 }
 
 .formGroup select {
-    padding: 0.6rem 0.75rem;
+    padding: 10px 12px; 
     border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--background);
     color: var(--on-surface);
-    font-size: 0.9rem;
+    font-size: 15px;
     transition: all 0.2s ease;
 }
 
@@ -61,7 +61,6 @@
 .actions {
     display: flex;
     justify-content: flex-end;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
+    gap: 12px; 
+    margin-top: 8px;
 }
-

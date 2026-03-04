@@ -4,6 +4,7 @@ import AppointmentStatusIndicator from "../../atoms/appointment-status-indicator
 import SmallTitle from "../../atoms/small-title/small-title";
 import editIcon from "../../../assets/icons/edit.svg";
 import style from "./style.module.css";
+import SecondaryButton from "../../atoms/secondary-button/secondary-button";
 
 type Props = {
     appointment: Appointment;
@@ -31,7 +32,7 @@ export default function AppointmentCard( { appointment,
 
             <div className={style.header}>
                 <SmallTitle text={`Turno n° ${appointmentNumber}`} />
-                <img src={editIcon} alt="Edit icon" onClick={onEditAppointment}/>
+                <img src={editIcon} alt="Edit icon" onClick={onEditAppointment} className={style.editIcon}/>
             </div>
 
             <p className={style.date}>
@@ -39,8 +40,8 @@ export default function AppointmentCard( { appointment,
                 {new Date(appointment.estimatedEndDateTime).toLocaleString()}
             </p>
 
-            <p className={style.person} >Cliente: {appointment.client.name}</p>
-            <p className={style.person} >Peluquero: {appointment.hairdresser.name}</p>
+            <p className={style.person}> Cliente: {appointment.client.name}</p>
+            <p className={style.person}> Peluquero: {appointment.hairdresser.name}</p>
 
             <span className={style.statusWrapper}>
                 <AppointmentStatusIndicator status={appointment.status} />
@@ -80,9 +81,10 @@ export default function AppointmentCard( { appointment,
             </div>
 
             <div className={style.detailButtonWrapper}>
-                <ActionButton
-                    label="Ver detalle"
-                    variant="secondary"
+                <SecondaryButton
+                    enabled
+                    text="Ver detalle"
+                    type="button"
                     onClick={() => onViewDetail?.(appointment.id)}
                 />
             </div>
