@@ -2,6 +2,7 @@ import type { Appointment, Client, Service, User } from "../../../../domain";
 import DestructiveButton from "../../atoms/destructive-button/destructive-button";
 import InputLabel from "../../atoms/input-label/input-label";
 import MainButton from "../../atoms/main-button/main-button";
+import SelectedServicesList from "../../atoms/selected-services-list/selected-services-list";
 import style from "./style.module.css";
 
 type Props = {
@@ -99,27 +100,13 @@ export function NewAppointmentForm({
                 </div>
 
                 {selectedServiceIds.length > 0 && (
-                    <div className={style.selectedServices}>
-                        <h4>Servicios seleccionados:</h4>
-                        <ul>
-                            {selectedServiceIds.map((id) => {
-                                const service = services.find(s => s.id === id);
-                                if (!service) return null;
-                                return (
-                                    <li key={id}>
-                                        {service.name}{" "}
-                                        <button
-                                            type="button"
-                                            onClick={() => onRemoveService(id)}
-                                        >
-                                            ❌
-                                        </button>
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </div>
+                    <SelectedServicesList
+                        onRemoveService={onRemoveService}
+                        selectedServiceIds={selectedServiceIds}
+                        services={services}
+                    />
                 )}
+                
                 <div className={style.actions}>
                     <DestructiveButton
                         text="Cancelar"
