@@ -1,23 +1,17 @@
 .container {
     width: 100%;
     max-width: 280px;
-
     background-color: var(--surface);
     color: var(--on-surface);
-
     border: 1px solid var(--border);
     border-radius: 16px;
-
     padding: 20px;
     margin-bottom: 20px;
-
     box-shadow: 0 4px 12px var(--shadow-low);
-
     display: flex;
     flex-direction: column;
-    gap: 16px;
-
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    height: 360px; 
 }
 
 .container:hover {
@@ -25,12 +19,11 @@
     box-shadow: 0 6px 18px var(--shadow-medium);
 }
 
-/* HEADER */
-
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 28px;
 }
 
 .editIcon {
@@ -46,15 +39,13 @@
     transform: scale(1.1);
 }
 
-/* INFO */
-
 .info {
     display: flex;
     flex-direction: column;
     gap: 10px;
-
-    padding-bottom: 12px;
+    padding: 12px 0;
     border-bottom: 1px solid var(--border-light);
+    min-height: 110px;
 }
 
 .date {
@@ -79,23 +70,23 @@
     font-weight: 500;
 }
 
-/* STATUS */
-
 .statusWrapper {
     margin-top: 4px;
 }
 
-/* ACTIONS */
-
 .actions {
+    margin-top: 5px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-height: 110px;
+    justify-content: center; 
+    align-items: center;     
+    width: 100%;
 }
 
-/* DETAIL BUTTON */
-
 .detailButtonWrapper {
+    margin-top: auto;
     padding-top: 12px;
     border-top: 1px solid var(--border-light);
     display: flex;
@@ -105,14 +96,10 @@
 .viewDetailButton {
     background: none;
     border: none;
-
     font-size: 13px;
     font-weight: 500;
-
     color: var(--text-secondary);
-
     cursor: pointer;
-
     transition: color 0.2s ease;
 }
 

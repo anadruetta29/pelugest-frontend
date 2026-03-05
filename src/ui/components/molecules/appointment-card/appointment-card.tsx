@@ -4,6 +4,7 @@ import AppointmentStatusIndicator from "../../atoms/appointment-status-indicator
 import SmallTitle from "../../atoms/small-title/small-title";
 import editIcon from "../../../assets/icons/edit.svg";
 import style from "./style.module.css";
+import EmptyActions from "../../atoms/empty-actions/empty-actions";
 
 type Props = {
     appointment: Appointment;
@@ -107,6 +108,12 @@ export default function AppointmentCard({
                             onClick={() => onMiss?.(appointment.id)}
                         />
                     </>
+                )}
+
+                {(  appointment.status.name === "MISSED" || 
+                    appointment.status.name === "ATTENDED" || 
+                    appointment.status.name === "CANCELLED" ) && (
+                    <EmptyActions message="No hay acciones disponibles en este momento" />
                 )}
             </div>
 
