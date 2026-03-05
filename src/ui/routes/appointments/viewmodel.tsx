@@ -1,29 +1,17 @@
 import { useEffect, useState } from "react";
 import { useRepositories } from "../../../core";
 import useSession from "../../hooks/useSession";
-import {
-    AppointmentDetail,
-    Client,
-    Errors,
-    Service,
-    User,
-    type Appointment,
-    type CreateAppointmentReq,
-    type FindRecordStatusByNameReq,
-    type GetAllAppointmentsReq,
-    type UpdateAppointmentReq
-} from "../../../domain";
+import { AppointmentDetail, Client, Errors, Service, User, type Appointment, type CreateAppointmentReq, 
+    type FindRecordStatusByNameReq, type GetAllAppointmentsReq, type UpdateAppointmentReq} from "../../../domain";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewModel() {
+
+    const navigate = useNavigate();
+
     const { session, logged } = useSession();
-    const {
-        appointmentRepository,
-        clientRepository,
-        serviceRepository,
-        userRepository,
-        recordStatusRepository
-    } = useRepositories();
+    const { appointmentRepository, clientRepository, serviceRepository, userRepository, recordStatusRepository } = useRepositories();
 
     const [isLoading, setIsLoading] = useState(true);
     const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -56,10 +44,13 @@ export default function ViewModel() {
             const response = await appointmentRepository.getAll({
                 session,
             } as GetAllAppointmentsReq);
+             console.log(response.appointments); // 👈 agregá esto
             setAppointments(response.appointments);
-        } catch (error) {
+        } 
+        catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
-        } finally {
+        } 
+        finally {
             setIsLoading(false);
         }
     };
@@ -98,7 +89,8 @@ export default function ViewModel() {
             toast.success("Turno creado correctamente");
             onCloseForm();
             fetchAppointments();
-        } catch (error) {
+        } 
+        catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
         }
     };
@@ -225,11 +217,65 @@ export default function ViewModel() {
     /* ==============================
        PLACEHOLDER ACTIONS
     ============================== */
-    const onAttendAppointment = (id: string) => {};
-    const onCancelAppointment = (id: string) => {};
-    const onMissAppointment = (id: string) => {};
-    const onStartAppointment = (id: string) => {};
-    const onViewDetail = (id: string) => {};
+    const onStartAppointment = async (id: string) => {
+        try {
+            await appointmentRepository.changeAppointmentStatus({
+                id,
+                action: "start",
+                session
+            });
+
+            await fetchAppointments(); 
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const onAttendAppointment = async (id: string) => {
+        try {
+            await appointmentRepository.changeAppointmentStatus({
+                id,
+                action: "attend",
+                session
+            });
+
+            await fetchAppointments();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const onMissAppointment = async (id: string) => {
+        try {
+            await appointmentRepository.changeAppointmentStatus({
+                id,
+                action: "miss",
+                session
+            });
+
+            await fetchAppointments();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const onCancelAppointment = async (id: string) => {
+        try {
+            await appointmentRepository.changeAppointmentStatus({
+                id,
+                action: "cancel",
+                session
+            });
+
+            await fetchAppointments();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const onViewDetail = (id: string) => {
+        navigate(`/appointments/${id}`);
+    };
 
     return {
         isLoading,
