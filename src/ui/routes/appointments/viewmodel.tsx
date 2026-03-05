@@ -44,7 +44,6 @@ export default function ViewModel() {
             const response = await appointmentRepository.getAll({
                 session,
             } as GetAllAppointmentsReq);
-             console.log(response.appointments); // 👈 agregá esto
             setAppointments(response.appointments);
         } 
         catch (error) {
