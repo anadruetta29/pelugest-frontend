@@ -1,4 +1,4 @@
-import type { Appointment, Client, Service, User } from "../../../../domain";
+import type { Appointment, AppointmentDetail, Client, Service, User } from "../../../../domain";
 import MainButton from "../../atoms/main-button/main-button";
 import { EditAppointmentForm } from "../../molecules/edit-appointment-form/edit-appointment-form";
 import { NewAppointmentForm } from "../../molecules/new-appointment-form/new-appointment-form";
@@ -29,7 +29,11 @@ type Props = {
     onCancelAppointment?: (id: string) => void;
     onMissAppointment?: (id: string) => void;
     onStartAppointment?: (id: string) => void;
+
     onViewDetail?: (id: string) => void;
+    selectedAppointment: Appointment | null;
+    onCloseDetail: () => void;
+    selectedAppointmentDetails: AppointmentDetail[];
 
     selectedServiceIds: string[];
     onRemoveService: (serviceId: string) => void;
@@ -54,7 +58,10 @@ export default function AppointmentsPage({
     onStartAppointment,
     onViewDetail,
     onRemoveService,
-    selectedServiceIds
+    selectedServiceIds,
+    onCloseDetail,
+    selectedAppointment,
+    selectedAppointmentDetails
 }: Props) {
     return (
         <div className={style.container}>
@@ -80,6 +87,9 @@ export default function AppointmentsPage({
                     onStart={onStartAppointment}
                     onViewDetail={onViewDetail}
                     onEdit={onOpenEditAppointment}
+                    selectedAppointment={selectedAppointment}
+                    onCloseDetail={onCloseDetail}
+                    selectedAppointmentDetails={selectedAppointmentDetails}
                 />
             </div>
 

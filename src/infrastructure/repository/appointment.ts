@@ -1,4 +1,4 @@
-import type { AppointmentDataSourceI, AppointmentRepositoryI, CreateAppointmentReq, CreateAppointmentRes, DeleteAppointmentReq, FindAppointmentByIdReq, FindAppointmentByIdRes, GetAllAppointmentsByStatusReq, GetAllAppointmentsByStatusRes, GetAllAppointmentsReq, GetAllAppointmentsRes, UpdateAppointmentReq, UpdateAppointmentRes } from "../../domain";
+import type { AppointmentDataSourceI, AppointmentRepositoryI, CreateAppointmentReq, CreateAppointmentRes, DeleteAppointmentReq, FindAppointmentByIdReq, FindAppointmentByIdRes, FindDetailsByAppointmentIdReq, FindDetailsByAppointmentIdRes, GetAllAppointmentsByStatusReq, GetAllAppointmentsByStatusRes, GetAllAppointmentsReq, GetAllAppointmentsRes, UpdateAppointmentReq, UpdateAppointmentRes } from "../../domain";
 import type { ChangeAppointmentStatusReq } from "../../domain/dto/appointment/request/ChangeAppointmentStatusReq";
 import type { CreateAppointmentDetailReq } from "../../domain/dto/appointment/request/CreateAppointmentDetailReq";
 import type { ChangeAppointmentStatusRes } from "../../domain/dto/appointment/response/ChangeAppointmentStatusRes";
@@ -78,6 +78,15 @@ export class AppointmentRepository implements AppointmentRepositoryI {
         public async changeAppointmentStatus(dto: ChangeAppointmentStatusReq): Promise<ChangeAppointmentStatusRes> {
             try {
                 return await this.dataSource.changeAppointmentStatus(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async findDetailsByAppointmentId(dto: FindDetailsByAppointmentIdReq): Promise<FindDetailsByAppointmentIdRes> {
+            try {
+                return await this.dataSource.findDetailsByAppointmentId(dto);
             }
             catch (error) {
                 throw error;

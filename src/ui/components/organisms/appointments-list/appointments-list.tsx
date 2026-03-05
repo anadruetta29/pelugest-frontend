@@ -1,6 +1,7 @@
-import type { Appointment } from "../../../../domain";
+import type { Appointment, AppointmentDetail } from "../../../../domain";
 import NoResults from "../../atoms/no-results/no-results";
-import AppointmentCard from "../../molecules/appointment-card/appointment-card";
+import AppointmentDetailModal from "../../molecules/appointment-detail-modal/appointment-detail-modal";
+import AppointmentCard from "../appointment-card/appointment-card";
 import style from "./style.module.css";
 
 type Props = {
@@ -13,6 +14,10 @@ type Props = {
     onMiss?: (id: string) => void;
     onCancel?: (id: string) => void;
     onViewDetail?: (id: string) => void;
+
+    selectedAppointmentDetails: AppointmentDetail[];
+    selectedAppointment: Appointment | null;
+    onCloseDetail: () => void;
 };
 
 export default function AppointmentsList({
@@ -22,7 +27,10 @@ export default function AppointmentsList({
   onMiss,
   onCancel,
   onViewDetail,
-  onEdit
+  onEdit,
+  selectedAppointment,
+  onCloseDetail,
+  selectedAppointmentDetails
 }: Props) {
 
     if (!appointments || appointments.length === 0) {
@@ -46,6 +54,13 @@ export default function AppointmentsList({
                     onEditAppointment={() => onEdit?.(appointment)}
                 />
             ))}
+            {selectedAppointment && (
+                <AppointmentDetailModal
+                    appointment={selectedAppointment}
+                    details={selectedAppointmentDetails} 
+                    onClose={onCloseDetail}
+                />
+            )}
         </div>
     );
 }

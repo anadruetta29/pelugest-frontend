@@ -23,7 +23,11 @@ export default function AppointmentsRoute() {
         onCancelAppointment,
         onMissAppointment,
         onStartAppointment,
+
         onViewDetail,
+        selectedAppointment,
+        onCloseDetail,
+        selectedAppointmentDetails,
         
         clients,
         hairdressers,
@@ -50,7 +54,6 @@ export default function AppointmentsRoute() {
                 onCancelAppointment={onCancelAppointment}
                 onMissAppointment={onMissAppointment}
                 onStartAppointment={onStartAppointment}
-                onViewDetail={onViewDetail}
                 clients={clients}
                 editingAppointment={editingAppointment}
                 hairdressers={hairdressers}
@@ -63,7 +66,10 @@ export default function AppointmentsRoute() {
                 onUpdateAppointment={onUpdateAppointment}
                 onRemoveService={onRemoveService}
                 selectedServiceIds={selectedServiceIds}
-
+                onViewDetail={onViewDetail}
+                selectedAppointment={selectedAppointment}
+                onCloseDetail={onCloseDetail}
+                selectedAppointmentDetails={selectedAppointmentDetails}
             />
         </Layout>
     );

@@ -25,6 +25,9 @@ export default function ViewModel() {
     const [hairdressers, setHairdressers] = useState<User[]>([]);
     const [services, setServices] = useState<Service[]>([]);
 
+    const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+    const [selectedAppointmentDetails, setSelectedAppointmentDetails] = useState<AppointmentDetail[]>([]);
+
     useEffect(() => {
         if (logged && session) {
             fetchClients();
@@ -157,7 +160,7 @@ export default function ViewModel() {
     };
 
     const onOpenEditAppointment = (appointment: Appointment) => {
-        setSelectedServiceIds(appointment.details?.map(d => d.service.id) || []);
+        setSelectedServiceIds(appointment.details?.map(d => d.service) || []);
         setIsNewOpen(false);
         setEditingAppointment(appointment);
     };
@@ -272,8 +275,42 @@ export default function ViewModel() {
         }
     };
 
-    const onViewDetail = (id: string) => {
-        navigate(`/appointments/${id}`);
+    const onViewDetail = async (id: string) => {
+        const appointment = appointments.find(a => a.id === id);
+        if (!appointment || !session) return;
+
+        try {
+            const response = await appointmentRepository.findDetailsByAppointmentId({
+                appointmentId: id,
+                session
+            });
+
+            const mappedDetails: AppointmentDetail[] = response.details
+            .map(d => {
+                const serviceObj = services.find(s => s.id === d.service);
+
+                if (!serviceObj) return null;
+
+                return AppointmentDetail.fromObject({
+                    id: d.id,
+                    service: serviceObj,
+                    price: Number(d.price),
+                    durationMin: d.durationMin
+                });
+            })
+            .filter((d): d is AppointmentDetail => d !== null);
+
+            setSelectedAppointment(appointment);
+            setSelectedAppointmentDetails(mappedDetails);
+
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
+        }
+    };
+
+    const onCloseDetail = () => {
+        setSelectedAppointment(null);
+        setSelectedAppointmentDetails([]);
     };
 
     return {
@@ -297,6 +334,10 @@ export default function ViewModel() {
         onCancelAppointment,
         onMissAppointment,
         onStartAppointment,
-        onViewDetail
+
+        onViewDetail,
+        selectedAppointment,
+        selectedAppointmentDetails,
+        onCloseDetail
     };
 }

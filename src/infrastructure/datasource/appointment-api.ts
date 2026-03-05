@@ -1,5 +1,5 @@
 import { HTTPClient } from "../../core";
-import { AppointmentDataSourceI, ErrorHandler, type CreateAppointmentReq, type CreateAppointmentRes, type DeleteAppointmentReq, type FindAppointmentByIdReq, type FindAppointmentByIdRes, type GetAllAppointmentsByStatusReq, type GetAllAppointmentsByStatusRes, type GetAllAppointmentsReq, type GetAllAppointmentsRes, type UpdateAppointmentReq, type UpdateAppointmentRes } from "../../domain";
+import { AppointmentDataSourceI, ErrorHandler, type CreateAppointmentReq, type CreateAppointmentRes, type DeleteAppointmentReq, type FindAppointmentByIdReq, type FindAppointmentByIdRes, type FindDetailsByAppointmentIdReq, type FindDetailsByAppointmentIdRes, type GetAllAppointmentsByStatusReq, type GetAllAppointmentsByStatusRes, type GetAllAppointmentsReq, type GetAllAppointmentsRes, type UpdateAppointmentReq, type UpdateAppointmentRes } from "../../domain";
 import type { ChangeAppointmentStatusReq } from "../../domain/dto/appointment/request/ChangeAppointmentStatusReq";
 import type { CreateAppointmentDetailReq } from "../../domain/dto/appointment/request/CreateAppointmentDetailReq";
 import type { ChangeAppointmentStatusRes } from "../../domain/dto/appointment/response/ChangeAppointmentStatusRes";
@@ -131,7 +131,28 @@ export class AppointmentApiDataSource implements AppointmentDataSourceI {
 
             return response;
 
-        } catch (error) {
+        } 
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+    public async findDetailsByAppointmentId(dto: FindDetailsByAppointmentIdReq): Promise<FindDetailsByAppointmentIdRes> {
+        try {
+            const response = await this.httpClient.get(
+                `/api/appointments/${dto.appointmentId}/details`,
+                undefined,
+                dto.session.getAccessToken()
+            );
+
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+
+        } 
+        catch (error) {
             throw ErrorHandler.handleError(error as Error);
         }
     }

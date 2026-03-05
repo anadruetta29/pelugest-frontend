@@ -1,0 +1,84 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--modal-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: var(--surface);
+    color: var(--on-surface);
+    padding: 28px;
+    border-radius: 14px;
+    width: 420px;
+    max-width: 90%;
+    box-shadow: 0 10px 30px var(--shadow-medium);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.modal p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.modal strong {
+    color: var(--on-surface);
+}
+
+.modal h3 {
+    margin-top: 12px;
+    margin-bottom: 6px;
+    font-size: 16px;
+    color: var(--text-soft-black);
+}
+
+.servicesList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.serviceItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface-light);
+    border: 1px solid var(--border-light);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.serviceName {
+    color: var(--on-surface);
+    font-weight: 500;
+}
+
+.servicePrice {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.closeButton {
+    margin-top: 16px;
+    align-self: flex-end;
+    background: var(--primary);
+    color: var(--on-primary);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.closeButton:hover {
+    background: var(--on-primary-container);
+}
