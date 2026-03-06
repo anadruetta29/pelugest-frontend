@@ -1,8 +1,10 @@
 import type { AppointmentDataSourceI, AppointmentRepositoryI, CreateAppointmentReq, CreateAppointmentRes, DeleteAppointmentReq, FindAppointmentByIdReq, FindAppointmentByIdRes, FindDetailsByAppointmentIdReq, FindDetailsByAppointmentIdRes, GetAllAppointmentsByStatusReq, GetAllAppointmentsByStatusRes, GetAllAppointmentsReq, GetAllAppointmentsRes, UpdateAppointmentReq, UpdateAppointmentRes } from "../../domain";
 import type { ChangeAppointmentStatusReq } from "../../domain/dto/appointment/request/ChangeAppointmentStatusReq";
 import type { CreateAppointmentDetailReq } from "../../domain/dto/appointment/request/CreateAppointmentDetailReq";
+import type { ToggleAppointmentDetailStatusReq } from "../../domain/dto/appointment/request/ToggleAppointmentDetailStatusReq";
 import type { ChangeAppointmentStatusRes } from "../../domain/dto/appointment/response/ChangeAppointmentStatusRes";
 import type { CreateAppointmentDetailRes } from "../../domain/dto/appointment/response/CreateAppointmentDetailRes";
+import type { ToggleAppointmentDetailStatusRes } from "../../domain/dto/appointment/response/ToggleAppointmentDetailStatusRes";
 import { AppointmentApiDataSource } from "../datasource/appointment-api";
 
 export class AppointmentRepository implements AppointmentRepositoryI {
@@ -92,5 +94,15 @@ export class AppointmentRepository implements AppointmentRepositoryI {
                 throw error;
             }
         }
+
+        public async toggleAppointmentDetailStatus(dto: ToggleAppointmentDetailStatusReq): Promise<ToggleAppointmentDetailStatusRes> {
+            try {
+                return await this.dataSource.toggleAppointmentDetailStatus(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
 
 }

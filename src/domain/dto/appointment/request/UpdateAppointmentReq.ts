@@ -1,4 +1,3 @@
-import type { RecordStatus } from "../../../entity/record-status";
 import type { Session } from "../../../entity/session";
 
 export interface UpdateAppointmentReq {
@@ -7,5 +6,6 @@ export interface UpdateAppointmentReq {
     estimatedEndDateTime: Date;
     clientId: string;
     hairdresserId: string;
+    details: any[];
     session: Session;
 }
