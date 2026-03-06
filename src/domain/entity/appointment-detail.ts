@@ -5,13 +5,13 @@ export class AppointmentDetail {
     public id: string;
     public price: number;
     public durationMin: number;
-    public service: string;
+    public service: Service;
 
     private constructor(
         id: string,
         price: number,
         durationMin: number,
-        service: string
+        service: Service
     ){
         this.id = id,
         this.price = price,

@@ -37,12 +37,14 @@ export default function AppointmentCard({
 
             <div className={style.header}>
                 <SmallTitle text={`Turno n° ${appointmentNumber}`} />
-                <img
-                    src={editIcon}
-                    alt="Edit icon"
-                    onClick={onEditAppointment}
-                    className={style.editIcon}
-                />
+                { appointment.status.name === "RESERVED" && ( 
+                    <img
+                        src={editIcon}
+                        alt="Edit icon"
+                        onClick={onEditAppointment}
+                        className={style.editIcon}
+                    /> )
+                }
             </div>
 
             <div className={style.info}>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRepositories } from "../../../core";
 import useSession from "../../hooks/useSession";
 import { AppointmentDetail, Client, Errors, Service, User, type Appointment, type CreateAppointmentReq, 
+    type FindDetailsByAppointmentIdReq, 
     type FindRecordStatusByNameReq, type GetAllAppointmentsReq, type UpdateAppointmentReq} from "../../../domain";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -160,7 +161,10 @@ export default function ViewModel() {
     };
 
     const onOpenEditAppointment = (appointment: Appointment) => {
-        setSelectedServiceIds(appointment.details?.map(d => d.service) || []);
+        setSelectedServiceIds(
+            appointment.details?.map(d => d.service.id) || []
+        );
+
         setIsNewOpen(false);
         setEditingAppointment(appointment);
     };
@@ -283,22 +287,16 @@ export default function ViewModel() {
             const response = await appointmentRepository.findDetailsByAppointmentId({
                 appointmentId: id,
                 session
-            });
+            } as FindDetailsByAppointmentIdReq);
 
-            const mappedDetails: AppointmentDetail[] = response.details
-            .map(d => {
-                const serviceObj = services.find(s => s.id === d.service);
-
-                if (!serviceObj) return null;
-
-                return AppointmentDetail.fromObject({
+            const mappedDetails: AppointmentDetail[] = response.details.map(d =>
+                AppointmentDetail.fromObject({
                     id: d.id,
-                    service: serviceObj,
+                    service: d.service,
                     price: Number(d.price),
                     durationMin: d.durationMin
-                });
-            })
-            .filter((d): d is AppointmentDetail => d !== null);
+                })
+            );
 
             setSelectedAppointment(appointment);
             setSelectedAppointmentDetails(mappedDetails);

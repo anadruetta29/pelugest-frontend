@@ -36,6 +36,7 @@ export default function AppointmentDetailModal({ appointment, details, onClose }
                                 <span className={style.serviceName}>
                                     {detail.service.name}
                                 </span>
+
                                 <span className={style.servicePrice}>
                                     ${detail.price}
                                 </span>
@@ -45,7 +46,6 @@ export default function AppointmentDetailModal({ appointment, details, onClose }
                         <p>No hay servicios disponibles.</p>
                     )}
                 </div>
-
                 <button className={style.closeButton} onClick={onClose}>
                     Cerrar
                 </button>
