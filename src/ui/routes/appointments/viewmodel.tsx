@@ -160,13 +160,25 @@ export default function ViewModel() {
         setIsNewOpen(true);
     };
 
-    const onOpenEditAppointment = (appointment: Appointment) => {
-        setSelectedServiceIds(
-            appointment.details?.map(d => d.service.id) || []
-        );
+    const onOpenEditAppointment = async (appointment: Appointment) => {
+        if (!session) return;
 
-        setIsNewOpen(false);
-        setEditingAppointment(appointment);
+        try {
+            const response = await appointmentRepository.findDetailsByAppointmentId({
+                appointmentId: appointment.id,
+                session
+            } as FindDetailsByAppointmentIdReq);
+
+            const serviceIds = response.details.map(d => d.service.id);
+
+            setSelectedServiceIds(serviceIds);
+
+            setEditingAppointment(appointment);
+            setIsNewOpen(false);
+
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
+        }
     };
 
     const onCloseForm = () => {
