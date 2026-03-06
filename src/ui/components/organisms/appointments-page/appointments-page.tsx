@@ -36,7 +36,8 @@ type Props = {
     selectedAppointmentDetails: AppointmentDetail[];
 
     selectedServiceIds: string[];
-    onRemoveService: (serviceId: string) => void;
+    
+    onRemoveService: (serviceId: string, detailId?: string) => void;
 };
 
 export default function AppointmentsPage({
@@ -121,6 +122,7 @@ export default function AppointmentsPage({
                         onAddService={onAddService}
                         onRemoveService={onRemoveService}
                         selectedServiceIds={selectedServiceIds}
+                        details={editingAppointment.details}
                     />
             )}
         </div>

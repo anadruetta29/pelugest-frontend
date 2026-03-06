@@ -1,4 +1,4 @@
-import type { Appointment, Client, Service, User } from "../../../../domain";
+import type { Appointment, AppointmentDetail, Client, Service, User } from "../../../../domain";
 import DestructiveButton from "../../atoms/destructive-button/destructive-button";
 import InputLabel from "../../atoms/input-label/input-label";
 import MainButton from "../../atoms/main-button/main-button";
@@ -19,10 +19,12 @@ type Props = {
 
     selectedServiceIds: string[];
     onRemoveService: (serviceId: string) => void;
+
+    details: AppointmentDetail[];
 };
 
 export function EditAppointmentForm({ appointment, onSubmit, onCancel, clients, hairdressers, onAddService, services, 
-    selectedServiceIds, onRemoveService
+    selectedServiceIds, onRemoveService, details
  }: Props) {
     return (
         <div className={style.backdrop}>
@@ -113,6 +115,7 @@ export function EditAppointmentForm({ appointment, onSubmit, onCancel, clients, 
                         onRemoveService={onRemoveService}
                         selectedServiceIds={selectedServiceIds}
                         services={services}
+                        details={details}
                     />
                 )}
 

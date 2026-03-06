@@ -41,6 +41,7 @@ export default function ViewModel() {
     /* ==============================
        GET ALL APPOINTMENTS
     ============================== */
+
     const fetchAppointments = async () => {
         if (!session) return;
         setIsLoading(true);
@@ -61,6 +62,7 @@ export default function ViewModel() {
     /* ==============================
        CREATE APPOINTMENT
     ============================== */
+
     const onCreateAppointment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!session) return;
@@ -101,6 +103,7 @@ export default function ViewModel() {
     /* ==============================
        UPDATE APPOINTMENT
     ============================== */
+
     const onUpdateAppointment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!session || !editingAppointment) return;
@@ -143,12 +146,40 @@ export default function ViewModel() {
     /* ==============================
        SERVICE MANAGEMENT
     ============================== */
+
     const onAddService = (serviceId: string) => {
         setSelectedServiceIds(prev => (prev.includes(serviceId) ? prev : [...prev, serviceId]));
     };
 
-    const onRemoveService = (serviceId: string) => {
-        setSelectedServiceIds(prev => prev.filter(id => id !== serviceId));
+    const onRemoveService = async (serviceId: string, detailId?: string) => {
+        if (!session) return;
+
+        try {
+
+            if (detailId) {
+                const status = await recordStatusRepository.findByName({
+                    name: "INACTIVE",
+                    session
+                } as FindRecordStatusByNameReq);
+
+                await appointmentRepository.toggleAppointmentDetailStatus({
+                    appointmentDetailId: detailId,
+                    recordStatusId: status.recordStatus.id,
+                    session
+                });
+            }
+
+            setSelectedServiceIds(prev => prev.filter(id => id !== serviceId));
+
+            setSelectedAppointmentDetails(prev =>
+                prev.filter(d => d.service.id !== serviceId)
+            );
+
+            toast.success("Servicio eliminado del turno");
+
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
+        }
     };
 
     /* ==============================
@@ -200,9 +231,10 @@ export default function ViewModel() {
         return endDateTime;
     };
 
-    /* ==============================
+    /* ======================================
        FETCH CLIENTS, HAIRDRESSERS, SERVICES
-    ============================== */
+    ======================================== */
+
     const fetchClients = async () => {
         try {
             const status = await recordStatusRepository.findByName({ name: "ACTIVE", session } as FindRecordStatusByNameReq);
@@ -235,6 +267,7 @@ export default function ViewModel() {
     /* ==============================
        PLACEHOLDER ACTIONS
     ============================== */
+
     const onStartAppointment = async (id: string) => {
         try {
             await appointmentRepository.changeAppointmentStatus({
