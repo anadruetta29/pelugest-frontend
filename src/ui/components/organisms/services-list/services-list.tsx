@@ -8,7 +8,7 @@ import { ClientsForm } from "../../molecules/clients-form/clients-form";
 import ServicesTable from "../../molecules/services-table/services-table";
 import { ServicesForm } from "../../molecules/services-form/services-form";
 import InfoModal from "../../molecules/info-modal/info-modal";
-import StatusIndicator from "../../atoms/status-indicator/status-indicator";
+import RecordStatusIndicator from "../../atoms/record-status-indicator/record-status-indicator";
 import SearchBar from "../../molecules/search-bar/search-bar";
 
 type Props = {
@@ -104,7 +104,7 @@ export default function ServicesList({
                         </p>
                         <p>
                             <strong>Estado:</strong>{" "}
-                            <StatusIndicator status={serviceToView.status} />
+                            <RecordStatusIndicator status={serviceToView.status} />
                         </p>
                     </InfoModal>
                     )}

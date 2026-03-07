@@ -3,7 +3,7 @@ import MainButton from "../../atoms/main-button/main-button";
 import MovementIndicator from "../../atoms/movement-indicator/movement-indicator";
 import NoResults from "../../atoms/no-results/no-results";
 import SecondaryButton from "../../atoms/secondary-button/secondary-button";
-import StatusIndicator from "../../atoms/status-indicator/status-indicator";
+import RecordStatusIndicator from "../../atoms/record-status-indicator/record-status-indicator";
 import Table from "../../atoms/table/table";
 import style from "./style.module.css";
 

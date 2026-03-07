@@ -1,7 +1,7 @@
 import type { Client } from "../../../../domain";
 import NoResults from "../../atoms/no-results/no-results";
 import SecondaryButton from "../../atoms/secondary-button/secondary-button";
-import StatusIndicator from "../../atoms/status-indicator/status-indicator";
+import RecordStatusIndicator from "../../atoms/record-status-indicator/record-status-indicator";
 import Table from "../../atoms/table/table";
 import style from "./style.module.css";
 
@@ -44,7 +44,7 @@ export default function ClientsTable({
 						)}
 					</td>
 					<td className={style.tableContent}>
-						<StatusIndicator status={client.status} />
+						<RecordStatusIndicator status={client.status} />
 					</td>
 					<td className={style.actions}>
 						<SecondaryButton

@@ -5,7 +5,7 @@ type Props = {
     status: RecordStatus;
 };
 
-export default function StatusIndicator({ status }: Props) {
+export default function RecordStatusIndicator({ status }: Props) {
     const isActive = status.name === RecordStatus.ACTIVE;
     const isInactive = status.name === RecordStatus.INACTIVE;
     const isDeleted = status.name === RecordStatus.DELETED;
