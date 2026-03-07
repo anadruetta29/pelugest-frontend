@@ -68,6 +68,11 @@ export default function ViewModel() {
         e.preventDefault();
         if (!session) return;
 
+        if (selectedServiceIds.length === 0) {
+            toast.error("Debes agregar al menos un servicio al turno");
+            return;
+        }
+
         const formData = new FormData(e.currentTarget);
         const startDateTimeString = formData.get("startDateTime") as string;
         const startDateTime = new Date(startDateTimeString);
@@ -108,6 +113,11 @@ export default function ViewModel() {
     const onUpdateAppointment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!session || !editingAppointment) return;
+
+        if (selectedServiceIds.length === 0) {
+            toast.error("Debes agregar al menos un servicio al turno");
+            return;
+        }
 
         const formData = new FormData(e.currentTarget);
         const startDateTime = new Date(formData.get("startDateTime") as string);
