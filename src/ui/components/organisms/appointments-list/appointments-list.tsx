@@ -18,6 +18,8 @@ type Props = {
     selectedAppointmentDetails: AppointmentDetail[];
     selectedAppointment: Appointment | null;
     onCloseDetail: () => void;
+
+    totalSelectedAppointmentPrice: number;
 };
 
 export default function AppointmentsList({
@@ -30,7 +32,8 @@ export default function AppointmentsList({
   onEdit,
   selectedAppointment,
   onCloseDetail,
-  selectedAppointmentDetails
+  selectedAppointmentDetails,
+  totalSelectedAppointmentPrice
 }: Props) {
 
     if (!appointments || appointments.length === 0) {
@@ -59,6 +62,7 @@ export default function AppointmentsList({
                     appointment={selectedAppointment}
                     details={selectedAppointmentDetails} 
                     onClose={onCloseDetail}
+                    totalPrice={totalSelectedAppointmentPrice}
                 />
             )}
         </div>

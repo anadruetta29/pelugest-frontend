@@ -38,6 +38,8 @@ type Props = {
     selectedServiceIds: string[];
     
     onRemoveService: (serviceId: string, detailId?: string) => void;
+
+    totalSelectedAppointmentPrice: number;
 };
 
 export default function AppointmentsPage({
@@ -62,7 +64,8 @@ export default function AppointmentsPage({
     selectedServiceIds,
     onCloseDetail,
     selectedAppointment,
-    selectedAppointmentDetails
+    selectedAppointmentDetails,
+    totalSelectedAppointmentPrice
 }: Props) {
     return (
         <div className={style.container}>
@@ -91,6 +94,7 @@ export default function AppointmentsPage({
                     selectedAppointment={selectedAppointment}
                     onCloseDetail={onCloseDetail}
                     selectedAppointmentDetails={selectedAppointmentDetails}
+                    totalSelectedAppointmentPrice={totalSelectedAppointmentPrice}
                 />
             </div>
 

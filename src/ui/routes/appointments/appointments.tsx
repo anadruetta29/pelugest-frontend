@@ -34,7 +34,9 @@ export default function AppointmentsRoute() {
         services,
 
         onRemoveService,
-        selectedServiceIds
+        selectedServiceIds,
+
+        totalSelectedAppointmentPrice
     } = ViewModel();
 
     if (isLoading) {
@@ -70,6 +72,7 @@ export default function AppointmentsRoute() {
                 selectedAppointment={selectedAppointment}
                 onCloseDetail={onCloseDetail}
                 selectedAppointmentDetails={selectedAppointmentDetails}
+                totalSelectedAppointmentPrice={totalSelectedAppointmentPrice}
             />
         </Layout>
     );

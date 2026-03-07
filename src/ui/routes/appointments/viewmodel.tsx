@@ -235,9 +235,9 @@ export default function ViewModel() {
         setSelectedServiceIds([]);
     };
 
-    /* ==============================
-       CALCULATE ESTIMATED END TIME
-    ============================== */
+    /* =======================================
+       CALCULATE ESTIMATED END TIME AND TOTAL 
+    ========================================*/
     const calculateEstimatedEndTime = (startDateTime: Date, serviceIds: string[]): Date => {
         if (!serviceIds.length) return startDateTime;
         const totalDuration = services
@@ -247,6 +247,11 @@ export default function ViewModel() {
         endDateTime.setMinutes(endDateTime.getMinutes() + totalDuration);
         return endDateTime;
     };
+
+    const totalSelectedAppointmentPrice = selectedAppointmentDetails.reduce(
+        (total, detail) => total + detail.price,
+        0
+    );
 
     /* ======================================
        FETCH CLIENTS, HAIRDRESSERS, SERVICES
@@ -341,6 +346,10 @@ export default function ViewModel() {
         }
     };
 
+    /* ==============================
+      VIEW APPOINTMENT DETAIL
+    ============================== */
+
     const onViewDetail = async (id: string) => {
         const appointment = appointments.find(a => a.id === id);
         if (!appointment || !session) return;
@@ -398,6 +407,8 @@ export default function ViewModel() {
         onViewDetail,
         selectedAppointment,
         selectedAppointmentDetails,
-        onCloseDetail
+        onCloseDetail,
+
+        totalSelectedAppointmentPrice
     };
 }
