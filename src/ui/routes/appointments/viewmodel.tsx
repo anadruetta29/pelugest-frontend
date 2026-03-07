@@ -155,7 +155,6 @@ export default function ViewModel() {
         if (!session) return;
 
         try {
-
             if (detailId) {
                 const status = await recordStatusRepository.findByName({
                     name: "INACTIVE",
@@ -167,16 +166,17 @@ export default function ViewModel() {
                     recordStatusId: status.recordStatus.id,
                     session
                 });
+
+                toast.success("Servicio eliminado del turno");
+                
+                await fetchAppointments(); 
+                
+                if (editingAppointment) {
+                    onOpenEditAppointment(editingAppointment);
+                }
+            } else {
+                setSelectedServiceIds(prev => prev.filter(id => id !== serviceId));
             }
-
-            setSelectedServiceIds(prev => prev.filter(id => id !== serviceId));
-
-            setSelectedAppointmentDetails(prev =>
-                prev.filter(d => d.service.id !== serviceId)
-            );
-
-            toast.success("Servicio eliminado del turno");
-
         } catch (error) {
             toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
         }
