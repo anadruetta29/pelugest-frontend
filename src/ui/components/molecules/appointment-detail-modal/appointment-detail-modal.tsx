@@ -1,6 +1,10 @@
 import type { Appointment, AppointmentDetail } from "../../../../domain";
 import AppointmentStatusIndicator from "../../atoms/appointment-status-indicator/appointment-status-indicator";
 import MediumTitle from "../../atoms/medium-title/medium-title";
+import clientIcon from "../../../assets/icons/client.svg";
+import hairdresserIcon from "../../../assets/icons/hair-salon.svg";
+import statusIcon from "../../../assets/icons/clipboard.svg";
+import serviceIcon from "../../../assets/icons/scissors.svg";
 import style from "./style.module.css";
 
 type Props = {
@@ -16,21 +20,25 @@ export default function AppointmentDetailModal({ appointment, details, onClose, 
             <div className={style.modal}>
                 <MediumTitle text="Detalle del turno" />
 
-                <p>
+                <p className={style.infoRow}>
+                    <img src={clientIcon} alt="Client icon" className={style.infoIcon} />
                     <strong>Cliente:</strong> {appointment.client.name}
                 </p>
 
-                <p>
+                <p className={style.infoRow}>
+                    <img src={hairdresserIcon} alt="Hairdresser icon" className={style.infoIcon} />
                     <strong>Peluquero:</strong> {appointment.hairdresser.name}
                 </p>
 
-                <p>
-                    <strong>Estado:</strong> 
+                <p className={style.infoRow}>
+                    <img src={statusIcon} alt="Appointment status icon" className={style.infoIcon} />
+                    <strong>Estado:</strong>
                     <AppointmentStatusIndicator status={appointment.status} />
                 </p>
 
-                <p>
-                    <strong>Servicios:</strong> 
+                <p className={style.infoRow}>
+                    <img src={serviceIcon} alt="Service icon" className={style.infoIcon} />
+                    <strong>Servicios:</strong>
                 </p>
                 <div className={style.servicesList}>
                     {details.length > 0 ? (
