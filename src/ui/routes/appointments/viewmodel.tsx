@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useRepositories } from "../../../core";
 import useSession from "../../hooks/useSession";
 import { AppointmentDetail, Client, Errors, Service, User, type Appointment, type CreateAppointmentReq, 
-    type FindDetailsByAppointmentIdReq, 
-    type FindRecordStatusByNameReq, type GetAllAppointmentsReq, type UpdateAppointmentReq} from "../../../domain";
+    type FindDetailsByAppointmentIdReq, type FindRecordStatusByNameReq, type GetAllAppointmentsReq, type UpdateAppointmentReq} from "../../../domain";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -28,6 +27,8 @@ export default function ViewModel() {
 
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
     const [selectedAppointmentDetails, setSelectedAppointmentDetails] = useState<AppointmentDetail[]>([]);
+
+    const [editingDetails, setEditingDetails] = useState<AppointmentDetail[]>([]);
 
     useEffect(() => {
         if (logged && session) {
@@ -115,14 +116,17 @@ export default function ViewModel() {
 
         const appointmentDetails: AppointmentDetail[] = services
             .filter(s => selectedServiceIds.includes(s.id))
-            .map(service =>
-                AppointmentDetail.fromObject({
-                    id: crypto.randomUUID(),
+            .map(service => {
+
+                const existing = editingDetails.find(d => d.service.id === service.id);
+
+                return AppointmentDetail.fromObject({
+                    id: existing?.id ?? crypto.randomUUID(),
                     service,
                     price: service.basePrice,
                     durationMin: service.estimatedDurationMin
-                })
-            );
+                });
+            });
 
         try {
             await appointmentRepository.update({
@@ -169,10 +173,12 @@ export default function ViewModel() {
 
                 toast.success("Servicio eliminado del turno");
                 
-                await fetchAppointments(); 
-                
-                if (editingAppointment) {
-                    onOpenEditAppointment(editingAppointment);
+                await fetchAppointments();
+
+                const updatedAppointment = appointments.find(a => a.id === editingAppointment?.id);
+
+                if (updatedAppointment) {
+                    onOpenEditAppointment(updatedAppointment);
                 }
             } else {
                 setSelectedServiceIds(prev => prev.filter(id => id !== serviceId));
@@ -198,10 +204,11 @@ export default function ViewModel() {
             const response = await appointmentRepository.findDetailsByAppointmentId({
                 appointmentId: appointment.id,
                 session
-            } as FindDetailsByAppointmentIdReq);
+            });
+
+            setEditingDetails(response.details);
 
             const serviceIds = response.details.map(d => d.service.id);
-
             setSelectedServiceIds(serviceIds);
 
             setEditingAppointment(appointment);
