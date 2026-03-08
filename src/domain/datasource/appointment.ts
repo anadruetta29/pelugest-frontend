@@ -29,4 +29,5 @@ export abstract class AppointmentDataSourceI {
     abstract changeAppointmentStatus(dto: ChangeAppointmentStatusReq): Promise<ChangeAppointmentStatusRes>;
     abstract findDetailsByAppointmentId(dto: FindDetailsByAppointmentIdReq): Promise<FindDetailsByAppointmentIdRes>;
     abstract toggleAppointmentDetailStatus(dto: ToggleAppointmentDetailStatusReq): Promise<ToggleAppointmentDetailStatusRes>;
+    abstract search(dto: SearchAppointmentReq): Promise<SearchAppointmentRes>;
 }

@@ -2,9 +2,11 @@ import { HTTPClient } from "../../core";
 import { AppointmentDataSourceI, ErrorHandler, type CreateAppointmentReq, type CreateAppointmentRes, type DeleteAppointmentReq, type FindAppointmentByIdReq, type FindAppointmentByIdRes, type FindDetailsByAppointmentIdReq, type FindDetailsByAppointmentIdRes, type GetAllAppointmentsByStatusReq, type GetAllAppointmentsByStatusRes, type GetAllAppointmentsReq, type GetAllAppointmentsRes, type UpdateAppointmentReq, type UpdateAppointmentRes } from "../../domain";
 import type { ChangeAppointmentStatusReq } from "../../domain/dto/appointment/request/ChangeAppointmentStatusReq";
 import type { CreateAppointmentDetailReq } from "../../domain/dto/appointment/request/CreateAppointmentDetailReq";
+import type { SearchAppointmentReq } from "../../domain/dto/appointment/request/SearchAppointmentReq";
 import type { ToggleAppointmentDetailStatusReq } from "../../domain/dto/appointment/request/ToggleAppointmentDetailStatusReq";
 import type { ChangeAppointmentStatusRes } from "../../domain/dto/appointment/response/ChangeAppointmentStatusRes";
 import type { CreateAppointmentDetailRes } from "../../domain/dto/appointment/response/CreateAppointmentDetailRes";
+import type { SearchAppointmentRes } from "../../domain/dto/appointment/response/SearchAppointmentRes";
 import type { ToggleAppointmentDetailStatusRes } from "../../domain/dto/appointment/response/ToggleAppointmentDetailStatusRes";
 
 export class AppointmentApiDataSource implements AppointmentDataSourceI {
@@ -163,7 +165,7 @@ export class AppointmentApiDataSource implements AppointmentDataSourceI {
         try {
 
             const response = await this.httpClient.get(
-                    `api/appointments/details/${dto.appointmentDetailId}/status`,
+                    `/api/appointments/details/${dto.appointmentDetailId}/status`,
                     undefined,
                     dto.session.getAccessToken()
                 );
@@ -179,4 +181,26 @@ export class AppointmentApiDataSource implements AppointmentDataSourceI {
             throw ErrorHandler.handleError(error as Error);
         }
     }
+
+    public async search(dto: SearchAppointmentReq): Promise<SearchAppointmentRes> {
+        try {
+
+            const response = await this.httpClient.get(
+                    `/api/appointments/search`,
+                    {...dto},
+                    dto.session.getAccessToken()
+                );
+
+                if (response.error) {
+                    throw ErrorHandler.handleError(response.error);
+                }
+
+                return response;
+
+        } 
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
 }

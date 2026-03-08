@@ -6,7 +6,7 @@ type Option = {
 };
 
 type Props = {
-    label: string;
+    label?: string;
     name?: string;
     id?: string;
     options: Option[];

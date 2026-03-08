@@ -22,8 +22,18 @@ export class AppointmentStatus extends Optionable {
             new AppointmentStatus(AppointmentStatus.RESERVED, "Reservado"),
             new AppointmentStatus(AppointmentStatus.ATTENDED, "Atendido"),
             new AppointmentStatus(AppointmentStatus.MISSED, "No atendido"),
-            new AppointmentStatus(AppointmentStatus.IN_PROGRESS, "En Curso"),
+            new AppointmentStatus(AppointmentStatus.IN_PROGRESS, "En Progreso"),
             new AppointmentStatus(AppointmentStatus.CANCELLED, "Cancelado"),
+        ];
+    }
+
+    public static getAppointmentStatusListEnum(): AppointmentStatus[] {
+        return [
+            new AppointmentStatus(AppointmentStatus.RESERVED, "RESERVED"),
+            new AppointmentStatus(AppointmentStatus.ATTENDED, "ATTENDED"),
+            new AppointmentStatus(AppointmentStatus.MISSED, "MISSED"),
+            new AppointmentStatus(AppointmentStatus.IN_PROGRESS, "IN_PROGRESS"),
+            new AppointmentStatus(AppointmentStatus.CANCELLED, "CANCELLED"),
         ];
     }
 

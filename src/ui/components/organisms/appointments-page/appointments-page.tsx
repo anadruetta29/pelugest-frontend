@@ -1,5 +1,6 @@
-import type { Appointment, AppointmentDetail, Client, Service, User } from "../../../../domain";
+import { Appointment, AppointmentStatus, type AppointmentDetail, type Client, type Service, type User } from "../../../../domain";
 import MainButton from "../../atoms/main-button/main-button";
+import AppointmentsFilter from "../../molecules/appointments-filter/appointments-filter";
 import { EditAppointmentForm } from "../../molecules/edit-appointment-form/edit-appointment-form";
 import { NewAppointmentForm } from "../../molecules/new-appointment-form/new-appointment-form";
 import AppointmentsList from "../appointments-list/appointments-list";
@@ -8,18 +9,28 @@ import style from "./style.module.css";
 type Props = {
     appointments: Appointment[];
 
-    isNewOpen: boolean;
-    editingAppointment: Appointment | null;
-
     clients: Client[];
     hairdressers: User[];
     services: Service[];
+
+    selectedDate?: string;
+    selectedClientId?: string;
+    selectedHairdresserId?: string;
+    selectedStatus?: string;
+
+    onDateChange: (value: string) => void;
+    onClientChange: (value: string) => void;
+    onHairdresserChange: (value: string) => void;
+    onStatusChange: (value: string) => void;
+    onClearFilters: () => void;
+
+    isNewOpen: boolean;
+    editingAppointment: Appointment | null;
 
     onNewAppointment: () => void;
     onCloseForm: () => void;
 
     onCreateAppointment: (e: React.FormEvent<HTMLFormElement>) => void;
-
     onUpdateAppointment: (e: React.FormEvent<HTMLFormElement>) => void;
     onOpenEditAppointment: (appointment: Appointment) => void;
 
@@ -36,7 +47,7 @@ type Props = {
     selectedAppointmentDetails: AppointmentDetail[];
 
     selectedServiceIds: string[];
-    
+
     onRemoveService: (serviceId: string, detailId?: string) => void;
 
     totalSelectedAppointmentPrice: number;
@@ -65,21 +76,50 @@ export default function AppointmentsPage({
     onCloseDetail,
     selectedAppointment,
     selectedAppointmentDetails,
-    totalSelectedAppointmentPrice
+    totalSelectedAppointmentPrice,
+    onClearFilters,
+    onClientChange,
+    onDateChange,
+    onHairdresserChange,
+    onStatusChange,
+    selectedClientId,
+    selectedDate,
+    selectedHairdresserId,
+    selectedStatus
 }: Props) {
     return (
         <div className={style.container}>
             
             <div className={style.header}>
-                <MainButton
-                    enabled
-                    text="Nuevo turno"
-                    type="button"
-                    onClick={onNewAppointment}
-                    iconAlt="Nuevo turno"
-                    iconPosition="left"
-                    modifier={style.newAppointmentButton}
-                />
+                <div className={style.filters}>
+                    <AppointmentsFilter
+                        clients={clients}
+                        hairdressers={hairdressers}
+                        statuses={AppointmentStatus.getAppointmentStatusListEnum()}
+
+                        selectedDate={selectedDate}
+                        selectedClientId={selectedClientId}
+                        selectedHairdresserId={selectedHairdresserId}
+                        selectedStatus={selectedStatus}
+
+                        onDateChange={onDateChange}
+                        onClientChange={onClientChange}
+                        onHairdresserChange={onHairdresserChange}
+                        onStatusChange={onStatusChange}
+                        onClearFilters={onClearFilters}
+                    />
+                </div>
+                <div className={style.button}>
+                    <MainButton
+                        enabled
+                        text="Nuevo turno"
+                        type="button"
+                        onClick={onNewAppointment}
+                        iconAlt="Nuevo turno"
+                        iconPosition="left"
+                        modifier={style.newAppointmentButton}
+                    />
+                </div>
             </div>
 
             <div className={style.list}>

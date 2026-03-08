@@ -1,24 +1,40 @@
 .container {
     width: 100%;
     margin: 0 auto;
-
     padding: 32px 20px;
 
     display: flex;
     flex-direction: column;
     gap: 30px;
-
-    justify-content: center;
 }
 
+/* HEADER */
 .header {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: space-between; /* separa filtros y botón */
+    width: 100%;
+    gap: 20px;
 }
 
+/* FILTROS (buscador ocupa todo el espacio disponible) */
+.filters {
+    display: flex;
+    align-items: center;
+    flex: 1; /* ocupa todo el ancho disponible */
+}
+
+/* BOTÓN */
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* BOTÓN NUEVO TURNO */
 .newAppointmentButton {
-    width: 150px; 
+    width: 180px;
     border-radius: 0;
     font-size: 15px;
+    white-space: nowrap;
 }

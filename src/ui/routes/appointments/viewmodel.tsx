@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRepositories } from "../../../core";
 import useSession from "../../hooks/useSession";
-import { AppointmentDetail, Client, Errors, Service, User, type Appointment, type CreateAppointmentReq, 
+import { AppointmentDetail, AppointmentStatus, Client, Errors, Service, User, type Appointment, type CreateAppointmentReq, 
     type FindDetailsByAppointmentIdReq, type FindRecordStatusByNameReq, type GetAllAppointmentsReq, type UpdateAppointmentReq} from "../../../domain";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import type { SearchAppointmentReq } from "../../../domain/dto/appointment/request/SearchAppointmentReq";
 
 export default function ViewModel() {
 
@@ -30,6 +31,11 @@ export default function ViewModel() {
 
     const [editingDetails, setEditingDetails] = useState<AppointmentDetail[]>([]);
 
+    const [selectedDate, setSelectedDate] = useState<string | undefined>();
+    const [selectedClientId, setSelectedClientId] = useState<string | undefined>();
+    const [selectedHairdresserId, setSelectedHairdresserId] = useState<string | undefined>();
+    const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
+
     useEffect(() => {
         if (logged && session) {
             fetchClients();
@@ -38,6 +44,13 @@ export default function ViewModel() {
             fetchAppointments();
         }
     }, [logged, session]);
+
+    useEffect(() => {
+        if (!session || !logged) return;
+
+        searchAppointments();
+
+    }, [ selectedDate, selectedClientId, selectedHairdresserId, selectedStatus ]);
 
     /* ==============================
        GET ALL APPOINTMENTS
@@ -382,6 +395,64 @@ export default function ViewModel() {
         setSelectedAppointmentDetails([]);
     };
 
+    /* ==============================
+       SEARCH FILTERS
+    ============================== */
+
+    const searchAppointments = async () => {
+        if (!session) return;
+
+        setIsLoading(true);
+
+        try {
+
+            const response = await appointmentRepository.search({
+                session,
+                clientId: selectedClientId,
+                hairdresserId: selectedHairdresserId,
+                statusName: selectedStatus,
+                date: selectedDate ? new Date(selectedDate) : undefined,
+                page: 1,
+                limit: 10
+            } as SearchAppointmentReq);
+            
+            setAppointments(response.appointments);
+
+        } 
+        catch (error) {
+            toast.error(error instanceof Error ? error.message : Errors.UNKNOWN_ERROR);
+        } 
+        finally {
+            setIsLoading(false);
+        }
+    };
+
+    const onDateChange = (value: string) => {
+        setSelectedDate(value || undefined);
+    };
+
+    const onClientChange = (value: string) => {
+        setSelectedClientId(value || undefined);
+    };
+
+    const onHairdresserChange = (value: string) => {
+        setSelectedHairdresserId(value || undefined);
+    };
+
+    const onStatusChange = (value: string) => {
+        setSelectedStatus(value || undefined);
+    };
+
+    const onClearFilters = () => {
+        setSelectedDate(undefined);
+        setSelectedClientId(undefined);
+        setSelectedHairdresserId(undefined);
+        setSelectedStatus(undefined);
+
+        fetchAppointments();
+    };
+
+
     return {
         isLoading,
         appointments,
@@ -409,6 +480,18 @@ export default function ViewModel() {
         selectedAppointmentDetails,
         onCloseDetail,
 
-        totalSelectedAppointmentPrice
+        totalSelectedAppointmentPrice,
+
+
+        selectedDate,
+        selectedClientId,
+        selectedHairdresserId,
+        selectedStatus,
+
+        onDateChange,
+        onClientChange,
+        onHairdresserChange,
+        onStatusChange,
+        onClearFilters,
     };
 }

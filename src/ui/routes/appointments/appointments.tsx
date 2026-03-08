@@ -1,3 +1,4 @@
+import { AppointmentStatus } from "../../../domain";
 import Loader from "../../components/atoms/loader/loader";
 import AppointmentsPage from "../../components/organisms/appointments-page/appointments-page";
 import Layout from "../../layout/layout";
@@ -36,7 +37,17 @@ export default function AppointmentsRoute() {
         onRemoveService,
         selectedServiceIds,
 
-        totalSelectedAppointmentPrice
+        totalSelectedAppointmentPrice,
+
+        onClearFilters,
+        onClientChange,
+        onDateChange,
+        onHairdresserChange,
+        onStatusChange,
+        selectedClientId,
+        selectedDate,
+        selectedHairdresserId,
+        selectedStatus
     } = ViewModel();
 
     if (isLoading) {
@@ -56,9 +67,7 @@ export default function AppointmentsRoute() {
                 onCancelAppointment={onCancelAppointment}
                 onMissAppointment={onMissAppointment}
                 onStartAppointment={onStartAppointment}
-                clients={clients}
                 editingAppointment={editingAppointment}
-                hairdressers={hairdressers}
                 isNewOpen={isNewOpen}
                 onAddService={onAddService}
                 onCloseForm={onCloseForm}
@@ -73,6 +82,17 @@ export default function AppointmentsRoute() {
                 onCloseDetail={onCloseDetail}
                 selectedAppointmentDetails={selectedAppointmentDetails}
                 totalSelectedAppointmentPrice={totalSelectedAppointmentPrice}
+                clients={clients}
+                hairdressers={hairdressers}
+                selectedDate={selectedDate}
+                selectedClientId={selectedClientId}
+                selectedHairdresserId={selectedHairdresserId}
+                selectedStatus={selectedStatus}
+                onDateChange={onDateChange}
+                onClientChange={onClientChange}
+                onHairdresserChange={onHairdresserChange}
+                onStatusChange={onStatusChange}
+                onClearFilters={onClearFilters}
             />
         </Layout>
     );

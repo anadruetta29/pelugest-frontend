@@ -6,6 +6,7 @@ import type { FindAppointmentByIdReq } from "../dto/appointment/request/FindAppo
 import type { FindDetailsByAppointmentIdReq } from "../dto/appointment/request/FindDetailsByAppointmentIdReq";
 import type { GetAllAppointmentsByStatusReq } from "../dto/appointment/request/GetAllAppointmentsByStatusReq";
 import type { GetAllAppointmentsReq } from "../dto/appointment/request/GetAllAppointmentsReq";
+import type { SearchAppointmentReq } from "../dto/appointment/request/SearchAppointmentReq";
 import type { ToggleAppointmentDetailStatusReq } from "../dto/appointment/request/ToggleAppointmentDetailStatusReq";
 import type { UpdateAppointmentReq } from "../dto/appointment/request/UpdateAppointmentReq";
 import type { ChangeAppointmentStatusRes } from "../dto/appointment/response/ChangeAppointmentStatusRes";
@@ -15,6 +16,7 @@ import type { FindAppointmentByIdRes } from "../dto/appointment/response/FindApp
 import type { FindDetailsByAppointmentIdRes } from "../dto/appointment/response/FindDetailsByAppointmentIdRes";
 import type { GetAllAppointmentsByStatusRes } from "../dto/appointment/response/GetAllAppointmentsByStatusRes";
 import type { GetAllAppointmentsRes } from "../dto/appointment/response/GetAllAppointmentsRes";
+import type { SearchAppointmentRes } from "../dto/appointment/response/SearchAppointmentRes";
 import type { ToggleAppointmentDetailStatusRes } from "../dto/appointment/response/ToggleAppointmentDetailStatusRes";
 import type { UpdateAppointmentRes } from "../dto/appointment/response/UpdateAppointmentRes";
 
@@ -29,4 +31,5 @@ export abstract class AppointmentRepositoryI {
     abstract changeAppointmentStatus(dto: ChangeAppointmentStatusReq): Promise<ChangeAppointmentStatusRes>;
     abstract findDetailsByAppointmentId(dto: FindDetailsByAppointmentIdReq): Promise<FindDetailsByAppointmentIdRes>;
     abstract toggleAppointmentDetailStatus(dto: ToggleAppointmentDetailStatusReq): Promise<ToggleAppointmentDetailStatusRes>;
+    abstract search(dto: SearchAppointmentReq): Promise<SearchAppointmentRes>;
 }
