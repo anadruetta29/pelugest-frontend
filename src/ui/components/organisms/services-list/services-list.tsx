@@ -60,6 +60,7 @@ export default function ServicesList({
                    value={search}
                    onChange={onSearchChange}
                    onSearch={onSearch}
+                   entityName="servicio"
                 />
                 <MainButton
                     enabled

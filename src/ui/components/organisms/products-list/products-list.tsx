@@ -46,6 +46,7 @@ export default function ProductsList({
                     value={search}
                     onChange={onSearchChange}
                     onSearch={onSearch}
+                    entityName="producto"
                  />
                 <MainButton
                     enabled

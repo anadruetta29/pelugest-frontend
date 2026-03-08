@@ -45,6 +45,7 @@ export default function ClientsList({
                     value={search}
                     onChange={onSearchChange}
                     onSearch={onSearch}
+                    entityName="cliente"
                 />
                 <MainButton
                     enabled

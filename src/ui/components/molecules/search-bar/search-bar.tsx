@@ -6,19 +6,21 @@ type Props = {
     value: string;
     onChange: (value: string) => void;
     onSearch: (e: React.FormEvent<HTMLFormElement>) => void;
+    entityName: string;
 };
 
 export default function SearchBar({
     value,
     onChange,
     onSearch,
+    entityName
 }: Props) {
     return (
         <form className={style.container} onSubmit={onSearch}>
             <InputLabel
                 id="search"
                 name="search"
-                placeholder="Ingrese el nombre del cliente"
+                placeholder={`Ingrese el nombre del ${entityName}`} 
                 type="text"
                 value={value}
                 onChange={onChange}
