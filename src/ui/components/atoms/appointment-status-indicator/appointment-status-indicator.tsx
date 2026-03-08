@@ -9,7 +9,7 @@ export default function AppointmentStatusIndicator({ status }: Props) {
 
     const isReserved = status.name === AppointmentStatus.RESERVED;
     const isMissed = status.name === AppointmentStatus.MISSED;
-    const isInProgress = status.name === AppointmentStatus.INPROGRESS;
+    const isInProgress = status.name === AppointmentStatus.IN_PROGRESS;
     const isAttended = status.name === AppointmentStatus.ATTENDED;
     const isCancelled = status.name === AppointmentStatus.CANCELLED;
 

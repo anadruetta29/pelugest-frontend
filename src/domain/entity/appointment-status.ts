@@ -5,7 +5,7 @@ export class AppointmentStatus extends Optionable {
     static readonly RESERVED = "RESERVED";
     static readonly ATTENDED = "ATTENDED";
     static readonly MISSED = "MISSED";
-    static readonly INPROGRESS = "INPROGRESS";
+    static readonly IN_PROGRESS = "IN_PROGRESS";
     static readonly CANCELLED = "CANCELLED";
 
     public override id: string;
@@ -22,7 +22,7 @@ export class AppointmentStatus extends Optionable {
             new AppointmentStatus(AppointmentStatus.RESERVED, "Reservado"),
             new AppointmentStatus(AppointmentStatus.ATTENDED, "Atendido"),
             new AppointmentStatus(AppointmentStatus.MISSED, "No atendido"),
-            new AppointmentStatus(AppointmentStatus.INPROGRESS, "En Curso"),
+            new AppointmentStatus(AppointmentStatus.IN_PROGRESS, "En Curso"),
             new AppointmentStatus(AppointmentStatus.CANCELLED, "Cancelado"),
         ];
     }

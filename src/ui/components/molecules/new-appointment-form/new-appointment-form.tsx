@@ -73,7 +73,7 @@ export function NewAppointmentForm({
                 />
 
                 <Selector
-                    label="Agregar servicio:"
+                    label="Servicio:"
                     placeholder="Seleccionar servicio"
                     options={services.map(service => ({
                         value: service.id,
