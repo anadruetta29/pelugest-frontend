@@ -3,6 +3,7 @@ import DestructiveButton from "../../atoms/destructive-button/destructive-button
 import InputLabel from "../../atoms/input-label/input-label";
 import MainButton from "../../atoms/main-button/main-button";
 import SelectedServicesList from "../../atoms/selected-services-list/selected-services-list";
+import Selector from "../../atoms/selector/selector";
 import style from "./style.module.css";
 
 type Props = {
@@ -57,58 +58,44 @@ export function EditAppointmentForm({ appointment, onSubmit, onCancel, clients, 
                     />
                 </div>
                 
-                <div className={style.formGroup}>
-                    <label htmlFor="clientId">Cliente:</label>
-                    <select
-                        id="clientId"
-                        name="clientId"
-                        defaultValue={appointment?.client?.id || ""}
-                        required
-                    >
-                        <option value="">Seleccionar cliente</option>
-                        {clients.map((client) => (
-                        <option key={client.id} value={client.id}>
-                            {client.name}
-                        </option>
-                        ))}
-                    </select>
-                </div>
+                <Selector
+                    label="Cliente:"
+                    name="clientId"
+                    id="clientId"
+                    required
+                    defaultValue={appointment?.client?.id}
+                    placeholder="Seleccionar cliente"
+                    options={clients.map(client => ({
+                        value: client.id,
+                        label: client.name
+                    }))}
+                />
 
-                <div className={style.formGroup}>
-                    <label htmlFor="hairdresserId">Peluquero:</label>
-                    <select
-                        id="hairdresserId"
-                        name="hairdresserId"
-                        defaultValue={appointment?.hairdresser?.id || ""}
-                        required
-                    >
-                        <option value="">Seleccionar peluquero</option>
-                        {hairdressers.map((hairdresser) => (
-                        <option key={hairdresser.id} value={hairdresser.id}>
-                            {hairdresser.name}
-                        </option>
-                        ))}
-                    </select>
-                </div>
+                <Selector
+                    label="Peluquero:"
+                    name="hairdresserId"
+                    id="hairdresserId"
+                    required
+                    defaultValue={appointment?.hairdresser?.id}
+                    placeholder="Seleccionar peluquero"
+                    options={hairdressers.map(h => ({
+                        value: h.id,
+                        label: h.name
+                    }))}
+                />
                 
-                <div className={style.formGroup}>
-                    <label htmlFor="serviceId">Agregar servicio:</label>
-                    <select
-                        defaultValue=""
-                        onChange={(e) => {
-                            if (!e.target.value) return;
-                            onAddService(e.target.value);
-                            e.target.value = "";
-                        }}
-                    >
-                        <option value="">Seleccionar servicio</option>
-                        {services.map((service) => (
-                            <option key={service.id} value={service.id}>
-                                {service.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <Selector
+                    label="Agregar servicio:"
+                    placeholder="Seleccionar servicio"
+                    options={services.map(service => ({
+                        value: service.id,
+                        label: service.name
+                    }))}
+                    onChange={(value) => {
+                        if (!value) return;
+                        onAddService(value);
+                    }}
+                />
 
                 {selectedServiceIds.length > 0 && (
                     <SelectedServicesList

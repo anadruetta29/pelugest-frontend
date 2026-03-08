@@ -3,6 +3,7 @@ import DestructiveButton from "../../atoms/destructive-button/destructive-button
 import InputLabel from "../../atoms/input-label/input-label";
 import MainButton from "../../atoms/main-button/main-button";
 import SelectedServicesList from "../../atoms/selected-services-list/selected-services-list";
+import Selector from "../../atoms/selector/selector";
 import style from "./style.module.css";
 
 type Props = {
@@ -17,19 +18,18 @@ type Props = {
 
     selectedServiceIds: string[];
     onRemoveService: (serviceId: string) => void;
-
 };
 
-export function NewAppointmentForm({ 
-    onSubmit, 
-    onCancel, 
-    clients, 
-    hairdressers, 
-    onAddService, 
+export function NewAppointmentForm({
+    onSubmit,
+    onCancel,
+    clients,
+    hairdressers,
+    onAddService,
     services,
     selectedServiceIds,
     onRemoveService
- }: Props) {
+}: Props) {
     return (
         <div className={style.backdrop}>
             <form onSubmit={onSubmit} className={style.card}>
@@ -39,65 +39,51 @@ export function NewAppointmentForm({
 
                 <div className={style.formGroup}>
                     <InputLabel
-                    label="Hora de inicio: "
-                    name="startDateTime"
-                    id="startDateTime"
-                    type="datetime-local"
-                    placeholder="Hora de inicio"
-                    required
-                />
-                </div>
-                
-                <div className={style.formGroup}>
-                    <label htmlFor="clientId">Cliente:</label>
-                    <select
-                        id="clientId"
-                        name="clientId"
+                        label="Hora de inicio:"
+                        name="startDateTime"
+                        id="startDateTime"
+                        type="datetime-local"
+                        placeholder="Hora de inicio"
                         required
-                    >
-                        <option value="">Seleccionar cliente</option>
-                        {clients.map((client) => (
-                        <option key={client.id} value={client.id}>
-                            {client.name}
-                        </option>
-                        ))}
-                    </select>
+                    />
                 </div>
 
-                <div className={style.formGroup}>
-                    <label htmlFor="hairdresserId">Peluquero:</label>
-                    <select
-                        id="hairdresserId"
-                        name="hairdresserId"
-                        required
-                    >
-                        <option value="">Seleccionar peluquero</option>
-                        {hairdressers.map((hairdresser) => (
-                        <option key={hairdresser.id} value={hairdresser.id}>
-                            {hairdresser.name}
-                        </option>
-                        ))}
-                    </select>
-                </div>
-                
-                <div className={style.formGroup}>
-                    <label htmlFor="serviceId">Agregar servicio:</label>
-                    <select
-                        defaultValue=""
-                        onChange={(e) => {
-                            if (!e.target.value) return;
-                            onAddService(e.target.value);
-                            e.target.value = "";
-                        }}
-                    >
-                        <option value="">Seleccionar servicio</option>
-                        {services.map((service) => (
-                            <option key={service.id} value={service.id}>
-                                {service.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <Selector
+                    label="Cliente:"
+                    name="clientId"
+                    id="clientId"
+                    required
+                    placeholder="Seleccionar cliente"
+                    options={clients.map(client => ({
+                        value: client.id,
+                        label: client.name
+                    }))}
+                />
+
+                <Selector
+                    label="Peluquero:"
+                    name="hairdresserId"
+                    id="hairdresserId"
+                    required
+                    placeholder="Seleccionar peluquero"
+                    options={hairdressers.map(h => ({
+                        value: h.id,
+                        label: h.name
+                    }))}
+                />
+
+                <Selector
+                    label="Agregar servicio:"
+                    placeholder="Seleccionar servicio"
+                    options={services.map(service => ({
+                        value: service.id,
+                        label: service.name
+                    }))}
+                    onChange={(value) => {
+                        if (!value) return;
+                        onAddService(value);
+                    }}
+                />
 
                 {selectedServiceIds.length > 0 && (
                     <SelectedServicesList
@@ -106,13 +92,14 @@ export function NewAppointmentForm({
                         services={services}
                     />
                 )}
-                
+
                 <div className={style.actions}>
                     <DestructiveButton
                         text="Cancelar"
                         type="button"
                         onClick={onCancel}
                     />
+
                     <MainButton
                         enabled
                         text="Crear turno"
