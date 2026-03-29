@@ -1,0 +1,109 @@
+.container {
+    width: 100%;
+    max-width: 280px;
+    background-color: var(--surface);
+    color: var(--on-surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px var(--shadow-low);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    height: 360px; 
+}
+
+.container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px var(--shadow-medium);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 28px;
+}
+
+.editIcon {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.editIcon:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+    min-height: 110px;
+}
+
+.date {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.person {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.label {
+    color: var(--text-secondary);
+}
+
+.value {
+    font-weight: 500;
+}
+
+.statusWrapper {
+    margin-top: 4px;
+}
+
+.actions {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 110px;
+    justify-content: center; 
+    align-items: center;     
+    width: 100%;
+}
+
+.detailButtonWrapper {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.viewDetailButton {
+    background: none;
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.viewDetailButton:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}

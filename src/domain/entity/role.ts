@@ -5,13 +5,8 @@ export class Role extends Optionable {
     static readonly HAIRDRESSER = "HAIRDRESSER";
     static readonly ADMIN = "ADMIN";
 
-    public override id: string;
-    public override name: string;
-
     constructor(id: string, name: string) {
         super(id, name);
-        this.id = id;
-        this.name = name;
     }
 
     public static getRoleList(): Role[] {

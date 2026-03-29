@@ -11,6 +11,7 @@
     font-size: 18px;
     border: 0;
     cursor: pointer;
+    gap: 6px;
 }
 
 .containerDisabled {
@@ -26,6 +27,11 @@
     font-size: 18px;
     border: 0;
     cursor: not-allowed; 
-    
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 

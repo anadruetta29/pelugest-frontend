@@ -1,0 +1,66 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--modal-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px; 
+    z-index: 1000;
+}
+
+.card {
+    background: var(--surface);
+    color: var(--on-surface);
+    width: 100%;
+    max-width: 500px;
+    border-radius: 16px;
+    padding: 32px; 
+    box-shadow: 0 10px 25px var(--shadow-medium);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.formGroup label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.formGroup select {
+    padding: 10px 12px; 
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--on-surface);
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.formGroup select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-container);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px; 
+    margin-top: 8px;
+}

@@ -18,7 +18,7 @@ export function ViewModel() {
 
             const form = Object.fromEntries(new FormData(e.currentTarget)) as { 
                 name?: string;
-                lastname?: string; 
+                surname?: string; 
                 email?: string; 
                 password?: string 
             };
@@ -27,8 +27,8 @@ export function ViewModel() {
                 return setError(Errors.INVALID_NAME);
             }
 
-            if(!Regex.LASTNAME.test(form.lastname || "")) {
-                return setError(Errors.INVALID_LASTNAME);
+            if(!Regex.SURNAME.test(form.surname || "")) {
+                return setError(Errors.INVALID_SURNAME);
             }
 
             if(!Regex.EMAIL.test(form.email || "")) {
@@ -41,7 +41,7 @@ export function ViewModel() {
 
             await authRepository.register({
                 name: form.name,
-                lastname: form.lastname,
+                surname: form.surname,
                 email: form.email,
                 password: form.password,
             } as RegisterUserReq);

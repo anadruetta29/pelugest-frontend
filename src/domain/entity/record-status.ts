@@ -6,14 +6,8 @@ export class RecordStatus extends Optionable {
     static readonly INACTIVE = "INACTIVE";
     static readonly DELETED = "DELETED";
 
-    public override id: string;
-    public override name: string;
-
     constructor(id: string, name: string) {
         super(id, name);
-        
-        this.id = id;
-        this.name = name;
     }
 
     public static getRecordStatusList(): RecordStatus[] {

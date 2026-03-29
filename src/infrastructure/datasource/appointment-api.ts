@@ -1,0 +1,206 @@
+import { HTTPClient } from "../../core";
+import { AppointmentDataSourceI, ErrorHandler, type CreateAppointmentReq, type CreateAppointmentRes, type DeleteAppointmentReq, type FindAppointmentByIdReq, type FindAppointmentByIdRes, type FindDetailsByAppointmentIdReq, type FindDetailsByAppointmentIdRes, type GetAllAppointmentsByStatusReq, type GetAllAppointmentsByStatusRes, type GetAllAppointmentsReq, type GetAllAppointmentsRes, type UpdateAppointmentReq, type UpdateAppointmentRes } from "../../domain";
+import type { ChangeAppointmentStatusReq } from "../../domain/dto/appointment/request/ChangeAppointmentStatusReq";
+import type { CreateAppointmentDetailReq } from "../../domain/dto/appointment/request/CreateAppointmentDetailReq";
+import type { SearchAppointmentReq } from "../../domain/dto/appointment/request/SearchAppointmentReq";
+import type { ToggleAppointmentDetailStatusReq } from "../../domain/dto/appointment/request/ToggleAppointmentDetailStatusReq";
+import type { ChangeAppointmentStatusRes } from "../../domain/dto/appointment/response/ChangeAppointmentStatusRes";
+import type { CreateAppointmentDetailRes } from "../../domain/dto/appointment/response/CreateAppointmentDetailRes";
+import type { SearchAppointmentRes } from "../../domain/dto/appointment/response/SearchAppointmentRes";
+import type { ToggleAppointmentDetailStatusRes } from "../../domain/dto/appointment/response/ToggleAppointmentDetailStatusRes";
+
+export class AppointmentApiDataSource implements AppointmentDataSourceI {
+
+    private httpClient: HTTPClient;
+    
+    constructor() {
+        this.httpClient = new HTTPClient();
+    }
+
+    public async create(dto: CreateAppointmentReq): Promise<CreateAppointmentRes> {
+        try {
+            const response = await this.httpClient.post(`/api/appointments/`, {...dto}, dto.session.getAccessToken());
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        }
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+    
+    public async update(dto: UpdateAppointmentReq): Promise<UpdateAppointmentRes> {
+        try {
+            const response = await this.httpClient.put(`/api/appointments/${dto.id}`, {...dto}, dto.session.getAccessToken());
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        }
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+    public async delete(dto: DeleteAppointmentReq): Promise<void> {
+        try {
+            const response = await this.httpClient.delete(`/api/appointments/`, {...dto}, dto.session.getAccessToken());
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        }
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+    public async findById(dto: FindAppointmentByIdReq): Promise<FindAppointmentByIdRes> {
+        try {
+            const response = await this.httpClient.get(`/api/appointments/${dto.id}`, {...dto}, dto.session.getAccessToken());
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        }
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+    public async getAll(dto: GetAllAppointmentsReq): Promise<GetAllAppointmentsRes> {
+        try {
+            const response = await this.httpClient.get(
+                `/api/appointments/`,
+                undefined,
+                dto.session.getAccessToken()
+            );
+            if (response.error) {
+            throw ErrorHandler.handleError(response.error);
+            }
+            return response;
+        } catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+    
+    public async getAllByStatus(dto: GetAllAppointmentsByStatusReq): Promise<GetAllAppointmentsByStatusRes> {
+        try {
+            const response = await this.httpClient.get(
+                `/api/appointments/status/${dto.statusId}`,
+                undefined,
+                dto.session.getAccessToken()
+            );
+
+            if (response.error) {
+            throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        } catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+    
+    public async createAppointmentDetail(dto: CreateAppointmentDetailReq): Promise<CreateAppointmentDetailRes> {
+        try {
+            const response = await this.httpClient.post(`/api/appointments/`, {...dto});
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+        }
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+    public async changeAppointmentStatus(dto: ChangeAppointmentStatusReq): Promise<ChangeAppointmentStatusRes> {
+        try {
+            const response = await this.httpClient.patch(
+                `/api/appointments/${dto.id}/${dto.action}`,
+                undefined,
+                dto.session.getAccessToken()
+            );
+
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+
+        } 
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+    public async findDetailsByAppointmentId(dto: FindDetailsByAppointmentIdReq): Promise<FindDetailsByAppointmentIdRes> {
+        try {
+            const response = await this.httpClient.get(
+                `/api/appointments/${dto.appointmentId}/details`,
+                undefined,
+                dto.session.getAccessToken()
+            );
+
+            if (response.error) {
+                throw ErrorHandler.handleError(response.error);
+            }
+
+            return response;
+
+        } 
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+    
+    public async toggleAppointmentDetailStatus(dto: ToggleAppointmentDetailStatusReq): Promise<ToggleAppointmentDetailStatusRes> {
+        try {
+
+            const response = await this.httpClient.get(
+                    `/api/appointments/details/${dto.appointmentDetailId}/status`,
+                    undefined,
+                    dto.session.getAccessToken()
+                );
+
+                if (response.error) {
+                    throw ErrorHandler.handleError(response.error);
+                }
+
+                return response;
+
+        } 
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+    public async search(dto: SearchAppointmentReq): Promise<SearchAppointmentRes> {
+        try {
+
+            const response = await this.httpClient.get(
+                    `/api/appointments/search`,
+                    {...dto},
+                    dto.session.getAccessToken()
+                );
+
+                if (response.error) {
+                    throw ErrorHandler.handleError(response.error);
+                }
+
+                return response;
+
+        } 
+        catch (error) {
+            throw ErrorHandler.handleError(error as Error);
+        }
+    }
+
+}

@@ -5,94 +5,73 @@ export class HTTPClient {
     private readonly baseURL: string;
 
     constructor() {
-        this.baseURL = env.BASE_URL!!;
+        this.baseURL = env.BASE_URL!;
     }
 
-    public async get(url: string, params?: any, token?: string) {
-        try {
-            let finalUrl = `${this.baseURL}${url}`;
-            let queryParams = undefined;
+    private getToken(): string | undefined {
+        const raw = localStorage.getItem("session");
+        
+        if (!raw) return undefined;
+        
+        const parsed = JSON.parse(raw);
 
-            if (typeof params === "string") {
-                finalUrl += `/${params}`;
-            } 
-            else if (typeof params === "object" && params !== null) {
-                queryParams = params;
+        return parsed.token?.accessToken; 
+    }
+
+    private buildHeaders(token?: string) {
+        const finalToken = token ?? this.getToken();
+        
+        return finalToken
+            ? { Authorization: `Bearer ${finalToken}` }
+            : {};
+    }
+
+    async get(url: string, params?: any, token?: string) {
+        const response = await axios.get(
+            `${this.baseURL}${url}`,
+            {
+                params,
+                headers: this.buildHeaders(token),
             }
-
-            const response = await axios.get(finalUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-                params: queryParams
-            });
-
-            return response.data;
-        }
-        catch (error: any) {
-            throw new Error(error.response.data.message);
-        }
+        );
+        return response.data;
     }
 
-    public async post(url: string, params?: any, token?: string) {
-        try {
-            const response = await axios.post(this.baseURL + url, params, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-            return response.data;
-        }
-        catch (error: any) {
-            throw new Error(error.response.data.message);
-        }
+    async post(url: string, body?: any, token?: string) {
+        const response = await axios.post(
+            `${this.baseURL}${url}`,
+            body,
+            { headers: this.buildHeaders(token) }
+        );
+        return response.data;
     }
 
-    public async put(url: string, params?: any, token?: string) {
-        try {
-            const response = await axios.put(this.baseURL + url, params, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-            });
-
-            return response.data;
-        }
-        catch (error: any) {
-            throw new Error(error.response.data.message);
-        }
+    async put(url: string, body?: any, token?: string) {
+        const response = await axios.put(
+            `${this.baseURL}${url}`,
+            body,
+            { headers: this.buildHeaders(token) }
+        );
+        return response.data;
     }
 
-    public async patch(url: string, params?: any, token?: string) {
-        try {
-            const response = await axios.patch(this.baseURL + url, params, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-            });
-
-            return response.data;
-        }
-        catch (error: any) {
-            throw new Error(error.response.data.message);
-        }
+    async patch(url: string, body?: any, token?: string) {
+        const response = await axios.patch(
+            `${this.baseURL}${url}`,
+            body,
+            { headers: this.buildHeaders(token) }
+        );
+        return response.data;
     }
 
-    public async delete(url: string, params?: any, token?: string) {
-        try {
-            const response = await axios.delete(this.baseURL + url, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-                data: params,
-            });
-            
-            return response.data;
-        }
-        catch (error: any) {
-            throw new Error(error.response.data.message);
-        }
+    async delete(url: string, body?: any, token?: string) {
+        const response = await axios.delete(
+            `${this.baseURL}${url}`,
+            {
+                data: body,
+                headers: this.buildHeaders(token),
+            }
+        );
+        return response.data;
     }
-    
 }

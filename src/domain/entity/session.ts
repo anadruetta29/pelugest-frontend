@@ -7,15 +7,14 @@ export class Session {
         this.token = token;
     }
 
-    public static fromObject(object: { [key: string]: any }): Session | null {
-        if (!object || !object.token) return null;
-
-        const tokenInstance = Token.fromObject(object.token);
+    public static fromObject(object: any): Session | null {
+        if (!object) return null;
         
+        const tokenInstance = Token.fromObject(object.token || object);
         if (!tokenInstance) return null;
 
         return new Session(tokenInstance);
-    };
+    }
 
     public getAccessToken(): string {
         return this.token.accessToken;

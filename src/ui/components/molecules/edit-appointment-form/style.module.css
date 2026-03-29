@@ -1,0 +1,39 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--modal-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.card {
+    background: var(--surface);
+    color: var(--on-surface);
+    width: 100%;
+    max-width: 500px;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px var(--shadow-medium);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+

@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.newClientButton {
+    width: 150px; 
+    border-radius: 0;
+    font-size: 15px;
+}
+
+.newClientButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px var(--shadow-medium);
+}

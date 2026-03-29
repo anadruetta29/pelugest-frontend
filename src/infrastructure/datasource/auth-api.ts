@@ -27,7 +27,7 @@ export class AuthApiDataSource implements AuthDataSourceI {
 
     public async login(dto: LoginUserReq): Promise<LoginUserRes> {
         try {
-            const response = await this.httpClient.post("/api/auth/login", { ...dto });
+            const response = await this.httpClient.post(`/api/auth/login`, { ...dto });
 
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
@@ -47,16 +47,15 @@ export class AuthApiDataSource implements AuthDataSourceI {
 
     public async register(dto: RegisterUserReq): Promise<void> {
         try {
-            const response = await this.httpClient.post("/api/auth/register", { ...dto });
+            const response = await this.httpClient.post(`/api/auth/register`, { ...dto });
 
             if (response.error) {
                 throw ErrorHandler.handleError(response.error);
             }
+            
         }
         catch (error) {
             throw ErrorHandler.handleError(error as Error);
         }
     }
-
-
 }

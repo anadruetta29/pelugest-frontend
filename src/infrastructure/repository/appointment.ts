@@ -1,0 +1,119 @@
+import type { AppointmentDataSourceI, AppointmentRepositoryI, CreateAppointmentReq, CreateAppointmentRes, DeleteAppointmentReq, FindAppointmentByIdReq, FindAppointmentByIdRes, FindDetailsByAppointmentIdReq, FindDetailsByAppointmentIdRes, GetAllAppointmentsByStatusReq, GetAllAppointmentsByStatusRes, GetAllAppointmentsReq, GetAllAppointmentsRes, UpdateAppointmentReq, UpdateAppointmentRes } from "../../domain";
+import type { ChangeAppointmentStatusReq } from "../../domain/dto/appointment/request/ChangeAppointmentStatusReq";
+import type { CreateAppointmentDetailReq } from "../../domain/dto/appointment/request/CreateAppointmentDetailReq";
+import type { SearchAppointmentReq } from "../../domain/dto/appointment/request/SearchAppointmentReq";
+import type { ToggleAppointmentDetailStatusReq } from "../../domain/dto/appointment/request/ToggleAppointmentDetailStatusReq";
+import type { ChangeAppointmentStatusRes } from "../../domain/dto/appointment/response/ChangeAppointmentStatusRes";
+import type { CreateAppointmentDetailRes } from "../../domain/dto/appointment/response/CreateAppointmentDetailRes";
+import type { SearchAppointmentRes } from "../../domain/dto/appointment/response/SearchAppointmentRes";
+import type { ToggleAppointmentDetailStatusRes } from "../../domain/dto/appointment/response/ToggleAppointmentDetailStatusRes";
+import { AppointmentApiDataSource } from "../datasource/appointment-api";
+
+export class AppointmentRepository implements AppointmentRepositoryI {
+    private dataSource: AppointmentDataSourceI;
+        
+        constructor(dataSource: AppointmentDataSourceI = new AppointmentApiDataSource()) {
+            this.dataSource = dataSource;
+        }
+        
+        public async create(dto: CreateAppointmentReq): Promise<CreateAppointmentRes> {
+            try {
+                return await this.dataSource.create(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        };
+
+        public async update(dto: UpdateAppointmentReq): Promise<UpdateAppointmentRes> {
+            try {
+                return await this.dataSource.update(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        };
+
+        public async delete(dto: DeleteAppointmentReq): Promise<void> {
+            try {
+                return await this.dataSource.delete(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        };
+
+        public async findById(dto: FindAppointmentByIdReq): Promise<FindAppointmentByIdRes> {
+            try {
+                return await this.dataSource.findById(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async getAll(dto: GetAllAppointmentsReq): Promise<GetAllAppointmentsRes> {
+            try {
+                return await this.dataSource.getAll(dto); 
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async getAllByStatus(dto: GetAllAppointmentsByStatusReq): Promise<GetAllAppointmentsByStatusRes> {
+            try {
+                return await this.dataSource.getAllByStatus(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async createAppointmentDetail(dto: CreateAppointmentDetailReq): Promise<CreateAppointmentDetailRes> {
+            try {
+                return await this.dataSource.createAppointmentDetail(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async changeAppointmentStatus(dto: ChangeAppointmentStatusReq): Promise<ChangeAppointmentStatusRes> {
+            try {
+                return await this.dataSource.changeAppointmentStatus(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async findDetailsByAppointmentId(dto: FindDetailsByAppointmentIdReq): Promise<FindDetailsByAppointmentIdRes> {
+            try {
+                return await this.dataSource.findDetailsByAppointmentId(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async toggleAppointmentDetailStatus(dto: ToggleAppointmentDetailStatusReq): Promise<ToggleAppointmentDetailStatusRes> {
+            try {
+                return await this.dataSource.toggleAppointmentDetailStatus(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+        public async search(dto: SearchAppointmentReq): Promise<SearchAppointmentRes> {
+            try {
+                return await this.dataSource.search(dto);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+
+
+}

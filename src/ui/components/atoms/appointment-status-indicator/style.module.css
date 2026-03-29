@@ -1,0 +1,44 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 6px 10px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    color: var(--text-secondary);
+    background-color: var(--surface-soft);
+
+    transition: background-color 0.2s ease;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+
+.RESERVED {
+    background-color: var(--reserved-status);
+}
+
+.IN_PROGRESS {
+    background-color: var(--in-progress-status);
+}
+
+.ATTENDED {
+    background-color: var(--attended-status);
+}
+
+.MISSED {
+    background-color: var(--missed-status);
+}
+
+.CANCELLED {
+    background-color: var(--cancelled-status);
+}

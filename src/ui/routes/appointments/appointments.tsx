@@ -1,0 +1,99 @@
+import { AppointmentStatus } from "../../../domain";
+import Loader from "../../components/atoms/loader/loader";
+import AppointmentsPage from "../../components/organisms/appointments-page/appointments-page";
+import Layout from "../../layout/layout";
+import ViewModel from "./viewmodel";
+
+export default function AppointmentsRoute() {
+    const {
+        isLoading,
+        appointments,
+
+        isNewOpen,
+        editingAppointment,
+
+        onNewAppointment,
+        onOpenEditAppointment,
+        onCloseForm,
+
+        onCreateAppointment,
+        onUpdateAppointment,
+        onAddService,
+
+        onAttendAppointment,
+        onCancelAppointment,
+        onMissAppointment,
+        onStartAppointment,
+
+        onViewDetail,
+        selectedAppointment,
+        onCloseDetail,
+        selectedAppointmentDetails,
+        
+        clients,
+        hairdressers,
+        services,
+
+        onRemoveService,
+        selectedServiceIds,
+
+        totalSelectedAppointmentPrice,
+
+        onClearFilters,
+        onClientChange,
+        onDateChange,
+        onHairdresserChange,
+        onStatusChange,
+        selectedClientId,
+        selectedDate,
+        selectedHairdresserId,
+        selectedStatus
+    } = ViewModel();
+
+    if (isLoading) {
+        return (
+            <Layout withSidebar>
+                <Loader />
+            </Layout>
+        );
+    }
+
+    return (
+        <Layout withSidebar>
+            <AppointmentsPage 
+                appointments={appointments}
+                onNewAppointment={onNewAppointment}
+                onAttendAppointment={onAttendAppointment}
+                onCancelAppointment={onCancelAppointment}
+                onMissAppointment={onMissAppointment}
+                onStartAppointment={onStartAppointment}
+                editingAppointment={editingAppointment}
+                isNewOpen={isNewOpen}
+                onAddService={onAddService}
+                onCloseForm={onCloseForm}
+                onCreateAppointment={onCreateAppointment}
+                onOpenEditAppointment={onOpenEditAppointment}
+                services={services}
+                onUpdateAppointment={onUpdateAppointment}
+                onRemoveService={onRemoveService}
+                selectedServiceIds={selectedServiceIds}
+                onViewDetail={onViewDetail}
+                selectedAppointment={selectedAppointment}
+                onCloseDetail={onCloseDetail}
+                selectedAppointmentDetails={selectedAppointmentDetails}
+                totalSelectedAppointmentPrice={totalSelectedAppointmentPrice}
+                clients={clients}
+                hairdressers={hairdressers}
+                selectedDate={selectedDate}
+                selectedClientId={selectedClientId}
+                selectedHairdresserId={selectedHairdresserId}
+                selectedStatus={selectedStatus}
+                onDateChange={onDateChange}
+                onClientChange={onClientChange}
+                onHairdresserChange={onHairdresserChange}
+                onStatusChange={onStatusChange}
+                onClearFilters={onClearFilters}
+            />
+        </Layout>
+    );
+}

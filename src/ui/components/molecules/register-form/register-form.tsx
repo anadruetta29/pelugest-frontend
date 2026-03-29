@@ -15,14 +15,14 @@ export default function RegisterForm({ onSubmit } : Props) {
             <form onSubmit={onSubmit} className={style.container}>
                 <MediumTitle text="Creá tu cuenta" />
                 <div className={style.nameContainer}>
-                    <InputLabel id="name" placeholder="Nombre" required type="text" />
-                    <InputLabel id="lastname" placeholder="Apellido" required type="text" />
+                    <InputLabel id="name" name="name" placeholder="Nombre" required type="text" />
+                    <InputLabel id="surname" name="surname" placeholder="Apellido" required type="text" />
                 </div>
                 <div className={style.inputDelimiter}>
-                    <InputLabel id="email" placeholder="Email" required type="text" />
+                    <InputLabel id="email" name="email" placeholder="Email" required type="text" />
                 </div>
                 <div className={style.inputDelimiter}>
-                    <InputLabel id="password" placeholder="Contraseña" required type="password" />
+                    <InputLabel id="password" name="password" placeholder="Contraseña" required type="password" />
                 </div>
                 <div className={style.inputDelimiter}>
                     <MainButton onClick={() => {}} text="Registrarse" type="submit" enabled={true}/>           
